@@ -10,11 +10,12 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
-
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
 
+
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
@@ -33,7 +34,7 @@ import org.project.mw.util.Util;
 public class PaneModelCentre extends JPanel {
 	private  static PaneModelCentre paneModelCentreInstanze=null;
 	private MouseListener listener = new DragMouseAdapter();
-	private ArrayList<JLabel> labelCompArrayTemp = new ArrayList();
+	private ArrayList<JButton> labelCompArrayTemp = new ArrayList();
 	private Logger log = Logger.getLogger(PaneModelCentre.class.getName());
 	protected int i = 0;
 
@@ -69,7 +70,7 @@ public class PaneModelCentre extends JPanel {
 				}
 
 				cellPane.setBorder(border);
-				JLabel label1 = new JLabel();
+				JButton label1 = new JButton();
 				label1.setMinimumSize(new Dimension(50, 50));
 				label1.setPreferredSize(new Dimension(50, 50));
 				label1.setMaximumSize(new Dimension(50, 50));
@@ -98,7 +99,7 @@ public class PaneModelCentre extends JPanel {
 	// x, y are the dimension of label and dridbag componets
 	public void update(int scalFactor, int xDemension, int yDemension, int compIndex)  {
 		log.info("PaneModelCentre is updated");
-		labelCompArrayTemp = new ArrayList<JLabel>();
+		labelCompArrayTemp = new ArrayList<JButton>();
 		GridBagLayout gb = new GridBagLayout();
 		setLayout(gb);
 		removeAll();
@@ -129,11 +130,11 @@ public class PaneModelCentre extends JPanel {
 
 				cellPane.setBorder(border);
 				
-				JLabel labelComp = new JLabel();
+				JButton labelComp = new JButton();
 			
 					if (i == compIndex | Util.getInstance().getElementsArray().get(i).getRotation() != 0) {
 						int j = i;
-						labelComp = new JLabel() {
+						labelComp = new JButton() {
 							protected void paintComponent(Graphics g) {
 								Graphics2D g2 = (Graphics2D) g;
 								g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -201,7 +202,7 @@ public class PaneModelCentre extends JPanel {
 		
 	}
 
-	public ArrayList<JLabel> getLabelArray() {
+	public ArrayList<JButton> getLabelArray() {
 		return labelCompArrayTemp;
 	}
 
