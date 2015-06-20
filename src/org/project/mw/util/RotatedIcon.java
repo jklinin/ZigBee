@@ -19,8 +19,8 @@ import javax.swing.Icon;
  * <li>ABOUT_CENTER - the icon is rotated by the specified degrees about its center.
  * </ul>
  */
-public class RotatedIcon implements Icon
-{
+public class RotatedIcon implements Icon{
+	public RotatedIcon rotatedIconInstanze =null;
 	public enum Rotate
 	{
 		DOWN,
@@ -209,4 +209,6 @@ public class RotatedIcon implements Icon
 			g2.setTransform(original);
 		}
 	}
+	
+	
 }

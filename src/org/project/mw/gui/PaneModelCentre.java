@@ -8,10 +8,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.logging.Logger;
+
+
+
 
 
 
@@ -37,6 +42,9 @@ public class PaneModelCentre extends JPanel {
 	private ArrayList<JButton> labelCompArrayTemp = new ArrayList();
 	private Logger log = Logger.getLogger(PaneModelCentre.class.getName());
 	protected int i = 0;
+	private ActionListener onClickListner=new ClickListner();
+		
+
 
 	public PaneModelCentre() {
 		log.info("PaneModelCentre is created");
@@ -71,6 +79,7 @@ public class PaneModelCentre extends JPanel {
 
 				cellPane.setBorder(border);
 				JButton label1 = new JButton();
+				label1.addActionListener(onClickListner);
 				label1.setMinimumSize(new Dimension(50, 50));
 				label1.setPreferredSize(new Dimension(50, 50));
 				label1.setMaximumSize(new Dimension(50, 50));
@@ -132,47 +141,9 @@ public class PaneModelCentre extends JPanel {
 				
 				JButton labelComp = new JButton();
 			
-					if (i == compIndex | Util.getInstance().getElementsArray().get(i).getRotation() != 0) {
-						int j = i;
-						labelComp = new JButton() {
-							protected void paintComponent(Graphics g) {
-								Graphics2D g2 = (Graphics2D) g;
-								g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-								AffineTransform aT = g2.getTransform();
-								Shape oldshape = g2.getClip();
-								double x = getWidth() / 2.0;
-							double y = getHeight() / 2.0;
-							int rotation = Util.getInstance().getElementsArray().get(j).getRotation();
+					
 
-							if (rotation > 360) {
-								System.out.println("Update->" + 0);
-								aT.rotate(Math.toRadians(0), x, y);
-								Util.getInstance().getElementsArray().get(compIndex).setRotation(0);
-								g2.transform(aT);
-								g2.setTransform(aT);
-								g2.setClip(oldshape);
-							} else {
-								if (compIndex > -1) {
-									System.out.println("Update->" + rotation + 90);
-									Util.getInstance().getElementsArray().get(compIndex).setRotation(rotation + 90);
-									aT.rotate(Math.toRadians(rotation + 90), x, y);// FIXME
-									g2.transform(aT);
-									g2.setTransform(aT);
-									g2.setClip(oldshape);
-								}
-							}
-							
-
-						/*	g2.transform(aT);
-							g2.setTransform(aT);
-							g2.setClip(oldshape);*/
-							
-								super.paintComponent(g);
-
-							}
-						};
-
-					}
+					
 				
 				
 				// scalation restart
