@@ -39,7 +39,7 @@ class EditorWindow extends JFrame {
 	private JButton buttonLessZoom;
 	PaneModelCentre paneModelCentre = new PaneModelCentre();// GridBagLayout
 	private static EditorWindow editorWindowInstanze=null;
-	private int modelDemension = 50;
+	protected int modelDemension = 50;
 
 	JScrollPane scrollpane;
 	protected JPanel contentPanel = new JPanel();
@@ -47,7 +47,7 @@ class EditorWindow extends JFrame {
 	private JButton buttonAdd;
 	private JButton buttonRemove;
 	private JButton buttonMainWindow;
-	private int scalFactor = 1;
+	protected int scalFactor = 1;
 	private MouseListener listener = new DragMouseAdapter();
 	private String icon;
 
