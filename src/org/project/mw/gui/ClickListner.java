@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import org.project.mw.util.RotatedIcon;
 import org.project.mw.util.Util;
 
 public class ClickListner implements ActionListener {
@@ -17,6 +18,8 @@ public class ClickListner implements ActionListener {
 		System.out.println("Parent index " + parentComp.getIndex());
 		if (EditorWindow.getEditWindowInstanze().rotEnabled == false) {
 			removeElement(parentComp.getIndex());
+		}else{
+			rotElemt(component);
 		}
 	}
 
@@ -44,4 +47,11 @@ public class ClickListner implements ActionListener {
 
 	}
 
+	public void rotElemt(JButton component) {
+		RotatedIcon ri = new RotatedIcon((component.getIcon()), RotatedIcon.Rotate.UPSIDE_DOWN);
+		component.setIcon( ri );
+		
+		EditorWindow.getEditWindowInstanze().scrollpane.revalidate();
+		EditorWindow.getEditWindowInstanze().scrollpane.repaint();
+	}
 }
