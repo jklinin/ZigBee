@@ -3,7 +3,6 @@ package org.project.mw.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import org.project.mw.util.Util;

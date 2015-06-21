@@ -1,14 +1,11 @@
 package org.project.mw.util;
 
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -163,8 +160,7 @@ public class Util {
 		return  new ImageIcon(resizedImg);
 	}
 	public Image getScaledImage(Image srcImg, int w, int h) {		
-		Toolkit t = Toolkit.getDefaultToolkit();
-		
+
 		BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = resizedImg.createGraphics();
 		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);

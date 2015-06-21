@@ -10,8 +10,6 @@ package org.project.mw.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
@@ -28,8 +26,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.TransferHandler;
-import javax.swing.border.Border;
-
 import org.project.mw.util.Util;
 
 class EditorWindow extends JFrame {
@@ -139,21 +135,7 @@ class EditorWindow extends JFrame {
 		pump.setToolTipText("Pumpe");
 		toolbarRight.add(pump);
 
-		// Faucet on toolbar
-		// JLabel faucet = new JLabel(FILE_IMAGE_PATH +"faucPartImage.png");
-		/*
-		 * faucet.setToolTipText("Wasserhahn");
-		 * faucet.addMouseListener(listener); faucet.setTransferHandler(new
-		 * TransferHandler("icon")); toolbarRight.add(faucet);
-		 */
-		// Sensor on toolbar
-		/*
-		 * JLabel sensor = new JLabel(FILE_IMAGE_PATH +"sensorPartImage.png");
-		 * sensor.addMouseListener(listener); sensor.setTransferHandler(new
-		 * TransferHandler("icon")); sensor.setToolTipText("Sensor");
-		 * toolbarRight.add(sensor);
-		 */
-
+	
 		add(toolbarTop, BorderLayout.NORTH);
 		add(toolbarRight, BorderLayout.EAST);
 		setTitle("Grundriss");
