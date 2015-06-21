@@ -50,7 +50,7 @@ public class MainWindow extends JFrame {
 		// Open button in File menu
 		ImageIcon openMenuIcon = new ImageIcon("refreshSmall.png");
 		JMenuItem openMenuItem = new JMenuItem("Öffnen", openMenuIcon);
-		openMenuItem.setMnemonic(KeyEvent.VK_R);
+		openMenuItem.setMnemonic(KeyEvent.VK_O);
 		openMenuItem.setToolTipText("Öffnet ein gespeichterten Grundriss");
 		openMenuItem.addActionListener(new ActionListener() {
 

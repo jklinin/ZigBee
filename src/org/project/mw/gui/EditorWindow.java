@@ -10,6 +10,7 @@ package org.project.mw.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -27,6 +28,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
@@ -58,7 +62,13 @@ class EditorWindow extends JFrame {
 	private JButton buttonRotation;
 	protected boolean rotEnabled=false;
 	public EditorWindow() {
-		editorWindowInstanze = this;
+		
+		JMenuBar menubar = new JMenuBar();
+		// File menu
+		JMenu file = new JMenu("Datei");
+		file.setMnemonic(KeyEvent.VK_F);
+
+		
 		Mlogger log = new Mlogger();// write to file for the testing
 	
 		addWindowListener(new WindowListener() {
@@ -314,6 +324,19 @@ class EditorWindow extends JFrame {
 		 * } paneModelCentre.update(1, 50, 50);//FIXME scrollpane.revalidate();
 		 * scrollpane.repaint(); }
 		 */
+		ImageIcon saveIcon = new ImageIcon();
+		JMenuItem saveMenuItem = new JMenuItem("Speichern", saveIcon);
+		saveMenuItem.setMnemonic(KeyEvent.VK_S);
+		saveMenuItem.setToolTipText("Speichern ein gespeichterten Grundriss");
+		saveMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			Util.getInstance().fileChooser( editorWindowInstanze, "save");
+
+			}
+		});
+		file.add(saveMenuItem);
 		// ------------ pannel south----------------------------------------
 		pannelSouth.add(buttonMoreZoom);
 		pannelSouth.add(buttonLessZoom);
@@ -324,6 +347,9 @@ class EditorWindow extends JFrame {
 		getContentPane().add(pannelSouth, BorderLayout.SOUTH);
 		scrollpane = new JScrollPane(paneModelCentre);
 		getContentPane().add(scrollpane, BorderLayout.CENTER);
+		menubar.setBackground(new Color(175,238,238));
+		setJMenuBar(menubar);
+		menubar.add(file);
 
 	}
 
