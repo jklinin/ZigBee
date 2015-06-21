@@ -42,65 +42,72 @@ public class ClickListner implements ActionListener {
 
 	}
 
-	public void rotElemt(JButton component, int compIndex, boolean state) {// if
-																			// the
-																			// state
-																			// true
-																			// update
-																			// method
+	// if the state true update method
+	public void rotElemt(JButton component, int compIndex, boolean state) {
 		Rotate roateElemt = Util.getInstance().getElementsArray().get(compIndex).getRotation();
 		RotatedIcon ri;
 		Icon icon;
 		if (state == false) {
+			System.out.println("This is not update (Rotation)");
 			icon = component.getIcon();
-			Util.getInstance().getElementsArray().get(compIndex).setFileIconName(icon.toString());
+			
+			if (icon.toString().contains("@") == false) {
+				Util.getInstance().getElementsArray().get(compIndex).setFileIconName(icon.toString());
+			}
+			System.out.println("Rotated Icon-> " + icon.toString());
 		} else {
+			System.out.println("This is  update (Rotation)");
 			icon = new ImageIcon(Util.getInstance().getElementsArray().get(compIndex).getFileIconName());
-			Util.getInstance().getElementsArray().get(compIndex).setFileIconName(icon.toString());
+			
+			if (icon.toString().contains("@") == false) {
+				Util.getInstance().getElementsArray().get(compIndex).setFileIconName(icon.toString());
+			}
 			ri = new RotatedIcon(icon, roateElemt);
 			component.setIcon(ri);
-			System.out.println("Rotated Icon-> " + ri.toString());
-		//	Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.UP);
+
+			System.out.println("Rotated Icon-> " + icon.toString());
+			// Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.UP);
 			EditorWindow.getEditWindowInstanze().scrollpane.revalidate();
 			EditorWindow.getEditWindowInstanze().scrollpane.repaint();
 			return;
 		}
-		if (roateElemt != null) {
 
+		if (roateElemt != null) {
+			System.out.println("Rotation is not null");
 			switch (roateElemt) {
 			case DOWN:
 				ri = new RotatedIcon(icon, RotatedIcon.Rotate.UP);
 				component.setIcon(ri);
-				System.out.println("Rotated Icon-> " + ri.toString());
+				System.out.println("Rotated Icon-> " + icon.toString());
 				Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.UP);
 				break;
 			case UP:
 				ri = new RotatedIcon(icon, RotatedIcon.Rotate.UPSIDE_DOWN);
 				component.setIcon(ri);
-				System.out.println("Rotated Icon-> " + ri.toString());
+				System.out.println("Rotated Icon-> " + icon.toString());
 				Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.UPSIDE_DOWN);
 				break;
 
 			case UPSIDE_DOWN:
 				ri = new RotatedIcon(icon, RotatedIcon.Rotate.ABOUT_CENTER);
 				component.setIcon(ri);
-				System.out.println("Rotated Icon-> " + ri.toString());
+				System.out.println("Rotated Icon-> " + icon.toString());
 				Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.ABOUT_CENTER);
 				break;
 
 			case ABOUT_CENTER:
 				ri = new RotatedIcon(icon, RotatedIcon.Rotate.DOWN);
 				component.setIcon(ri);
-				System.out.println("Rotated Icon-> " + ri.toString());
+				System.out.println("Rotated Icon-> " + icon.toString());
 				Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.DOWN);
 				break;
 			}
 		} else {
-
+			System.out.println("Rotation is null from array");
 			ri = new RotatedIcon(icon, RotatedIcon.Rotate.DOWN);
 			Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.DOWN);
 			component.setIcon(ri);
-			System.out.println("Rotated Icon-> " + ri.toString());
+			System.out.println("Rotated Icon-> " + icon.toString());
 
 		}
 
