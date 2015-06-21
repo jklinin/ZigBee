@@ -85,7 +85,7 @@ class EditorWindow extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				dispose();
+				editorWindowInstanze.dispose();
 				MainWindow.getInstance().dispose();
 				
 

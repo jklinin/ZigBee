@@ -31,6 +31,18 @@ public class ClickListner implements ActionListener {
 	public void removeElement(int indexComp) {
 		PaneModelCentre paneModelCentre = EditorWindow.getEditWindowInstanze().paneModelCentre;
 		String icon;
+		for (int i = 0; i < paneModelCentre.getLabelArray().size(); i++) {
+			if (paneModelCentre.getLabelArray().get(i).getIcon() != null) {
+				icon = paneModelCentre.getLabelArray().get(i).getIcon().toString();
+				//paneModelCentre.getLabelArray().get(i).setIcon(Util.getInstance().getScaledImage(icon, modelDemension, modelDemension));
+
+				if (icon.contains("@") == false) {
+					Util.getInstance().getElementsArray().get(i).setFileIconName(icon);
+				//	paneModelCentre.getLabelArray().get(i).setIcon(Util.getInstance().getScaledImage(icon, modelDemension, modelDemension));
+				}
+			}
+		}
+		paneModelCentre.update(EditorWindow.getEditWindowInstanze().scalFactor,EditorWindow.getEditWindowInstanze().modelDemension, EditorWindow.getEditWindowInstanze().modelDemension);// FIXME
 		paneModelCentre.getLabelArray().get(indexComp).setIcon(null);
 		int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
 		int scalFactor = EditorWindow.getEditWindowInstanze().scalFactor;
