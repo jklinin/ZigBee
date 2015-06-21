@@ -21,14 +21,14 @@ public class CellPane extends JPanel {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				defaultBackground = getBackground();
-				setBackground(ACTIVE_COLOR);
+				//defaultBackground = getBackground();
+				//setBackground(ACTIVE_COLOR);
 				
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				setBackground(defaultBackground);
+				//setBackground(defaultBackground);
 			}
 		});
 		

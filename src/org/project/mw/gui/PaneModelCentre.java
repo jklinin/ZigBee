@@ -74,7 +74,7 @@ public class PaneModelCentre extends JPanel {
 				label1.setTransferHandler(new TransferHandler("icon"));
 				labelCompArrayTemp.add(label1);
 				Element element = new Element();
-				element.setPosition(row, col); // rotation is 0
+				element.setPosition(row, col); 
 				Util.getInstance().getElementsArray().add(element);
 				cellPane.add(label1, gbc);
 				add(cellPane, gbc);
@@ -145,8 +145,8 @@ public class PaneModelCentre extends JPanel {
 				labelCompArrayTemp.add(labelComp);
 				Element element = new Element();
 				element.setPosition(row, col);
-
-				Util.getInstance().getElementsArray().add(element);
+				//Util.getInstance().removeAllElementsArray();
+			//	Util.getInstance().getElementsArray().add(element);
 				cellPane.add(labelComp, gbc);
 				add(cellPane, gbc);
 				i++;
