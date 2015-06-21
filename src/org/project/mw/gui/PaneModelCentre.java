@@ -74,7 +74,7 @@ public class PaneModelCentre extends JPanel {
 				label1.setTransferHandler(new TransferHandler("icon"));
 				labelCompArrayTemp.add(label1);
 				Element element = new Element();
-				element.setPosition(row, col); 
+				element.setPosition(row, col);
 				Util.getInstance().getElementsArray().add(element);
 				cellPane.add(label1, gbc);
 				add(cellPane, gbc);
@@ -129,12 +129,15 @@ public class PaneModelCentre extends JPanel {
 				JButton labelComp = new JButton();
 				labelComp.setBackground(Color.WHITE);
 				labelComp.addActionListener(onClickListner);
-
-				String icon = Util.getInstance().getElementsArray().get(i).getFileIconName();
-				if (Util.getInstance().getElementsArray().get(i).getRotation() != null) {
-					ClickListner.getClickListnerInstanze().rotElemt(labelComp, i, true);// true for upadate
-				} else {
-					labelComp.setIcon(Util.getInstance().getScaledImage(icon, xDemension, yDemension));
+				if (i < Util.getInstance().getElementsArray().size()) {
+					String icon = Util.getInstance().getElementsArray().get(i).getFileIconName();
+					if (Util.getInstance().getElementsArray().get(i).getRotation() != null) {
+						ClickListner.getClickListnerInstanze().rotElemt(labelComp, i, true);// true
+																							// for
+																							// upadate
+					} else {
+						labelComp.setIcon(Util.getInstance().getScaledImage(icon, xDemension, yDemension));
+					}
 				}
 				labelComp.setMinimumSize(new Dimension(xDemension, yDemension));
 				labelComp.setPreferredSize(new Dimension(xDemension, yDemension));
@@ -143,10 +146,11 @@ public class PaneModelCentre extends JPanel {
 				labelComp.setTransferHandler(new TransferHandler("icon"));
 
 				labelCompArrayTemp.add(labelComp);
-				Element element = new Element();
-				element.setPosition(row, col);
-				//Util.getInstance().removeAllElementsArray();
-			//	Util.getInstance().getElementsArray().add(element);
+				if (i >= Util.getInstance().getElementsArray().size()) {
+					Element element = new Element();
+					element.setPosition(row, col);
+					Util.getInstance().getElementsArray().add(element);
+				}
 				cellPane.add(labelComp, gbc);
 				add(cellPane, gbc);
 				i++;
