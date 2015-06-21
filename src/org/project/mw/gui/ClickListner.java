@@ -15,7 +15,9 @@ public class ClickListner implements ActionListener {
 		CellPane parentComp = (CellPane) component.getParent();
 
 		System.out.println("Parent index " + parentComp.getIndex());
-		removeElement(parentComp.getIndex());
+		if (EditorWindow.getEditWindowInstanze().rotEnabled == false) {
+			removeElement(parentComp.getIndex());
+		}
 	}
 
 	public void removeElement(int indexComp) {
