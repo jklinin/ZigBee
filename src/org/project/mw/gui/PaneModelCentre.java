@@ -130,12 +130,12 @@ public class PaneModelCentre extends JPanel {
 				labelComp.setBackground(Color.WHITE);
 				labelComp.addActionListener(onClickListner);
 
-				// scalation restart
-
-				System.out.println("Rotation from array->" + Util.getInstance().getElementsArray().get(i).getRotation());
 				String icon = Util.getInstance().getElementsArray().get(i).getFileIconName();
-				labelComp.setIcon(Util.getInstance().getScaledImage(icon, xDemension, yDemension));
-
+				if (Util.getInstance().getElementsArray().get(i).getRotation() != null) {
+					ClickListner.getClickListnerInstanze().rotElemt(labelComp, i, true);// true for upadate
+				} else {
+					labelComp.setIcon(Util.getInstance().getScaledImage(icon, xDemension, yDemension));
+				}
 				labelComp.setMinimumSize(new Dimension(xDemension, yDemension));
 				labelComp.setPreferredSize(new Dimension(xDemension, yDemension));
 				labelComp.setMaximumSize(new Dimension(xDemension, yDemension));
