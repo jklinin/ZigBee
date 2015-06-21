@@ -34,6 +34,7 @@ public class ClickListner implements ActionListener {
 		int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
 		int scalFactor = EditorWindow.getEditWindowInstanze().scalFactor;
 		Util.getInstance().getElementsArray().get(indexComp).setFileIconName("");
+		Util.getInstance().getElementsArray().get(indexComp).setRotation(null);
 
 		paneModelCentre.update(scalFactor, modelDemension, modelDemension);// FIXME
 		EditorWindow.getEditWindowInstanze().scrollpane.revalidate();

@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -26,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.TransferHandler;
+
 import org.project.mw.util.Util;
 
 class EditorWindow extends JFrame {
@@ -172,6 +174,7 @@ class EditorWindow extends JFrame {
 				buttonRotation.setIcon(new ImageIcon(FILE_IMAGE_PATH+"Icon/iconRotation.png"));
 				buttonRotation.setMaximumSize(new Dimension(5, 5));
 				buttonRotation.setBackground(new Color(255, 248,151));
+				buttonRotation.setMnemonic(KeyEvent.VK_R);
 				buttonRotation.addActionListener(new ActionListener() {
 				
 					@Override
