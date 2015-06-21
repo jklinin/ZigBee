@@ -37,7 +37,7 @@ class EditorWindow extends JFrame {
 	
 	private JButton buttonMoreZoom;
 	private JButton buttonLessZoom;
-	private PaneModelCentre paneModelCentre = new PaneModelCentre();// GridBagLayout
+	PaneModelCentre paneModelCentre = new PaneModelCentre();// GridBagLayout
 	private static EditorWindow editorWindowInstanze=null;
 	private int modelDemension = 50;
 
