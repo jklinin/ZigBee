@@ -16,6 +16,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,6 +32,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.TransferHandler;
 
+import org.project.mw.threeD.Loader;
+import org.project.mw.util.Mlogger;
 import org.project.mw.util.Util;
 
 class EditorWindow extends JFrame {
@@ -53,6 +59,8 @@ class EditorWindow extends JFrame {
 	protected boolean rotEnabled=false;
 	public EditorWindow() {
 		editorWindowInstanze = this;
+		Mlogger log = new Mlogger();// write to file for the testing
+	
 		addWindowListener(new WindowListener() {
 
 			@Override
@@ -79,6 +87,7 @@ class EditorWindow extends JFrame {
 			public void windowClosing(WindowEvent e) {
 				dispose();
 				MainWindow.getInstance().dispose();
+				
 
 			}
 
@@ -279,8 +288,8 @@ class EditorWindow extends JFrame {
 				MainWindow.getInstance().changeVisiableMainWindow(true);
 				// for testing
 				for (int i = 0; i < Util.getInstance().getElementsArray().size(); i++) {
-					System.out.println("Arrays with elemts contains " + Util.getInstance().getElementsArray().get(i).getFileIconName() + " X " + Util.getInstance().getElementsArray().get(i).getPositionX() + " Y " + Util.getInstance().getElementsArray().get(i).getPositionY());
-					System.out.println("Rotation " + Util.getInstance().getElementsArray().get(i).getRotation());
+					log.log(("Arrays with elemts contains " + Util.getInstance().getElementsArray().get(i).getFileIconName() + " X " + Util.getInstance().getElementsArray().get(i).getPositionX() + " Y " + Util.getInstance().getElementsArray().get(i).getPositionY()));
+					log.log("Rotation " + Util.getInstance().getElementsArray().get(i).getRotation());
 				
 				}
 				System.out.println("Size " + Util.getInstance().getElementsArray().size());
