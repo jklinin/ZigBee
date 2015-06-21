@@ -14,7 +14,7 @@ public class ClickListner implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton component = (JButton) e.getSource();
 		CellPane parentComp = (CellPane) component.getParent();
-		compIndex=parentComp.getIndex();
+		
 		System.out.println("Parent index " + parentComp.getIndex());
 		removeElement(parentComp.getIndex());
 	}
