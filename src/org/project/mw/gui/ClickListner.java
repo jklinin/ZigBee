@@ -1,5 +1,6 @@
 package org.project.mw.gui;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -77,6 +78,11 @@ public class ClickListner implements ActionListener {
 
 		if (roateElemt != null) {
 			System.out.println("Rotation is not null");
+			Image image =Util.getInstance().iconToImage(icon);
+			int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
+			JButton btnTemp =new JButton();
+			btnTemp.setIcon(new ImageIcon(Util.getInstance().getScaledImage(image, modelDemension, modelDemension)));
+			icon=btnTemp.getIcon();
 			switch (roateElemt) {
 			case DOWN:
 				ri = new RotatedIcon(icon, RotatedIcon.Rotate.UP);
