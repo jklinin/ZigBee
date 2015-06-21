@@ -62,7 +62,10 @@ public class ClickListner implements ActionListener {
 			if (icon.toString().contains("@") == false) {
 				Util.getInstance().getElementsArray().get(compIndex).setFileIconName(icon.toString());
 			}
-			ri = new RotatedIcon(icon, roateElemt);
+			int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
+			JButton btnTemp=new JButton();
+			btnTemp.setIcon(Util.getInstance().getScaledImage(icon.toString(), modelDemension, modelDemension));
+			ri = new RotatedIcon(btnTemp.getIcon(), roateElemt);
 			component.setIcon(ri);
 
 			System.out.println("Rotated Icon-> " + icon.toString());
