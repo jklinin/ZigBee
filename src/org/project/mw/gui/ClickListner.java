@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import org.project.mw.util.RotatedIcon;
+import org.project.mw.util.RotatedIcon.Rotate;
 import org.project.mw.util.Util;
 
 public class ClickListner implements ActionListener {
@@ -18,8 +19,8 @@ public class ClickListner implements ActionListener {
 		System.out.println("Parent index " + parentComp.getIndex());
 		if (EditorWindow.getEditWindowInstanze().rotEnabled == false) {
 			removeElement(parentComp.getIndex());
-		}else{
-			rotElemt(component);
+		} else {
+			rotElemt(component, parentComp.getIndex());
 		}
 	}
 
@@ -30,26 +31,49 @@ public class ClickListner implements ActionListener {
 		int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
 		int scalFactor = EditorWindow.getEditWindowInstanze().scalFactor;
 		Util.getInstance().getElementsArray().get(indexComp).setFileIconName("");
-		for (int i = 0; i < paneModelCentre.getLabelArray().size(); i++) {
-			if (paneModelCentre.getLabelArray().get(i).getIcon() != null) {
-				icon = paneModelCentre.getLabelArray().get(i).getIcon().toString();
-				paneModelCentre.getLabelArray().get(i).setIcon(Util.getInstance().getScaledImage(icon, modelDemension, modelDemension));
 
-				if (icon.contains("@") == false) {
-					Util.getInstance().getElementsArray().get(i).setFileIconName(icon);
-					paneModelCentre.getLabelArray().get(i).setIcon(Util.getInstance().getScaledImage(icon, modelDemension, modelDemension));
-				}
-			}
-		}
 		paneModelCentre.update(scalFactor, modelDemension, modelDemension);// FIXME
 		EditorWindow.getEditWindowInstanze().scrollpane.revalidate();
 		EditorWindow.getEditWindowInstanze().scrollpane.repaint();
 
 	}
 
-	public void rotElemt(JButton component) {
-		RotatedIcon ri = new RotatedIcon((component.getIcon()), RotatedIcon.Rotate.UPSIDE_DOWN);
-		component.setIcon( ri );
+	public void rotElemt(JButton component, int compIndex) {
+		String icon = component.getIcon().toString();
+
+		Util.getInstance().getElementsArray().get(compIndex).setFileIconName(icon);
+		Rotate roateElemt = Util.getInstance().getElementsArray().get(compIndex).getRotation();
+		RotatedIcon ri;
+		if (roateElemt != null) {
+			switch (roateElemt) {
+			case DOWN:
+				ri = new RotatedIcon((component.getIcon()), RotatedIcon.Rotate.UP);
+				component.setIcon(ri);
+				System.out.println("Rotated Icon-> " + ri.toString());
+				Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.UP);
+				break;
+			case UP:
+				ri = new RotatedIcon((component.getIcon()), RotatedIcon.Rotate.UPSIDE_DOWN);
+				component.setIcon(ri);
+				System.out.println("Rotated Icon-> " + ri.toString());
+				Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.UPSIDE_DOWN);
+				break;
+
+			case UPSIDE_DOWN:
+				ri = new RotatedIcon((component.getIcon()), RotatedIcon.Rotate.ABOUT_CENTER);
+				component.setIcon(ri);
+				System.out.println("Rotated Icon-> " + ri.toString());
+				Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.ABOUT_CENTER);
+				break;
+			}
+		} else {
+
+			ri = new RotatedIcon((component.getIcon()), RotatedIcon.Rotate.DOWN);
+			Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.DOWN);
+			component.setIcon(ri);
+			System.out.println("Rotated Icon-> " + ri.toString());
+
+		}
 		
 		EditorWindow.getEditWindowInstanze().scrollpane.revalidate();
 		EditorWindow.getEditWindowInstanze().scrollpane.repaint();

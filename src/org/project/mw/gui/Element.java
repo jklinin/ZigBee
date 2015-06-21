@@ -5,6 +5,9 @@ package org.project.mw.gui;
 
 import java.io.Serializable;
 
+import org.project.mw.util.RotatedIcon;
+import org.project.mw.util.RotatedIcon.Rotate;
+
 /**
  * @author yuri
  *
@@ -13,7 +16,7 @@ public class Element implements Serializable{
 	private String fileNameIcon;
 	private int xPosition;
 	private int yPosition;
-	private int rotation=0;
+	private Rotate rotate;
 	
 	public Element() {
 
@@ -43,12 +46,12 @@ public class Element implements Serializable{
 		return fileNameIcon;
 
 	}
-	public void setRotation (int rotation) {
-		this.rotation=rotation;
+	public void setRotation (Rotate rotation) {
+		this.rotate=rotation;
 		
 	}
-	public int getRotation () {
-		return rotation;
+	public Rotate getRotation () {
+		return rotate;
 	}
 
 }
