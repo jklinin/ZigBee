@@ -21,6 +21,7 @@ public class ClickListner implements ActionListener {
 	public void removeElement(int indexComp) {
 		PaneModelCentre paneModelCentre=EditorWindow.getEditWindowInstanze().paneModelCentre;
 		String icon;
+		 paneModelCentre.getLabelArray().remove(indexComp);
 		for (int i = 0; i < paneModelCentre.getLabelArray().size(); i++) {
 			if (paneModelCentre.getLabelArray().get(i).getIcon() != null) {
 				icon = paneModelCentre.getLabelArray().get(i).getIcon().toString();
@@ -32,7 +33,7 @@ public class ClickListner implements ActionListener {
 				}
 			}
 		}
-		paneModelCentre.update(3, 60, 60, -1);// FIXME
+		paneModelCentre.update(1, 50, 50, -1);// FIXME
 		EditorWindow.getEditWindowInstanze().scrollpane.revalidate();
 		EditorWindow.getEditWindowInstanze().scrollpane.repaint();
 

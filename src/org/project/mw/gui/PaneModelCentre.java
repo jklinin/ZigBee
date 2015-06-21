@@ -15,11 +15,6 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-
-
-
-
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -37,21 +32,19 @@ import org.project.mw.util.Util;
  *
  */
 public class PaneModelCentre extends JPanel {
-	private  static PaneModelCentre paneModelCentreInstanze=null;
+	private static PaneModelCentre paneModelCentreInstanze = null;
 	private MouseListener listener = new DragMouseAdapter();
 	private ArrayList<JButton> labelCompArrayTemp = new ArrayList();
 	private Logger log = Logger.getLogger(PaneModelCentre.class.getName());
 	protected int i = 0;
-	private ActionListener onClickListner=new ClickListner();
-		
-
+	private ActionListener onClickListner = new ClickListner();
 
 	public PaneModelCentre() {
 		log.info("PaneModelCentre is created");
 		GridBagLayout gb = new GridBagLayout();
 		setLayout(gb);
 		GridBagConstraints gbc = new GridBagConstraints();
-		
+
 		for (int row = 0; row < 5; row++) {
 			for (int col = 0; col < 5; col++) {
 				gbc.gridx = col;
@@ -97,16 +90,16 @@ public class PaneModelCentre extends JPanel {
 
 	}
 
-	public static PaneModelCentre getPaneModelCentreInstanze(){
-		if(paneModelCentreInstanze==null){
-			paneModelCentreInstanze=new PaneModelCentre();
+	public static PaneModelCentre getPaneModelCentreInstanze() {
+		if (paneModelCentreInstanze == null) {
+			paneModelCentreInstanze = new PaneModelCentre();
 		}
 		return paneModelCentreInstanze;
 	}
-	
+
 	// method for the changing of size
 	// x, y are the dimension of label and dridbag componets
-	public void update(int scalFactor, int xDemension, int yDemension, int compIndex)  {
+	public void update(int scalFactor, int xDemension, int yDemension, int compIndex) {
 		log.info("PaneModelCentre is updated");
 		labelCompArrayTemp = new ArrayList<JButton>();
 		GridBagLayout gb = new GridBagLayout();
@@ -138,39 +131,35 @@ public class PaneModelCentre extends JPanel {
 				}
 
 				cellPane.setBorder(border);
-				
-				JButton labelComp = new JButton();
-			
-					
 
-					
-				
-				
+				JButton labelComp = new JButton();
+
+				labelComp.addActionListener(onClickListner);
+
 				// scalation restart
-				
-					System.out.println("Rotation from array->"+Util.getInstance().getElementsArray().get(i).getRotation());	
-					String icon=Util.getInstance().getElementsArray().get(i).getFileIconName();
-					labelComp.setIcon(Util.getInstance().getScaledImage(icon, xDemension, yDemension));
-				
-			
+
+				System.out.println("Rotation from array->" + Util.getInstance().getElementsArray().get(i).getRotation());
+				String icon = Util.getInstance().getElementsArray().get(i).getFileIconName();
+				labelComp.setIcon(Util.getInstance().getScaledImage(icon, xDemension, yDemension));
+
 				labelComp.setMinimumSize(new Dimension(xDemension, yDemension));
 				labelComp.setPreferredSize(new Dimension(xDemension, yDemension));
 				labelComp.setMaximumSize(new Dimension(xDemension, yDemension));
 				labelComp.addMouseListener(listener);
 				labelComp.setTransferHandler(new TransferHandler("icon"));
-				
+
 				labelCompArrayTemp.add(labelComp);
 				Element element = new Element();
 				element.setPosition(row, col);
-				
+
 				Util.getInstance().getElementsArray().add(element);
 				cellPane.add(labelComp, gbc);
 				add(cellPane, gbc);
-				 i++;
+				i++;
 
 			}
 		}
-		
+
 	}
 
 	public ArrayList<JButton> getLabelArray() {
