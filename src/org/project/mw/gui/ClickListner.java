@@ -51,7 +51,7 @@ public class ClickListner implements ActionListener {
 		if (state == false) {
 			System.out.println("This is not update (Rotation)");
 			icon = component.getIcon();
-			
+
 			if (icon.toString().contains("@") == false) {
 				Util.getInstance().getElementsArray().get(compIndex).setFileIconName(icon.toString());
 			}
@@ -59,12 +59,12 @@ public class ClickListner implements ActionListener {
 		} else {
 			System.out.println("This is  update (Rotation)");
 			icon = new ImageIcon(Util.getInstance().getElementsArray().get(compIndex).getFileIconName());
-			
+
 			if (icon.toString().contains("@") == false) {
 				Util.getInstance().getElementsArray().get(compIndex).setFileIconName(icon.toString());
 			}
 			int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
-			JButton btnTemp=new JButton();
+			JButton btnTemp = new JButton();
 			btnTemp.setIcon(Util.getInstance().getScaledImage(icon.toString(), modelDemension, modelDemension));
 			ri = new RotatedIcon(btnTemp.getIcon(), roateElemt);
 			component.setIcon(ri);
@@ -75,14 +75,14 @@ public class ClickListner implements ActionListener {
 			EditorWindow.getEditWindowInstanze().scrollpane.repaint();
 			return;
 		}
-
+		Image image = Util.getInstance().iconToImage(icon);
+		int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
+		JButton btnTemp = new JButton();
+		btnTemp.setIcon(new ImageIcon(Util.getInstance().getScaledImage(image, modelDemension, modelDemension)));
+		icon = btnTemp.getIcon();
 		if (roateElemt != null) {
 			System.out.println("Rotation is not null");
-			Image image =Util.getInstance().iconToImage(icon);
-			int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
-			JButton btnTemp =new JButton();
-			btnTemp.setIcon(new ImageIcon(Util.getInstance().getScaledImage(image, modelDemension, modelDemension)));
-			icon=btnTemp.getIcon();
+
 			switch (roateElemt) {
 			case DOWN:
 				ri = new RotatedIcon(icon, RotatedIcon.Rotate.UP);
