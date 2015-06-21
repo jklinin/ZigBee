@@ -72,6 +72,7 @@ public class PaneModelCentre extends JPanel {
 
 				cellPane.setBorder(border);
 				JButton label1 = new JButton();
+				label1.setBackground(Color.WHITE);
 				label1.addActionListener(onClickListner);
 				label1.setMinimumSize(new Dimension(50, 50));
 				label1.setPreferredSize(new Dimension(50, 50));
@@ -133,7 +134,7 @@ public class PaneModelCentre extends JPanel {
 				cellPane.setBorder(border);
 
 				JButton labelComp = new JButton();
-
+				labelComp.setBackground(Color.WHITE);
 				labelComp.addActionListener(onClickListner);
 
 				// scalation restart

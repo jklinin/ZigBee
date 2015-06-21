@@ -21,7 +21,9 @@ public class ClickListner implements ActionListener {
 	public void removeElement(int indexComp) {
 		PaneModelCentre paneModelCentre=EditorWindow.getEditWindowInstanze().paneModelCentre;
 		String icon;
-		 paneModelCentre.getLabelArray().remove(indexComp);
+		 paneModelCentre.getLabelArray().get(indexComp).setIcon(null);;
+		// Util.getInstance().getElementsArray().remove(indexComp);
+		 Util.getInstance().getElementsArray().get(indexComp).setFileIconName("");
 		for (int i = 0; i < paneModelCentre.getLabelArray().size(); i++) {
 			if (paneModelCentre.getLabelArray().get(i).getIcon() != null) {
 				icon = paneModelCentre.getLabelArray().get(i).getIcon().toString();
