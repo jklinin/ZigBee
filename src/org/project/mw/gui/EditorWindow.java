@@ -193,25 +193,7 @@ class EditorWindow extends JFrame {
 				
 					@Override
 					public void actionPerformed(ActionEvent e) {
-					/*
-				 * modelDemension = modelDemension + 5; for (int i = 0; i <
-				 * paneModelCentre.getLabelArray().size(); i++) { if
-				 * (paneModelCentre.getLabelArray().get(i).getIcon() != null) {
-				 * icon =
-				 * paneModelCentre.getLabelArray().get(i).getIcon().toString();
-				 * paneModelCentre
-				 * .getLabelArray().get(i).setIcon(Util.getInstance
-				 * ().getScaledImage(icon, modelDemension, modelDemension));
-				 * 
-				 * if (icon.contains("@") == false) {
-				 * Util.getInstance().getElementsArray
-				 * ().get(i).setFileIconName(icon);
-				 * paneModelCentre.getLabelArray
-				 * ().get(i).setIcon(Util.getInstance().getScaledImage(icon,
-				 * modelDemension, modelDemension)); } } }
-				 * paneModelCentre.update(scalFactor, modelDemension,
-				 * modelDemension);// FIXME
-				 */
+				
 						if (rotEnabled == true) {
 					buttonRotation.setBackground(new Color(255, 248,151));
 					rotEnabled = false;

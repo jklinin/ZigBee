@@ -3,8 +3,8 @@ package org.project.mw.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 
 import org.project.mw.util.Util;
 
@@ -14,6 +14,7 @@ public class ClickListner implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton component = (JButton) e.getSource();
 		CellPane parentComp = (CellPane) component.getParent();
+		compIndex=parentComp.getIndex();
 		System.out.println("Parent index " + parentComp.getIndex());
 		removeElement(parentComp.getIndex());
 	}

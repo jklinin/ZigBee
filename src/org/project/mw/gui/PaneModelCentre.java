@@ -2,21 +2,14 @@ package org.project.mw.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 import javax.swing.border.Border;
@@ -34,7 +27,7 @@ import org.project.mw.util.Util;
 public class PaneModelCentre extends JPanel {
 	private static PaneModelCentre paneModelCentreInstanze = null;
 	private MouseListener listener = new DragMouseAdapter();
-	private ArrayList<JButton> labelCompArrayTemp = new ArrayList();
+	protected ArrayList<JButton> labelCompArrayTemp = new ArrayList();
 	private Logger log = Logger.getLogger(PaneModelCentre.class.getName());
 	protected int i = 0;
 	private ActionListener onClickListner = new ClickListner();

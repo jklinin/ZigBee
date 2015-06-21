@@ -140,7 +140,7 @@ public class Util {
 	}
 
 	public void removeAllElementsArray() {
-		elementsArray.removeAll(elementsArray);
+		elementsArray=new ArrayList<Element>();
 
 	}
 

@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import org.project.mw.threeD.DisplayManager;
+
 import org.project.mw.util.Util;
 
 public class MainWindow extends JFrame {
@@ -39,9 +39,9 @@ public class MainWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Util.getInstance().removeAllElementsArray();
-				//EditorWindow nmd = new EditorWindow(" ");
+				EditorWindow.getEditWindowInstanze().dispose();
 				EditorWindow.getEditWindowInstanze().setVisible(true);
-//				nmd.setVisible(true);
+		
 				mainWindowInstance.setVisible(false);
 				
 			}
