@@ -122,6 +122,7 @@ class EditorWindow extends JFrame {
 		JLabel lPart = new JLabel(new ImageIcon(FILE_IMAGE_PATH + "LPartImage_50.png"));
 		lPart.setToolTipText("L-Bauteil");
 		lPart.addMouseListener(listener);
+		lPart.setTransferHandler(new TransferHandler("icon"));
 		toolbarRight.add(lPart);
 
 		// Straight-Part on toolbar
