@@ -162,7 +162,7 @@ class EditorWindow extends JFrame {
 						}
 					}
 				}
-				paneModelCentre.update(scalFactor, modelDemension, modelDemension, -1);// FIXME
+				paneModelCentre.update(scalFactor, modelDemension, modelDemension);// FIXME
 				
 
 			}
@@ -203,7 +203,7 @@ class EditorWindow extends JFrame {
 						}
 
 					}
-					paneModelCentre.update(scalFactor, modelDemension, modelDemension, -1); // FIXME
+					paneModelCentre.update(scalFactor, modelDemension, modelDemension); // FIXME
 					scrollpane.revalidate();
 					scrollpane.repaint();
 					modelDemension = modelDemension - 5;
@@ -228,7 +228,7 @@ class EditorWindow extends JFrame {
 
 					}
 					scalFactor++;
-					paneModelCentre.update(scalFactor, modelDemension, modelDemension, -1);// FIXME
+					paneModelCentre.update(scalFactor, modelDemension, modelDemension);// FIXME
 					scrollpane.revalidate();
 					scrollpane.repaint();
 
@@ -256,7 +256,7 @@ class EditorWindow extends JFrame {
 
 					}
 					scalFactor--;
-					paneModelCentre.update(scalFactor, modelDemension, modelDemension, -1); // FIXME
+					paneModelCentre.update(scalFactor, modelDemension, modelDemension); // FIXME
 					scrollpane.revalidate();
 					scrollpane.repaint();
 					
@@ -277,8 +277,10 @@ class EditorWindow extends JFrame {
 				// for testing
 				for (int i = 0; i < Util.getInstance().getElementsArray().size(); i++) {
 					System.out.println("Arrays with elemts contains " + Util.getInstance().getElementsArray().get(i).getFileIconName() + " X " + Util.getInstance().getElementsArray().get(i).getPositionX() + " Y " + Util.getInstance().getElementsArray().get(i).getPositionY());
-				System.out.println("Rotation "+Util.getInstance().getElementsArray().get(i).getRotation());
+					System.out.println("Rotation " + Util.getInstance().getElementsArray().get(i).getRotation());
+				
 				}
+				System.out.println("Size " + Util.getInstance().getElementsArray().size());
 
 			}
 		});
@@ -313,10 +315,6 @@ class EditorWindow extends JFrame {
 
 	}
 
-	public void updateWindow() {
-		editorWindowInstanze.revalidate();
-		editorWindowInstanze.repaint();
-	}
 
 	public  static EditorWindow getEditWindowInstanze() {
 		if (editorWindowInstanze == null) {
@@ -325,23 +323,6 @@ class EditorWindow extends JFrame {
 		return editorWindowInstanze;
 	}
 
-	public void rotate(int compIndex) {
-//		modelDemension = modelDemension + 5;
-		for (int i = 0; i < paneModelCentre.getLabelArray().size(); i++) {
-			if (paneModelCentre.getLabelArray().get(i).getIcon() != null) {
-				icon = paneModelCentre.getLabelArray().get(i).getIcon().toString();
-				paneModelCentre.getLabelArray().get(i).setIcon(Util.getInstance().getScaledImage(icon, modelDemension, modelDemension));
 
-				if (icon.contains("@") == false) {
-					Util.getInstance().getElementsArray().get(i).setFileIconName(icon);
-					paneModelCentre.getLabelArray().get(i).setIcon(Util.getInstance().getScaledImage(icon, modelDemension, modelDemension));
-				}
-			}
-		}
-		paneModelCentre.update(scalFactor, modelDemension, modelDemension, compIndex);// FIXME
-		scrollpane.revalidate();
-		scrollpane.repaint();
-
-	}
 
 }

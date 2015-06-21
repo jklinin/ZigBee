@@ -93,7 +93,7 @@ public class PaneModelCentre extends JPanel {
 
 	// method for the changing of size
 	// x, y are the dimension of label and dridbag componets
-	public void update(int scalFactor, int xDemension, int yDemension, int compIndex) {
+	public void update(int scalFactor, int xDemension, int yDemension) {
 		log.info("PaneModelCentre is updated");
 		labelCompArrayTemp = new ArrayList<JButton>();
 		GridBagLayout gb = new GridBagLayout();
