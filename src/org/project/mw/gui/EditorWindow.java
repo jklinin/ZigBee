@@ -160,6 +160,7 @@ public class EditorWindow extends JFrame {
 				menuItemClose.setText("Beenden");
 				menuItemClose.setIcon(null);
 				menuItemClose.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_MASK));
+				menuItemClose.addActionListener(e->closeItemMenuActionPerformed(e));
 				menuFile.add(menuItemClose);
 			}
 			menuBar.add(menuFile);
@@ -249,7 +250,13 @@ public class EditorWindow extends JFrame {
 		}
 	}
 
+
 	// ======== OnClicListners ========
+	private void closeItemMenuActionPerformed(ActionEvent e) {
+		editWindowInstanze.dispose();
+		Util.getInstance().disposeElemtsArray();
+	}
+
 	private void goTo3DModelActionPerformed(ActionEvent e) {
 		new DisplayManager().start();
 		// for testing
