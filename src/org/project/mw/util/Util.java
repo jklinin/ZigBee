@@ -174,6 +174,9 @@ public class Util {
 		g2.dispose();
 		return resizedImg;
 	}
+	public void disposeElemtsArray(){
+		elementsArray=new ArrayList<Element>();
+	}
 
 	public Image iconToImage(Icon icon) {
 		if (icon instanceof ImageIcon) {

@@ -38,7 +38,7 @@ public class Edit extends JFrame {
 	private JScrollPane scrollpane;
 	private JPanel panelEast;
 	private String icon;
-	private final String FILE_IMAGE_PATH="./Resources/Images/";
+	private final String FILE_IMAGE_PATH = "./Resources/Images/";
 	private MouseListener listener;
 
 	public Edit() {
@@ -61,9 +61,12 @@ public class Edit extends JFrame {
 		buttonRemove = new JButton();
 		separatorThree = new JSeparator();
 		paneModelCentre = new PaneModelCentre();
-		scrollpane=new JScrollPane(paneModelCentre);
+		paneModelCentre.setMinimumSize(new Dimension(50, 50));
+		scrollpane = new JScrollPane(paneModelCentre);
+		scrollpane.setMinimumSize(new Dimension(150, 150));
+		modelDemension=50;
 		listener = new DragMouseAdapter();
-		panelEast=new JPanel();
+		panelEast = new JPanel();
 		// ======== this ========
 		setIconImage(((ImageIcon) UIManager.getIcon("FileView.computerIcon")).getImage());
 		setMinimumSize(new Dimension(1133, 652));
@@ -81,7 +84,7 @@ public class Edit extends JFrame {
 				newItemMenu.setText("Neu");
 				newItemMenu.setIcon(UIManager.getIcon("FileView.fileIcon"));
 				newItemMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_MASK));
-				newItemMenu.addActionListener(e->newItemMenuActionPerformed(e));
+				newItemMenu.addActionListener(e -> newItemMenuActionPerformed(e));
 				// newItemMenu
 				menuFile.add(newItemMenu);
 				menuFile.add(separator);
@@ -130,7 +133,7 @@ public class Edit extends JFrame {
 			menuBar.add(menuHelp);
 		}
 		setJMenuBar(menuBar);
-// ======== toolbar Right ========
+		// ======== toolbar Right ========
 		JToolBar toolbarRight = new JToolBar(JToolBar.VERTICAL);
 		// T-Part on toolbar
 		JLabel tPart = new JLabel(new ImageIcon(FILE_IMAGE_PATH + "tPartImage_50.png"));
@@ -158,7 +161,7 @@ public class Edit extends JFrame {
 		pump.addMouseListener(listener);
 		pump.setTransferHandler(new TransferHandler("icon"));
 		pump.setToolTipText("Pumpe");
-		toolbarRight.add(pump);		
+		toolbarRight.add(pump);
 		panelEast.add(toolbarRight);
 
 		// ======== pane ========
@@ -189,18 +192,20 @@ public class Edit extends JFrame {
 			panelSouth.add(buttonRemove);
 			editWindowContentPane.add(panelSouth, BorderLayout.SOUTH);
 			editWindowContentPane.add(panelEast, BorderLayout.EAST);
-			editWindowContentPane.add(scrollpane,BorderLayout.CENTER);
-		
+			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
+
 			pack();
 			setLocationRelativeTo(null);
 		}
 	}
 
 	private void newItemMenuActionPerformed(ActionEvent e) {
-		if(editWindowInstanze!=null){
-			editWindowInstanze=null;
-			
-			editWindowInstanze=new Edit();
+		if (editWindowInstanze != null) {
+			editWindowInstanze.setVisible(false);
+			editWindowInstanze.dispose();
+
+			editWindowInstanze = new Edit();
+			editWindowInstanze.setVisible(true);
 		}
 	}
 
@@ -224,7 +229,7 @@ public class Edit extends JFrame {
 			paneModelCentre.update(scalFactor, modelDemension, modelDemension); // FIXME
 			scrollpane.revalidate();
 			scrollpane.repaint();
-			
+
 		}
 
 	}
@@ -247,8 +252,6 @@ public class Edit extends JFrame {
 		}
 	}
 
-
-
 	private void moreZoomActionPerformend(ActionEvent e) {
 		modelDemension = modelDemension + 5;
 		for (int i = 0; i < paneModelCentre.getLabelArray().size(); i++) {
@@ -262,6 +265,8 @@ public class Edit extends JFrame {
 				}
 			}
 		}
+		scrollpane.revalidate();
+		scrollpane.repaint();
 		paneModelCentre.update(scalFactor, modelDemension, modelDemension);// FIXME
 
 	}
@@ -291,6 +296,11 @@ public class Edit extends JFrame {
 
 	private void saveDefaultItemMenuActionPerformed(ActionEvent e) {
 
+	}
+
+	private void ScrlolPaneUpdate() {
+		scrollpane.revalidate();
+		scrollpane.repaint();
 	}
 
 	public static void main(String[] args) {
