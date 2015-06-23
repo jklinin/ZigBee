@@ -194,7 +194,7 @@ public class MainWindow extends JFrame {
 		mainWindowInstance.setVisible(vis);
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		//Für die 3D-Demo nachfolgenden Code auskommentieren
 		//new DisplayManager().start();
 		SwingUtilities.invokeLater(new Runnable() {
@@ -205,5 +205,5 @@ public class MainWindow extends JFrame {
 			}
 		});
 	}
-
+*/
 }
