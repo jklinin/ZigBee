@@ -14,17 +14,18 @@ import org.project.mw.util.Util;
 
 public class ClickListner implements ActionListener {
 	public static ClickListner clickListnerInstanze = null;
-
+	//rotation
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton component = (JButton) e.getSource();
 		CellPane parentComp = (CellPane) component.getParent();
 
 		System.out.println("Parent index " + parentComp.getIndex());
-		if (EditorWindow.getEditWindowInstanze().rotEnabled == false) {
-			removeElement(parentComp.getIndex());
-		} else {
+		if (EditorWindow.rotEnbledKey == true) {
+		
 			rotElemt(component, parentComp.getIndex(), false);
+		} if(EditorWindow.removeEnbKey==true){
+			removeElement(parentComp.getIndex());
 		}
 	}
 
