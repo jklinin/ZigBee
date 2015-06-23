@@ -5,6 +5,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import org.project.mw.threeD.DisplayManager;
+import org.project.mw.util.Mlogger;
 import org.project.mw.util.Util;
 
 /**
@@ -14,6 +16,7 @@ import org.project.mw.util.Util;
  */
 
 public class EditorWindow extends JFrame {
+	private Mlogger log = new Mlogger();// for logging write inf ito output.txt
 	private static EditorWindow editWindowInstanze = null;
 	private JMenuBar menuBar;
 	private JMenu menuFile;
@@ -34,11 +37,12 @@ public class EditorWindow extends JFrame {
 	int modelDemension;
 	protected PaneModelCentre paneModelCentre;
 	int scalFactor = 1;
-	JScrollPane scrollpane;
+	protected JScrollPane scrollpane;
 	private JPanel panelEast;
 	private String icon;
 	private final String FILE_IMAGE_PATH = "./Resources/Images/";
 	private MouseListener listener;
+	private JButton buttonOk;
 	protected static boolean rotEnbledKey = false;
 	public static boolean removeEnbKey = false;
 
@@ -67,52 +71,47 @@ public class EditorWindow extends JFrame {
 		modelDemension = 50;
 		listener = new DragMouseAdapter();
 		panelEast = new JPanel();
+		buttonOk = new JButton();
 		// ======== this ========
 		setIconImage(((ImageIcon) UIManager.getIcon("FileView.computerIcon")).getImage());
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		manager.addKeyEventDispatcher(new MyDispatcher());
 		addWindowListener(new WindowListener() {
-			
+
 			@Override
 			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void windowClosing(WindowEvent e) {
 				editWindowInstanze.dispose();
-				
+
 			}
-			
+
 			@Override
 			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		setMinimumSize(new Dimension(1133, 652));
@@ -210,7 +209,7 @@ public class EditorWindow extends JFrame {
 		toolbarRight.add(pump);
 		panelEast.add(toolbarRight);
 
-		// ======== pane ========
+		// ======== panes ========
 		{
 
 			// ---- button MoreZoom ----
@@ -236,6 +235,11 @@ public class EditorWindow extends JFrame {
 			buttonRemove.addActionListener(e -> removeColsRowsActionPerformend(e));
 			buttonRemove.setMnemonic(KeyEvent.VK_LEFT);
 			panelSouth.add(buttonRemove);
+			// ---- button GoTO 3D Model----
+			buttonOk.setText("Fertig");
+			buttonOk.setBackground(new Color(135, 206, 235));
+			buttonOk.addActionListener(e -> goTo3DModelActionPerformed(e));
+			panelSouth.add(buttonOk);
 			editWindowContentPane.add(panelSouth, BorderLayout.SOUTH);
 			editWindowContentPane.add(panelEast, BorderLayout.EAST);
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
@@ -243,6 +247,19 @@ public class EditorWindow extends JFrame {
 			pack();
 			setLocationRelativeTo(null);
 		}
+	}
+
+	// ======== OnClicListners ========
+	private void goTo3DModelActionPerformed(ActionEvent e) {
+		new DisplayManager().start();
+		// for testing
+		for (int i = 0; i < Util.getInstance().getElementsArray().size(); i++) {
+			log.log(("Arrays with elemts contains " + Util.getInstance().getElementsArray().get(i).getFileIconName() + " X " + Util.getInstance().getElementsArray().get(i).getPositionX() + " Y " + Util.getInstance().getElementsArray().get(i).getPositionY()));
+			log.log("Rotation " + Util.getInstance().getElementsArray().get(i).getRotation());
+
+		}
+		System.out.println("Size " + Util.getInstance().getElementsArray().size());
+
 	}
 
 	private void newItemMenuActionPerformed(ActionEvent e) {
@@ -349,6 +366,9 @@ public class EditorWindow extends JFrame {
 		scrollpane.repaint();
 	}
 
+	// ======== End of OnClickListners ========
+	
+	
 	public static void main(String[] args) {
 		// Für die 3D-Demo nachfolgenden Code auskommentieren
 		// new DisplayManager().start();
