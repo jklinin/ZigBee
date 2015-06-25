@@ -32,6 +32,7 @@ public class PaneModelCentre extends JPanel {
 	protected int i = 0;
 	private ActionListener onClickListner = new ClickListner();
 
+
 	public PaneModelCentre() {
 		log.info("PaneModelCentre is created");
 		GridBagLayout gb = new GridBagLayout();
@@ -43,7 +44,7 @@ public class PaneModelCentre extends JPanel {
 				gbc.gridx = col;
 				gbc.gridy = row;
 
-				CellPane cellPane = new CellPane(50, 50, row, col, i);// new
+			//	CellPane cellPane = new CellPane(50, 50, row, col, i);// new
 																		// cell
 																		// with
 																		// index
@@ -63,7 +64,7 @@ public class PaneModelCentre extends JPanel {
 					}
 				}
 
-				cellPane.setBorder(border);
+			//	cellPane.setBorder(border);
 				JButton label1 = new JButton();
 				label1.setBackground(Color.WHITE);
 				label1.addActionListener(onClickListner);
@@ -76,8 +77,8 @@ public class PaneModelCentre extends JPanel {
 				Element element = new Element();
 				element.setPosition(row, col);
 				Util.getInstance().getElementsArray().add(element);
-				cellPane.add(label1, gbc);
-				add(cellPane, gbc);
+				//cellPane.add(label1, gbc);
+				add(label1, gbc);
 				i++;
 			}
 		}
