@@ -71,7 +71,7 @@ public class PaneModelCentre implements ActionListener {
 			gc.gridy = y;
 			//button[i].setMinimumSize(new Dimension(100, 100));
 			btnArrayListTemp.get(i).setPreferredSize(new Dimension(dimenisionX, dimenisionY));
-
+			btnArrayListTemp.get(i).setTransferHandler(new TransferHandler("icon"));
 			gb.setConstraints(btnArrayListTemp.get(i), gc);
 			container.add(btnArrayListTemp.get(i));
 			map.put(new Point(x, y), btnArrayListTemp.get(i));
