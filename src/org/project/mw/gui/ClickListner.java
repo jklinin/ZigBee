@@ -17,9 +17,11 @@ public class ClickListner implements ActionListener {
 	//rotation
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		JButton component = (JButton) e.getSource();
+		System.out.println("Location "+PaneModelCentre.map.get(1,0));
 		CellPane parentComp = (CellPane) component.getParent();
-
+	
 		System.out.println("Parent index " + parentComp.getIndex());
 		if (EditorWindow.rotEnbledKey == true) {
 		

@@ -35,7 +35,7 @@ public class EditorWindow extends JFrame {
 	private AbstractButton buttonAdd;
 	private AbstractButton buttonRemove;
 	int modelDemension;
-	protected PaneModelCentre paneModelCentre;
+	protected PaneModelCentre paneModelCentre= new PaneModelCentre();
 	int scalFactor = 1;
 	protected JScrollPane scrollpane;
 	private JPanel panelEast;
@@ -65,9 +65,10 @@ public class EditorWindow extends JFrame {
 		buttonAdd = new JButton();
 		buttonRemove = new JButton();
 		paneModelCentre = new PaneModelCentre();
-		paneModelCentre.setMinimumSize(new Dimension(50, 50));
-		scrollpane = new JScrollPane(paneModelCentre);
-		scrollpane.setMinimumSize(new Dimension(150, 150));
+		
+		//paneModelCentre.setMinimumSize(new Dimension(50, 50));
+		scrollpane = new JScrollPane(paneModelCentre.getContainer());
+		//scrollpane.setMinimumSize(new Dimension(150, 150));
 		modelDemension = 50;
 		listener = new DragMouseAdapter();
 		panelEast = new JPanel();
@@ -138,14 +139,14 @@ public class EditorWindow extends JFrame {
 				openItemMenu.setText("\u00d6ffnen...");
 				openItemMenu.setIcon(UIManager.getIcon("FileChooser.upFolderIcon"));
 				openItemMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_MASK));
-				openItemMenu.addActionListener(e -> openItemMenuActionPerformed(e));
+			//	openItemMenu.addActionListener(e -> openItemMenuActionPerformed(e));
 				menuFile.add(openItemMenu);
 
 				// ---- saveDefaultItemMenu ----
 				saveDefaultItemMenu.setText("Speichern");
 				saveDefaultItemMenu.setIcon(UIManager.getIcon("FileView.floppyDriveIcon"));
 				saveDefaultItemMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
-				saveDefaultItemMenu.addActionListener(e -> saveDefaultItemMenuActionPerformed(e));
+				//saveDefaultItemMenu.addActionListener(e -> saveDefaultItemMenuActionPerformed(e));
 				menuFile.add(saveDefaultItemMenu);
 
 				// ---- menuItem Save ----
@@ -215,25 +216,25 @@ public class EditorWindow extends JFrame {
 
 			// ---- button MoreZoom ----
 			buttonMoreZoom.setText("+");
-			buttonMoreZoom.addActionListener(e -> moreZoomActionPerformend(e));
+	//		buttonMoreZoom.addActionListener(e -> moreZoomActionPerformend(e));
 			buttonMoreZoom.setMnemonic(KeyEvent.VK_UP);
 			panelSouth.add(buttonMoreZoom);
 
 			// ---- button Less Zoom ----
 			buttonLessZoom.setText("-");
-			buttonLessZoom.addActionListener(e -> lessZoomActionPerformed(e));
+			//buttonLessZoom.addActionListener(e -> lessZoomActionPerformed(e));
 			buttonLessZoom.setMnemonic(KeyEvent.VK_DOWN);
 			panelSouth.add(buttonLessZoom);
 
 			// ---- button add new col and rows ----
 			buttonAdd.setText("Hinzufügen");
 			buttonAdd.setMnemonic(KeyEvent.VK_RIGHT);
-			buttonAdd.addActionListener(e -> addColsRowsActionPerformend(e));
+		//	buttonAdd.addActionListener(e -> addColsRowsActionPerformend(e));
 			panelSouth.add(buttonAdd);
 
 			// ---- button remove cols and rows----
 			buttonRemove.setText("Löschen");
-			buttonRemove.addActionListener(e -> removeColsRowsActionPerformend(e));
+			//buttonRemove.addActionListener(e -> removeColsRowsActionPerformend(e));
 			buttonRemove.setMnemonic(KeyEvent.VK_LEFT);
 			panelSouth.add(buttonRemove);
 			// ---- button GoTO 3D Model----
@@ -244,7 +245,7 @@ public class EditorWindow extends JFrame {
 			editWindowContentPane.add(panelSouth, BorderLayout.SOUTH);
 			editWindowContentPane.add(panelEast, BorderLayout.EAST);
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
-
+		//	editWindowContentPane.add(paneModelCentre.getContainer(), BorderLayout.CENTER);
 			pack();
 			setLocationRelativeTo(null);
 		}
@@ -284,7 +285,7 @@ public class EditorWindow extends JFrame {
 
 	}
 
-	private void removeColsRowsActionPerformend(ActionEvent e) {
+	/*private void removeColsRowsActionPerformend(ActionEvent e) {
 		if (scalFactor > 1) {
 			for (int i = 0; i < paneModelCentre.getLabelArray().size(); i++) {
 				if (paneModelCentre.getLabelArray().get(i).getIcon() != null) {
@@ -371,7 +372,7 @@ public class EditorWindow extends JFrame {
 	private void ScrlolPaneUpdate() {
 		scrollpane.revalidate();
 		scrollpane.repaint();
-	}
+	}*/
 
 	// ======== End of OnClickListners ========
 	
