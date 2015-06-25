@@ -9,6 +9,7 @@ import org.project.mw.threeD.DisplayManager;
 import org.project.mw.util.Mlogger;
 import org.project.mw.util.Util;
 
+
 /**
  * @author test test
  * 
@@ -35,7 +36,7 @@ public class EditorWindow extends JFrame {
 	private AbstractButton buttonAdd;
 	private AbstractButton buttonRemove;
 	int modelDemension;
-	protected PaneModelCentre paneModelCentre= new PaneModelCentre();
+	protected PaneModelCentre paneModelCentre;
 	int scalFactor = 1;
 	protected JScrollPane scrollpane;
 	private JPanel panelEast;
@@ -45,6 +46,8 @@ public class EditorWindow extends JFrame {
 	private JButton buttonOk;
 	protected static boolean rotEnbledKey = false;
 	public static boolean removeEnbKey = false;
+	Container editWindowContentPane;
+	int n=40;
 
 	public EditorWindow() {
 
@@ -64,12 +67,10 @@ public class EditorWindow extends JFrame {
 		buttonLessZoom = new JButton();
 		buttonAdd = new JButton();
 		buttonRemove = new JButton();
-		paneModelCentre = new PaneModelCentre();
-		
-		//paneModelCentre.setMinimumSize(new Dimension(50, 50));
-		scrollpane = new JScrollPane(paneModelCentre.getContainer());
-		//scrollpane.setMinimumSize(new Dimension(150, 150));
 		modelDemension = 50;
+		paneModelCentre = new PaneModelCentre(n, modelDemension, modelDemension);
+		scrollpane = new JScrollPane(paneModelCentre.getContainer());
+		scrollpane.setMinimumSize(new Dimension(150, 150));
 		listener = new DragMouseAdapter();
 		panelEast = new JPanel();
 		buttonOk = new JButton();
@@ -116,7 +117,7 @@ public class EditorWindow extends JFrame {
 			}
 		});
 		setMinimumSize(new Dimension(1133, 652));
-		Container editWindowContentPane = getContentPane();
+		 editWindowContentPane = getContentPane();
 		editWindowContentPane.setLayout(new BorderLayout());
 
 		// ======== menuBar ========
@@ -216,25 +217,25 @@ public class EditorWindow extends JFrame {
 
 			// ---- button MoreZoom ----
 			buttonMoreZoom.setText("+");
-	//		buttonMoreZoom.addActionListener(e -> moreZoomActionPerformend(e));
+			buttonMoreZoom.addActionListener(e -> moreZoomActionPerformend(e));
 			buttonMoreZoom.setMnemonic(KeyEvent.VK_UP);
 			panelSouth.add(buttonMoreZoom);
 
 			// ---- button Less Zoom ----
 			buttonLessZoom.setText("-");
-			//buttonLessZoom.addActionListener(e -> lessZoomActionPerformed(e));
+			buttonLessZoom.addActionListener(e -> lessZoomActionPerformed(e));
 			buttonLessZoom.setMnemonic(KeyEvent.VK_DOWN);
 			panelSouth.add(buttonLessZoom);
 
 			// ---- button add new col and rows ----
 			buttonAdd.setText("Hinzufügen");
 			buttonAdd.setMnemonic(KeyEvent.VK_RIGHT);
-		//	buttonAdd.addActionListener(e -> addColsRowsActionPerformend(e));
+			buttonAdd.addActionListener(e -> addColsRowsActionPerformend(e));
 			panelSouth.add(buttonAdd);
 
 			// ---- button remove cols and rows----
 			buttonRemove.setText("Löschen");
-			//buttonRemove.addActionListener(e -> removeColsRowsActionPerformend(e));
+			buttonRemove.addActionListener(e -> removeColsRowsActionPerformend(e));
 			buttonRemove.setMnemonic(KeyEvent.VK_LEFT);
 			panelSouth.add(buttonRemove);
 			// ---- button GoTO 3D Model----
@@ -285,82 +286,67 @@ public class EditorWindow extends JFrame {
 
 	}
 
-	/*private void removeColsRowsActionPerformend(ActionEvent e) {
+	private void removeColsRowsActionPerformend(ActionEvent e) {
 		if (scalFactor > 1) {
-			for (int i = 0; i < paneModelCentre.getLabelArray().size(); i++) {
-				if (paneModelCentre.getLabelArray().get(i).getIcon() != null) {
-					icon = paneModelCentre.getLabelArray().get(i).getIcon().toString();
-					if (icon.contains("@") == false) {
-						Util.getInstance().getElementsArray().get(i).setFileIconName(icon);
-					}
-				}
+			scalFactor=scalFactor-2;
+			editWindowContentPane.remove(scrollpane);
+			paneModelCentre = new PaneModelCentre(n* scalFactor, modelDemension, modelDemension);// FIXME
+			paneModelCentre.getContainer().repaint();
+			scrollpane = new JScrollPane(paneModelCentre.getContainer());
+			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
 
-			}
-			scalFactor--;
-			paneModelCentre.update(scalFactor, modelDemension, modelDemension); // FIXME
-			scrollpane.revalidate();
-			scrollpane.repaint();
+			pack();
+			
+		
 
 		}
 
 	}
 
 	private void addColsRowsActionPerformend(ActionEvent e) {
-		if (scalFactor < 4) {
-			for (int i = 0; i < paneModelCentre.getLabelArray().size(); i++) {
-				if (paneModelCentre.getLabelArray().get(i).getIcon() != null) {
-					icon = paneModelCentre.getLabelArray().get(i).getIcon().toString();
-					if (icon.contains("@") == false) {
-						Util.getInstance().getElementsArray().get(i).setFileIconName(icon);
-					}
-				}
+	
+		if (scalFactor < 10) {
+			scalFactor = scalFactor + 2;
+			editWindowContentPane.remove(scrollpane);
+			paneModelCentre = new PaneModelCentre(n* scalFactor, modelDemension, modelDemension);// FIXME
+			paneModelCentre.getContainer().repaint();
+			scrollpane = new JScrollPane(paneModelCentre.getContainer());
+			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
 
-			}
-			scalFactor++;
-			paneModelCentre.update(scalFactor, modelDemension, modelDemension);// FIXME
-			scrollpane.revalidate();
-			scrollpane.repaint();
+			pack();
+
 		}
+		
 	}
 
 	private void moreZoomActionPerformend(ActionEvent e) {
 		modelDemension = modelDemension + 5;
-		for (int i = 0; i < paneModelCentre.getLabelArray().size(); i++) {
-			if (paneModelCentre.getLabelArray().get(i).getIcon() != null) {
-				String icon = paneModelCentre.getLabelArray().get(i).getIcon().toString();
-				paneModelCentre.getLabelArray().get(i).setIcon(Util.getInstance().getScaledImage(icon, modelDemension, modelDemension));
+		
+		editWindowContentPane.remove(scrollpane);
+		paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension);// FIXME
+		paneModelCentre.getContainer().repaint();
+		scrollpane = new JScrollPane(paneModelCentre.getContainer());
+		editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
 
-				if (icon.contains("@") == false) {
-					Util.getInstance().getElementsArray().get(i).setFileIconName(icon);
-					paneModelCentre.getLabelArray().get(i).setIcon(Util.getInstance().getScaledImage(icon, modelDemension, modelDemension));
-				}
-			}
-		}
-		scrollpane.revalidate();
-		scrollpane.repaint();
-		paneModelCentre.update(scalFactor, modelDemension, modelDemension);// FIXME
+		pack();
+
 
 	}
 
 	private void lessZoomActionPerformed(ActionEvent e) {
 		if (modelDemension != 50) {
-			for (int i = 0; i < paneModelCentre.getLabelArray().size(); i++) {
-				if (paneModelCentre.getLabelArray().get(i).getIcon() != null) {
-					String icon = paneModelCentre.getLabelArray().get(i).getIcon().toString();
-					if (icon.contains("@") == false) {
-						Util.getInstance().getElementsArray().get(i).setFileIconName(icon);
-					}
-				}
+			editWindowContentPane.remove(scrollpane);
+			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension);// FIXME
+			paneModelCentre.getContainer().repaint();
+			scrollpane = new JScrollPane(paneModelCentre.getContainer());
+			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
 
-			}
-			paneModelCentre.update(scalFactor, modelDemension, modelDemension);
-			scrollpane.revalidate();
-			scrollpane.repaint();
+			pack();
 			modelDemension = modelDemension - 5;
 		}
 
 	}
-
+/*
 	private void openItemMenuActionPerformed(ActionEvent e) {
 		Util.getInstance().fileChooser(editWindowInstanze, "open");
 	}
