@@ -5,9 +5,9 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import org.project.mw.threeD.DisplayManager;
+
 import org.project.mw.util.Mlogger;
-import org.project.mw.util.Util;
+
 
 /**
  * @author Yuri Kalinin
@@ -263,15 +263,8 @@ public class EditorWindow extends JFrame {
 	}
 
 	private void goTo3DModelActionPerformed(ActionEvent e) {
-//		new DisplayManager().start();
-//		// for testing
-//		for (int i = 0; i < Util.getInstance().getElementsArray().size(); i++) {
-//			log.log(("Arrays with elemts contains " + Util.getInstance().getElementsArray().get(i).getFileIconName() + " X " + Util.getInstance().getElementsArray().get(i).getPositionX() + " Y " + Util.getInstance().getElementsArray().get(i).getPositionY()));
-//			log.log("Rotation " + Util.getInstance().getElementsArray().get(i).getRotation());
-//
-//		}
-//		System.out.println("Size " + Util.getInstance().getElementsArray().size());
-
+		// new DisplayManager().start();
+		editWindowInstanze.setVisible(false);
 	}
 
 	private void newItemMenuActionPerformed(ActionEvent e) {
@@ -325,25 +318,22 @@ public class EditorWindow extends JFrame {
 		modelDemension = modelDemension + 5;
 		editWindowContentPane.remove(scrollpane);
 		paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
-	
-	
 		scrollpane = new JScrollPane(paneModelCentre.getContainer());
 		editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
-
 		pack();
 
 	}
 
 	private void lessZoomActionPerformed(ActionEvent e) {
 		if (modelDemension != 50) {
+			modelDemension = modelDemension - 5;
 			editWindowContentPane.remove(scrollpane);
 			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 			paneModelCentre.getContainer().repaint();
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
-
 			pack();
-			modelDemension = modelDemension - 5;
+			
 		}
 
 	}
