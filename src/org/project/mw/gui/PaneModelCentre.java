@@ -55,7 +55,6 @@ public class PaneModelCentre implements ActionListener {
 		for (int i = 0; i < size; i++) {
 			btnArrayListTemp.add(new JButton());
 			btnArrayListTemp.get(i).setBackground(Color.WHITE);
-		
 
 			if (size > 100) {
 				if (i % 20 == 0) {
@@ -77,9 +76,12 @@ public class PaneModelCentre implements ActionListener {
 			gb.setConstraints(btnArrayListTemp.get(i), gc);
 			container.add(btnArrayListTemp.get(i));
 			if (restore == true) {
+
 				button = Util.getInstance().map.get(new Point(x, y));
-				if (button.getIcon() != null) {
-					btnArrayListTemp.get(i).setIcon(new ImageIcon(button.getIcon().toString()));
+				if (button != null) {
+					if (button.getIcon() != null) {
+						btnArrayListTemp.get(i).setIcon(new ImageIcon(button.getIcon().toString()));
+					}
 				}
 				Util.getInstance().map.replace(new Point(x, y), btnArrayListTemp.get(i));
 			} else {
@@ -89,7 +91,7 @@ public class PaneModelCentre implements ActionListener {
 			}
 			btnArrayListTemp.get(i).setActionCommand(x + "," + y);
 			btnArrayListTemp.get(i).addActionListener(this);
-			
+
 		}
 		container.repaint();
 

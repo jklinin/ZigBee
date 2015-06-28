@@ -292,7 +292,7 @@ public class EditorWindow extends JFrame {
 		if (scalFactor > 1) {
 			scalFactor = scalFactor - 2;
 			editWindowContentPane.remove(scrollpane);
-			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension);
+			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 			paneModelCentre.getContainer().repaint();
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
@@ -308,7 +308,7 @@ public class EditorWindow extends JFrame {
 		if (scalFactor < 10) {
 			scalFactor = scalFactor + 2;
 			editWindowContentPane.remove(scrollpane);
-			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension);// FIXME
+			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);// FIXME
 			paneModelCentre.getContainer().repaint();
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
@@ -320,17 +320,7 @@ public class EditorWindow extends JFrame {
 	}
 
 	private void moreZoomActionPerformend(ActionEvent e) {
-		/*modelDemension = modelDemension + 5;
-		paneModelCentre.saveElementTemp();
-		for (int i = 0; i < paneModelCentre.btnArrayListTemp.size(); i++) {
-			if (paneModelCentre.btnArrayListTemp.get(i).getIcon() != null) {
-				System.out.println("Icon Name->" + paneModelCentre.btnArrayListTemp.get(i).getIcon().toString());
-				Element element = new Element();
-				element.setFileIconName(paneModelCentre.btnArrayListTemp.get(i).getIcon().toString());
-			//	element.set
-			//	Util.getInstance().getElementsArray().add( element);
-			}
-		}*/
+		
 		modelDemension = modelDemension + 5;
 		editWindowContentPane.remove(scrollpane);
 		paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
@@ -346,7 +336,7 @@ public class EditorWindow extends JFrame {
 	private void lessZoomActionPerformed(ActionEvent e) {
 		if (modelDemension != 50) {
 			editWindowContentPane.remove(scrollpane);
-			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension);// FIXME
+			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);// FIXME
 			paneModelCentre.getContainer().repaint();
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
