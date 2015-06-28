@@ -85,7 +85,7 @@ public class PaneModelCentre implements ActionListener {
 						Image image = Util.getInstance().iconToImage(button.getIcon());
 
 						btnArrayListTemp.get(i).setIcon(new ImageIcon(Util.getInstance().getScaledImage(image, dimenisionX, dimenisionY)));
-						
+
 					}
 				}
 
@@ -107,7 +107,7 @@ public class PaneModelCentre implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		// resetAll();
-		//System.out.println(btnArrayListTemp.get(0).getIcon().toString());
+		// System.out.println(btnArrayListTemp.get(0).getIcon().toString());
 		JButton source = (JButton) evt.getSource();
 		String command = source.getActionCommand();
 		System.out.println(command);
@@ -115,11 +115,10 @@ public class PaneModelCentre implements ActionListener {
 		int x = Integer.parseInt(arr[0]);
 		int y = Integer.parseInt(arr[1]);
 		JButton button = Util.getInstance().map.get(new Point(x, y));
-		 System.out.println("****" + button.getName());
+		System.out.println("****" + button.getName());
 		// TODO impement action
 
-		if (EditorWindow.removeEnbKey == true) {// TODO just testing change
-													// this to true
+		if (EditorWindow.removeEnbKey == true) {
 			Util.getInstance().map.remove(new Point(x, y));
 			EditorWindow editorWindowInstanze = EditorWindow.getEditWindowInstanze();
 			editorWindowInstanze.editWindowContentPane.remove(editorWindowInstanze.scrollpane);
@@ -131,12 +130,13 @@ public class PaneModelCentre implements ActionListener {
 			editorWindowInstanze.pack();
 
 		}
-		
-		if (EditorWindow.rotEnbledKey == false) {
-			
-			Util.getInstance().rotElemt(new Point(x,y));
 
-	}}
+		if (EditorWindow.rotEnbledKey == true) {
+
+			Util.getInstance().rotElemt(new Point(x, y));
+
+		}
+	}
 
 	public JPanel getContainer() {
 		return container;

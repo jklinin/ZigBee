@@ -10,8 +10,8 @@ import org.project.mw.util.Mlogger;
 import org.project.mw.util.Util;
 
 /**
- * @author test test
- * 
+ * @author Yuri Kalinin
+ * MainWindow for 2D constaraction
  * 
  */
 
@@ -39,7 +39,7 @@ public class EditorWindow extends JFrame {
 	int scalFactor = 1;
 	public JScrollPane scrollpane;
 	private JPanel panelEast;
-	private String icon;
+
 	private final String FILE_IMAGE_PATH = "./Resources/Images/";
 	private MouseListener listener;
 	private JButton buttonOk;
@@ -77,6 +77,7 @@ public class EditorWindow extends JFrame {
 		setIconImage(((ImageIcon) UIManager.getIcon("FileView.computerIcon")).getImage());
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		manager.addKeyEventDispatcher(new MyDispatcher());
+		
 		addWindowListener(new WindowListener() {
 
 			@Override
@@ -101,7 +102,7 @@ public class EditorWindow extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				editWindowInstanze.dispose();
+			dispose();
 
 			}
 
@@ -308,7 +309,7 @@ public class EditorWindow extends JFrame {
 		if (scalFactor < 10) {
 			scalFactor = scalFactor + 2;
 			editWindowContentPane.remove(scrollpane);
-			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);// FIXME
+			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 			paneModelCentre.getContainer().repaint();
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
@@ -336,7 +337,7 @@ public class EditorWindow extends JFrame {
 	private void lessZoomActionPerformed(ActionEvent e) {
 		if (modelDemension != 50) {
 			editWindowContentPane.remove(scrollpane);
-			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);// FIXME
+			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 			paneModelCentre.getContainer().repaint();
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
