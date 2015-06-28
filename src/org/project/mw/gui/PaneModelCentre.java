@@ -2,7 +2,7 @@ package org.project.mw.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,21 +10,15 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
+
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.TransferHandler;
-import javax.swing.border.Border;
-import javax.swing.border.MatteBorder;
-
-import java.util.Map;
 
 import org.project.mw.util.Util;
 
@@ -106,8 +100,7 @@ public class PaneModelCentre implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		// resetAll();
-		// System.out.println(btnArrayListTemp.get(0).getIcon().toString());
+
 		JButton source = (JButton) evt.getSource();
 		String command = source.getActionCommand();
 		System.out.println(command);

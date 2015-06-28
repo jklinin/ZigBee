@@ -22,10 +22,10 @@ import org.project.mw.gui.EditorWindow;
 import org.project.mw.util.RotatedIcon;
 
 /**
- * @author yuri
+ * @author Yuri Kalinin
  *
  */
-public class Util {
+public class Util  {
 	private static Util utilInstance = null;
 	private String FILENAME_DEFAULT = "./test.zb";
 	public Map<Point, JButton> map;
@@ -107,7 +107,10 @@ public class Util {
 	 * 
 	 * }
 	 */
-	public Map<Point, JButton> getElementsArray() {
+	/**
+	 * @return Map of all elements on GridBagLayout
+	 */
+	public Map<Point, JButton> getElementsCollection() {
 		return map;
 
 	}
@@ -168,8 +171,7 @@ public class Util {
 		JButton button = map.get(locationElement);
 		String roateElemt = button.getName();
 		icon = button.getIcon();
-		System.out.println("Rotated Icon-> " + icon.toString());
-		System.out.println("-> " + button.getName());
+		
 
 		int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
 		JButton btnTemp = new JButton();
@@ -180,8 +182,7 @@ public class Util {
 		button.setIcon(new ImageIcon(Util.getInstance().getScaledImage(image, modelDemension, modelDemension)));
 		icon = button.getIcon();
 		if (roateElemt != null) {
-			System.out.println("Rotation is not null");
-
+			
 			switch (roateElemt) {
 			case "DOWN":
 				ri = new RotatedIcon(icon, RotatedIcon.Rotate.UP);

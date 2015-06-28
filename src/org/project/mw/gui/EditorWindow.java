@@ -258,8 +258,8 @@ public class EditorWindow extends JFrame {
 
 	// ======== OnClicListners ========
 	private void closeItemMenuActionPerformed(ActionEvent e) {
-		//editWindowInstanze.dispose();
-		//Util.getInstance().disposeElemtsArray();
+		editWindowInstanze.dispose();
+		
 	}
 
 	private void goTo3DModelActionPerformed(ActionEvent e) {

@@ -1,12 +1,9 @@
 package org.project.mw.gui;
 
-import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Logger;
 
-import javax.swing.ActionMap;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
@@ -17,14 +14,9 @@ class DragMouseAdapter extends MouseAdapter {
 	public void mousePressed(MouseEvent e) {
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			log.info("Mouse Linke Taste");
-			JComponent c = (JComponent) e.getSource();		
+			JComponent c = (JComponent) e.getSource();
 			TransferHandler handler = c.getTransferHandler();
 			handler.exportAsDrag(c, e, TransferHandler.COPY);
-			
-			
-		
-		
-		
 
 		}
 	}
