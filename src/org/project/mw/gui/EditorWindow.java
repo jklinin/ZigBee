@@ -5,8 +5,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-
 import org.project.mw.util.Mlogger;
+import org.project.mw.util.Util;
 
 
 /**
@@ -17,7 +17,7 @@ import org.project.mw.util.Mlogger;
 
 public class EditorWindow extends JFrame {
 	private Mlogger log = new Mlogger();// for logging write inf ito output.txt
-	private static EditorWindow editWindowInstanze = null;
+	private static EditorWindow editWindowInstance = null;
 	private JMenuBar menuBar;
 	private JMenu menuFile;
 	private JMenuItem newItemMenu;
@@ -140,8 +140,7 @@ public class EditorWindow extends JFrame {
 				openItemMenu.setText("\u00d6ffnen...");
 				openItemMenu.setIcon(UIManager.getIcon("FileChooser.upFolderIcon"));
 				openItemMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_MASK));
-				// openItemMenu.addActionListener(e ->
-				// openItemMenuActionPerformed(e));
+				 openItemMenu.addActionListener(e -> openItemMenuActionPerformed(e));
 				menuFile.add(openItemMenu);
 
 				// ---- saveDefaultItemMenu ----
@@ -258,27 +257,27 @@ public class EditorWindow extends JFrame {
 
 	// ======== OnClicListners ========
 	private void closeItemMenuActionPerformed(ActionEvent e) {
-		editWindowInstanze.dispose();
+		editWindowInstance.dispose();
 		
 	}
 
 	private void goTo3DModelActionPerformed(ActionEvent e) {
 		// new DisplayManager().start();
-		editWindowInstanze.setVisible(false);
+		editWindowInstance.setVisible(false);
 	}
 
 	private void newItemMenuActionPerformed(ActionEvent e) {
-		if (editWindowInstanze != null) {
-			editWindowInstanze.setVisible(false);
-			editWindowInstanze.dispose();
+		if (editWindowInstance != null) {
+			editWindowInstance.setVisible(false);
+			editWindowInstance.dispose();
 
-			editWindowInstanze = new EditorWindow();
-			editWindowInstanze.setVisible(true);
+			editWindowInstance = new EditorWindow();
+			editWindowInstance.setVisible(true);
 		}
 	}
 
 	private void saveFileItemActionPerformed(ActionEvent e) {
-		//Util.getInstance().fileChooser(editWindowInstanze, "save");
+		Util.getInstance().fileChooser(editWindowInstance, "save");
 
 	}
 
@@ -338,17 +337,16 @@ public class EditorWindow extends JFrame {
 
 	}
 
-	/*
-	 * private void openItemMenuActionPerformed(ActionEvent e) {
-	 * Util.getInstance().fileChooser(editWindowInstanze, "open"); }
-	 * 
-	 * private void saveDefaultItemMenuActionPerformed(ActionEvent e) {
-	 * 
-	 * }
-	 * 
-	 * private void ScrlolPaneUpdate() { scrollpane.revalidate();
-	 * scrollpane.repaint(); }
-	 */
+	
+	private void openItemMenuActionPerformed(ActionEvent e) {
+		Util.getInstance().fileChooser(editWindowInstance, "open");
+	}
+
+	private void saveDefaultItemMenuActionPerformed(ActionEvent e) {
+
+	}
+	 
+	 
 
 	// ======== End of OnClickListners ========
 
@@ -367,9 +365,9 @@ public class EditorWindow extends JFrame {
 	}
 
 	public static EditorWindow getEditWindowInstanze() {
-		if (editWindowInstanze == null) {
-			editWindowInstanze = new EditorWindow();
+		if (editWindowInstance == null) {
+			editWindowInstance = new EditorWindow();
 		}
-		return editWindowInstanze;
+		return editWindowInstance;
 	}
 }

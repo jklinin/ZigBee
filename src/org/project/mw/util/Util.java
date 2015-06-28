@@ -1,5 +1,6 @@
 package org.project.mw.util;
 
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -9,23 +10,30 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 import org.project.mw.gui.EditorWindow;
-
 import org.project.mw.util.RotatedIcon;
 
 /**
  * @author Yuri Kalinin
  *
  */
-public class Util  {
+public class Util implements Serializable{
 	private static Util utilInstance = null;
 	private String FILENAME_DEFAULT = "./test.zb";
 	public Map<Point, JButton> map;
@@ -41,72 +49,98 @@ public class Util  {
 		return utilInstance;
 	}
 
-	/*
-	 * public void saveModel() { if (new File(FILENAME_DEFAULT).exists()) { new
-	 * File(FILENAME_DEFAULT).delete(); } try { FileOutputStream fileoutput =
-	 * new FileOutputStream(FILENAME_DEFAULT); ObjectOutputStream outputstream =
-	 * new ObjectOutputStream(fileoutput);
-	 * outputstream.writeObject(elementsArray);
-	 * System.out.println("file saved"); outputstream.flush();
-	 * outputstream.close(); } catch (Exception e) { e.printStackTrace(); } }
-	 */
+	public void saveModel() {
+		if (new File(FILENAME_DEFAULT).exists()) {
+			new File(FILENAME_DEFAULT).delete();
+		}
+		try {
+			FileOutputStream fileoutput = new FileOutputStream(FILENAME_DEFAULT);
+			ObjectOutputStream outputstream = new ObjectOutputStream(fileoutput);
+			outputstream.writeObject(map);
+			System.out.println("file saved");
+			outputstream.flush();
+			outputstream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Two methondes for the saving files and opening file with the using the
 	 * file choosers
 	 */
-	/*
-	 * public void openModel() {
-	 * 
-	 * try { ObjectInputStream input = new ObjectInputStream(new
-	 * FileInputStream(FILENAME_DEFAULT)); elementsArray = (ArrayList<Element>)
-	 * input.readObject(); input.close(); } catch (Exception e) {
-	 * JOptionPane.showMessageDialog(null, Util.getInstance().FILENAME_DEFAULT +
-	 * " Konnte nicht gefunden werden.", "Warnung",
-	 * JOptionPane.WARNING_MESSAGE); e.printStackTrace(); } }
-	 */
-	/*
-	 * protected void saveModel(String fileName) { if (new
-	 * File(FILENAME_DEFAULT).exists()) { new File(FILENAME_DEFAULT).delete(); }
-	 * try { FileOutputStream fileoutput = new FileOutputStream(fileName);
-	 * ObjectOutputStream outputstream = new ObjectOutputStream(fileoutput);
-	 * outputstream.writeObject(elementsArray);
-	 * 
-	 * outputstream.flush(); outputstream.close(); } catch (Exception e) {
-	 * e.printStackTrace(); } }
-	 */
 
-	/*
-	 * private void openModel(String fileName) {
-	 * 
-	 * try { ObjectInputStream input = new ObjectInputStream(new
-	 * FileInputStream(fileName)); elementsArray = (ArrayList<Element>)
-	 * input.readObject(); input.close(); } catch (Exception e) {
-	 * JOptionPane.showMessageDialog(null, fileName +
-	 * " Konnte nicht gefunden werden.", "Warnung",
-	 * JOptionPane.WARNING_MESSAGE); e.printStackTrace(); } }
-	 */
+	public void openModel() {
 
-	/*
-	 * public void fileChooser(Component component, String option) {
-	 * JFileChooser fc = new JFileChooser(); fc.addChoosableFileFilter(new
-	 * FileFilter() {
-	 * 
-	 * @Override public String getDescription() { return "ZigBee"; }
-	 * 
-	 * @Override public boolean accept(File f) { return
-	 * f.getName().endsWith(".zb"); } }); if (option.equals("save")) {
-	 * fc.showSaveDialog(component); if (fc.getSelectedFile() != null) {
-	 * saveModel(fc.getSelectedFile().getAbsolutePath() + ".zb");
-	 * System.out.println(fc.getSelectedFile().getAbsolutePath()); } } else if
-	 * (option.equals("open")) { fc.showOpenDialog(component); if
-	 * (fc.getSelectedFile() != null) {
-	 * openModel(fc.getSelectedFile().getAbsolutePath());
-	 * 
-	 * } }
-	 * 
-	 * }
-	 */
+		try {
+			ObjectInputStream input = new ObjectInputStream(new FileInputStream(FILENAME_DEFAULT));
+			map = (Map<Point, JButton>) input.readObject();
+			input.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, Util.getInstance().FILENAME_DEFAULT + " Konnte nicht gefunden werden.", "Warnung", JOptionPane.WARNING_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+
+	protected void saveModel(String fileName) {
+		if (new File(FILENAME_DEFAULT).exists()) {
+			new File(FILENAME_DEFAULT).delete();
+		}
+		try {
+			FileOutputStream fileoutput = new FileOutputStream(fileName);
+			ObjectOutputStream outputstream = new ObjectOutputStream(fileoutput);
+			outputstream.writeObject(map);
+
+			outputstream.flush();
+			outputstream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void openModel(String fileName) {
+
+		try {
+			ObjectInputStream input = new ObjectInputStream(new FileInputStream(fileName));
+			map = (Map<Point, JButton>) input.readObject();
+			input.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, fileName + " Konnte nicht gefunden werden.", "Warnung", JOptionPane.WARNING_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+
+	public void fileChooser(Component component, String option) {
+		JFileChooser fc = new JFileChooser();
+		fc.addChoosableFileFilter(new FileFilter() {
+
+			@Override
+			public String getDescription() {
+				return "ZigBee";
+			}
+
+			@Override
+			public boolean accept(File f) {
+				return f.getName().endsWith(".zb");
+			}
+
+		});
+		if (option.equals("save")) {
+			fc.showSaveDialog(component);
+			if (fc.getSelectedFile() != null) {
+				saveModel(fc.getSelectedFile().getAbsolutePath() + ".zb");
+				System.out.println(fc.getSelectedFile().getAbsolutePath());
+			}
+		} else if (option.equals("open")) {
+			fc.showOpenDialog(component);
+			if (fc.getSelectedFile() != null) {
+				openModel(fc.getSelectedFile().getAbsolutePath());
+
+			}
+		}
+
+	}
+
 	/**
 	 * @return Map of all elements on GridBagLayout
 	 */
@@ -171,7 +205,6 @@ public class Util  {
 		JButton button = map.get(locationElement);
 		String roateElemt = button.getName();
 		icon = button.getIcon();
-		
 
 		int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
 		JButton btnTemp = new JButton();
@@ -182,7 +215,7 @@ public class Util  {
 		button.setIcon(new ImageIcon(Util.getInstance().getScaledImage(image, modelDemension, modelDemension)));
 		icon = button.getIcon();
 		if (roateElemt != null) {
-			
+
 			switch (roateElemt) {
 			case "DOWN":
 				ri = new RotatedIcon(icon, RotatedIcon.Rotate.UP);
