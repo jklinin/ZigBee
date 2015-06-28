@@ -8,10 +8,8 @@ import javax.swing.*;
 import org.project.mw.util.Mlogger;
 import org.project.mw.util.Util;
 
-
 /**
- * @author Yuri Kalinin
- * MainWindow for 2D constaraction
+ * @author Yuri Kalinin MainWindow for 2D constaraction
  * 
  */
 
@@ -47,9 +45,10 @@ public class EditorWindow extends JFrame {
 	public static boolean removeEnbKey = false;
 	Container editWindowContentPane;
 	int n = 40;
+	boolean newWindow;
 
-	public EditorWindow() {
-
+	public EditorWindow(boolean newWindow) {
+		this.newWindow = newWindow;
 		menuBar = new JMenuBar();
 		menuFile = new JMenu();
 		newItemMenu = new JMenuItem();
@@ -77,12 +76,24 @@ public class EditorWindow extends JFrame {
 		setIconImage(((ImageIcon) UIManager.getIcon("FileView.computerIcon")).getImage());
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		manager.addKeyEventDispatcher(new MyDispatcher());
-		
+
 		addWindowListener(new WindowListener() {
 
 			@Override
 			public void windowOpened(WindowEvent e) {
+				if (Util.getInstance().checkFileDefaultSaving() == true & newWindow == false) {
+					Util.getInstance().openModel();
+					editWindowContentPane.remove(scrollpane);
+					paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
+					paneModelCentre.getContainer().repaint();
+					scrollpane = new JScrollPane(paneModelCentre.getContainer());
+					editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
 
+					pack();
+
+				}else{
+					Util.getInstance().revomeDefaultSaveFile();
+				}
 			}
 
 			@Override
@@ -133,7 +144,7 @@ public class EditorWindow extends JFrame {
 				newItemMenu.setIcon(UIManager.getIcon("FileView.fileIcon"));
 				newItemMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_MASK));
 				newItemMenu.addActionListener(e -> newItemMenuActionPerformed(e));
-				// newItemMenu
+
 				menuFile.add(newItemMenu);
 				menuFile.add(separator);
 
@@ -141,14 +152,14 @@ public class EditorWindow extends JFrame {
 				openItemMenu.setText("\u00d6ffnen...");
 				openItemMenu.setIcon(UIManager.getIcon("FileChooser.upFolderIcon"));
 				openItemMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_MASK));
-				 openItemMenu.addActionListener(e -> openItemMenuActionPerformed(e));
+				openItemMenu.addActionListener(e -> openItemMenuActionPerformed(e));
 				menuFile.add(openItemMenu);
 
 				// ---- saveDefaultItemMenu ----
 				saveDefaultItemMenu.setText("Speichern");
 				saveDefaultItemMenu.setIcon(UIManager.getIcon("FileView.floppyDriveIcon"));
 				saveDefaultItemMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
-				 saveDefaultItemMenu.addActionListener(e -> saveDefaultItemMenuActionPerformed(e));
+				saveDefaultItemMenu.addActionListener(e -> saveDefaultItemMenuActionPerformed(e));
 				menuFile.add(saveDefaultItemMenu);
 
 				// ---- menuItem Save ----
@@ -258,7 +269,7 @@ public class EditorWindow extends JFrame {
 	// ======== OnClicListners ========
 	private void closeItemMenuActionPerformed(ActionEvent e) {
 		editWindowInstance.dispose();
-		
+
 	}
 
 	private void goTo3DModelActionPerformed(ActionEvent e) {
@@ -271,7 +282,7 @@ public class EditorWindow extends JFrame {
 			editWindowInstance.setVisible(false);
 			editWindowInstance.dispose();
 
-			editWindowInstance = new EditorWindow();
+			editWindowInstance = new EditorWindow(true);
 			editWindowInstance.setVisible(true);
 		}
 	}
@@ -305,7 +316,7 @@ public class EditorWindow extends JFrame {
 			paneModelCentre.getContainer().repaint();
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
-			
+
 			pack();
 
 		}
@@ -313,7 +324,7 @@ public class EditorWindow extends JFrame {
 	}
 
 	private void moreZoomActionPerformend(ActionEvent e) {
-		
+
 		modelDemension = modelDemension + 5;
 		editWindowContentPane.remove(scrollpane);
 		paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
@@ -332,16 +343,16 @@ public class EditorWindow extends JFrame {
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
 			pack();
-			
+
 		}
 
 	}
 
 	// action listner open model
 	private void openItemMenuActionPerformed(ActionEvent e) {
-		// file chooser dialog and reading of file into Util.map 
+		// file chooser dialog and reading of file into Util.map
 		Util.getInstance().fileChooser(editWindowInstance, "open");
-		
+
 		editWindowContentPane.remove(scrollpane);
 		paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 		paneModelCentre.getContainer().repaint();
@@ -355,8 +366,6 @@ public class EditorWindow extends JFrame {
 		Util.getInstance().saveModel();
 
 	}
-	 
-	 
 
 	// ======== End of OnClickListners ========
 
@@ -376,7 +385,7 @@ public class EditorWindow extends JFrame {
 
 	public static EditorWindow getEditWindowInstanze() {
 		if (editWindowInstance == null) {
-			editWindowInstance = new EditorWindow();
+			editWindowInstance = new EditorWindow(false);
 		}
 		return editWindowInstance;
 	}

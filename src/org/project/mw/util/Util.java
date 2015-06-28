@@ -26,6 +26,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
+
 import org.project.mw.gui.EditorWindow;
 import org.project.mw.util.RotatedIcon;
 
@@ -35,7 +36,7 @@ import org.project.mw.util.RotatedIcon;
  */
 public class Util implements Serializable{
 	private static Util utilInstance = null;
-	private String FILENAME_DEFAULT = "./test.zb";
+	private String FILENAME_DEFAULT = "./dafaultModel.zb";
 	public Map<Point, JButton> map;
 
 	Util() {
@@ -66,7 +67,7 @@ public class Util implements Serializable{
 	}
 
 	/**
-	 * Two methondes for the saving files and opening file with the using the
+	 * Two method for the saving files and opening file with the using the
 	 * file choosers
 	 */
 
@@ -81,7 +82,25 @@ public class Util implements Serializable{
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * @return true if the default file exists 
+	 */
+	public boolean checkFileDefaultSaving(){
+		if (new File(FILENAME_DEFAULT).exists()) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+	/**
+	 * remove default file
+	 */
+	public void revomeDefaultSaveFile() {
+		if(new File(FILENAME_DEFAULT).exists()){
+			new File(FILENAME_DEFAULT).delete();
+		}
+		
+	}
 	protected void saveModel(String fileName) {
 		if (new File(fileName).exists()) {
 			new File(fileName).delete();
@@ -256,5 +275,7 @@ public class Util implements Serializable{
 		EditorWindow.getEditWindowInstanze().scrollpane.revalidate();
 		EditorWindow.getEditWindowInstanze().scrollpane.repaint();
 	}
+
+
 
 }
