@@ -26,8 +26,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
+import org.project.mw.gui.EditorWindow;
 import org.project.mw.gui.Element;
-
+import org.project.mw.gui.PaneModelCentre;
+import org.project.mw.util.RotatedIcon.Rotate;
+import org.project.mw.util.RotatedIcon;
+import org.project.mw.util.RotatedIcon.Rotate;
 /**
  * @author yuri
  *
@@ -167,4 +171,74 @@ public class Util {
 			return image;
 		}
 	}
+	
+	
+	public void rotElemt(Point locationElement) {
+		//Rotate roateElemt = Util.getInstance().getElementsArray().get(compIndex).getRotation();
+		RotatedIcon ri;
+		Icon icon;
+		JButton button=map.get(locationElement);
+		String roateElemt=button.getName();
+		icon=button.getIcon();
+			System.out.println("Rotated Icon-> " + icon.toString());
+			System.out.println("-> " + button.getName());
+		
+			int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
+			JButton btnTemp = new JButton();
+			btnTemp.setIcon(Util.getInstance().getScaledImage(icon.toString(), modelDemension, modelDemension));
+		//	ri = new RotatedIcon(btnTemp.getIcon(), roateElemt);
+			//component.setIcon(ri);
+
+		
+			// Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.UP);
+		
+		Image image = Util.getInstance().iconToImage(icon);
+	
+	
+		button.setIcon(new ImageIcon(Util.getInstance().getScaledImage(image, modelDemension, modelDemension)));
+		icon = button.getIcon();
+		if (roateElemt != null) {
+			System.out.println("Rotation is not null");
+
+			switch (roateElemt) {
+			case "DOWN":
+				ri = new RotatedIcon(icon, RotatedIcon.Rotate.UP);
+				button.setIcon(ri);
+				System.out.println("Rotated Icon-> " + icon.toString());
+				button.setName("UP");
+				break;
+			case "UP":
+				ri = new RotatedIcon(icon, RotatedIcon.Rotate.UPSIDE_DOWN);
+				button.setIcon(ri);
+				System.out.println("Rotated Icon-> " + icon.toString());
+				//Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.UPSIDE_DOWN);
+				break;
+
+			case "UPSIDE_DOWN":
+				ri = new RotatedIcon(icon, RotatedIcon.Rotate.ABOUT_CENTER);
+				button.setIcon(ri);
+				System.out.println("Rotated Icon-> " + icon.toString());
+				//Util.getInstance().getElementsArray().get(compIndex).setRotation(RotatedIcon.Rotate.ABOUT_CENTER);
+				break;
+
+			case "ABOUT_CENTER":
+				ri = new RotatedIcon(icon, RotatedIcon.Rotate.DOWN);
+				button.setIcon(ri);
+				System.out.println("Rotated Icon-> " + icon.toString());
+				button.setName("DOWN");
+				break;
+			}
+		} else {
+			System.out.println("Rotation is null from array");
+			ri = new RotatedIcon(icon, RotatedIcon.Rotate.DOWN);
+			button.setName("DOWN");
+			button.setIcon(ri);
+			System.out.println("Rotated Icon-> " + icon.toString());
+
+		}
+
+		EditorWindow.getEditWindowInstanze().scrollpane.revalidate();
+		EditorWindow.getEditWindowInstanze().scrollpane.repaint();
+	}
+
 }

@@ -56,7 +56,7 @@ public class PaneModelCentre implements ActionListener {
 		for (int i = 0; i < size; i++) {
 			btnArrayListTemp.add(new JButton());
 			btnArrayListTemp.get(i).setBackground(Color.WHITE);
-
+			btnArrayListTemp.get(i).setName("DOWN");
 			if (size > 100) {
 				if (i % 20 == 0) {
 					x = 0;
@@ -111,10 +111,10 @@ public class PaneModelCentre implements ActionListener {
 		int x = Integer.parseInt(arr[0]);
 		int y = Integer.parseInt(arr[1]);
 		JButton button = Util.getInstance().map.get(new Point(x, y));
-		// System.out.println("****" + button.getIcon().toString());
+		 System.out.println("****" + button.getName());
 		// TODO impement action
 
-		if (EditorWindow.removeEnbKey == false) {// TODO just testing change
+		if (EditorWindow.removeEnbKey == true) {// TODO just testing change
 													// this to true
 			Util.getInstance().map.remove(new Point(x, y));
 			EditorWindow editorWindowInstanze = EditorWindow.getEditWindowInstanze();
@@ -127,8 +127,12 @@ public class PaneModelCentre implements ActionListener {
 			editorWindowInstanze.pack();
 
 		}
+		
+		if (EditorWindow.rotEnbledKey == false) {
+			
+			Util.getInstance().rotElemt(new Point(x,y));
 
-	}
+	}}
 
 	public JPanel getContainer() {
 		return container;

@@ -34,10 +34,10 @@ public class EditorWindow extends JFrame {
 	private AbstractButton buttonLessZoom;
 	private AbstractButton buttonAdd;
 	private AbstractButton buttonRemove;
-	int modelDemension;
-	protected PaneModelCentre paneModelCentre;
+	public int modelDemension;
+	public PaneModelCentre paneModelCentre;
 	int scalFactor = 1;
-	protected JScrollPane scrollpane;
+	public JScrollPane scrollpane;
 	private JPanel panelEast;
 	private String icon;
 	private final String FILE_IMAGE_PATH = "./Resources/Images/";
@@ -375,7 +375,7 @@ public class EditorWindow extends JFrame {
 
 	}
 
-	protected static EditorWindow getEditWindowInstanze() {
+	public static EditorWindow getEditWindowInstanze() {
 		if (editWindowInstanze == null) {
 			editWindowInstanze = new EditorWindow();
 		}
