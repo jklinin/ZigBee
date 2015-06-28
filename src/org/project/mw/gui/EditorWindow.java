@@ -9,7 +9,6 @@ import org.project.mw.threeD.DisplayManager;
 import org.project.mw.util.Mlogger;
 import org.project.mw.util.Util;
 
-
 /**
  * @author test test
  * 
@@ -47,7 +46,7 @@ public class EditorWindow extends JFrame {
 	protected static boolean rotEnbledKey = false;
 	public static boolean removeEnbKey = false;
 	Container editWindowContentPane;
-	int n=40;
+	int n = 40;
 
 	public EditorWindow() {
 
@@ -68,7 +67,7 @@ public class EditorWindow extends JFrame {
 		buttonAdd = new JButton();
 		buttonRemove = new JButton();
 		modelDemension = 50;
-		paneModelCentre = new PaneModelCentre(n, modelDemension, modelDemension);
+		paneModelCentre = new PaneModelCentre(n, modelDemension, modelDemension, false);
 		scrollpane = new JScrollPane(paneModelCentre.getContainer());
 		scrollpane.setMinimumSize(new Dimension(150, 150));
 		listener = new DragMouseAdapter();
@@ -117,7 +116,7 @@ public class EditorWindow extends JFrame {
 			}
 		});
 		setMinimumSize(new Dimension(1133, 652));
-		 editWindowContentPane = getContentPane();
+		editWindowContentPane = getContentPane();
 		editWindowContentPane.setLayout(new BorderLayout());
 
 		// ======== menuBar ========
@@ -140,14 +139,16 @@ public class EditorWindow extends JFrame {
 				openItemMenu.setText("\u00d6ffnen...");
 				openItemMenu.setIcon(UIManager.getIcon("FileChooser.upFolderIcon"));
 				openItemMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_MASK));
-			//	openItemMenu.addActionListener(e -> openItemMenuActionPerformed(e));
+				// openItemMenu.addActionListener(e ->
+				// openItemMenuActionPerformed(e));
 				menuFile.add(openItemMenu);
 
 				// ---- saveDefaultItemMenu ----
 				saveDefaultItemMenu.setText("Speichern");
 				saveDefaultItemMenu.setIcon(UIManager.getIcon("FileView.floppyDriveIcon"));
 				saveDefaultItemMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
-				//saveDefaultItemMenu.addActionListener(e -> saveDefaultItemMenuActionPerformed(e));
+				// saveDefaultItemMenu.addActionListener(e ->
+				// saveDefaultItemMenuActionPerformed(e));
 				menuFile.add(saveDefaultItemMenu);
 
 				// ---- menuItem Save ----
@@ -162,7 +163,7 @@ public class EditorWindow extends JFrame {
 				menuItemClose.setText("Beenden");
 				menuItemClose.setIcon(null);
 				menuItemClose.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_MASK));
-				menuItemClose.addActionListener(e->closeItemMenuActionPerformed(e));
+				menuItemClose.addActionListener(e -> closeItemMenuActionPerformed(e));
 				menuFile.add(menuItemClose);
 			}
 			menuBar.add(menuFile);
@@ -243,31 +244,32 @@ public class EditorWindow extends JFrame {
 			buttonOk.setBackground(new Color(135, 206, 235));
 			buttonOk.addActionListener(e -> goTo3DModelActionPerformed(e));
 			panelSouth.add(buttonOk);
+
 			editWindowContentPane.add(panelSouth, BorderLayout.SOUTH);
 			editWindowContentPane.add(panelEast, BorderLayout.EAST);
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
-		//	editWindowContentPane.add(paneModelCentre.getContainer(), BorderLayout.CENTER);
+			// editWindowContentPane.add(paneModelCentre.getContainer(),
+			// BorderLayout.CENTER);
 			pack();
 			setLocationRelativeTo(null);
 		}
 	}
 
-
 	// ======== OnClicListners ========
 	private void closeItemMenuActionPerformed(ActionEvent e) {
-		editWindowInstanze.dispose();
-		Util.getInstance().disposeElemtsArray();
+		//editWindowInstanze.dispose();
+		//Util.getInstance().disposeElemtsArray();
 	}
 
 	private void goTo3DModelActionPerformed(ActionEvent e) {
-		new DisplayManager().start();
-		// for testing
-		for (int i = 0; i < Util.getInstance().getElementsArray().size(); i++) {
-			log.log(("Arrays with elemts contains " + Util.getInstance().getElementsArray().get(i).getFileIconName() + " X " + Util.getInstance().getElementsArray().get(i).getPositionX() + " Y " + Util.getInstance().getElementsArray().get(i).getPositionY()));
-			log.log("Rotation " + Util.getInstance().getElementsArray().get(i).getRotation());
-
-		}
-		System.out.println("Size " + Util.getInstance().getElementsArray().size());
+//		new DisplayManager().start();
+//		// for testing
+//		for (int i = 0; i < Util.getInstance().getElementsArray().size(); i++) {
+//			log.log(("Arrays with elemts contains " + Util.getInstance().getElementsArray().get(i).getFileIconName() + " X " + Util.getInstance().getElementsArray().get(i).getPositionX() + " Y " + Util.getInstance().getElementsArray().get(i).getPositionY()));
+//			log.log("Rotation " + Util.getInstance().getElementsArray().get(i).getRotation());
+//
+//		}
+//		System.out.println("Size " + Util.getInstance().getElementsArray().size());
 
 	}
 
@@ -282,33 +284,31 @@ public class EditorWindow extends JFrame {
 	}
 
 	private void saveFileItemActionPerformed(ActionEvent e) {
-		Util.getInstance().fileChooser(editWindowInstanze, "save");
+		//Util.getInstance().fileChooser(editWindowInstanze, "save");
 
 	}
 
 	private void removeColsRowsActionPerformend(ActionEvent e) {
 		if (scalFactor > 1) {
-			scalFactor=scalFactor-2;
+			scalFactor = scalFactor - 2;
 			editWindowContentPane.remove(scrollpane);
-			paneModelCentre = new PaneModelCentre(n* scalFactor, modelDemension, modelDemension);// FIXME
+			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension);
 			paneModelCentre.getContainer().repaint();
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
 
 			pack();
-			
-		
 
 		}
 
 	}
 
 	private void addColsRowsActionPerformend(ActionEvent e) {
-	
+
 		if (scalFactor < 10) {
 			scalFactor = scalFactor + 2;
 			editWindowContentPane.remove(scrollpane);
-			paneModelCentre = new PaneModelCentre(n* scalFactor, modelDemension, modelDemension);// FIXME
+			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension);// FIXME
 			paneModelCentre.getContainer().repaint();
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
@@ -316,20 +316,30 @@ public class EditorWindow extends JFrame {
 			pack();
 
 		}
-		
+
 	}
 
 	private void moreZoomActionPerformend(ActionEvent e) {
+		/*modelDemension = modelDemension + 5;
+		paneModelCentre.saveElementTemp();
+		for (int i = 0; i < paneModelCentre.btnArrayListTemp.size(); i++) {
+			if (paneModelCentre.btnArrayListTemp.get(i).getIcon() != null) {
+				System.out.println("Icon Name->" + paneModelCentre.btnArrayListTemp.get(i).getIcon().toString());
+				Element element = new Element();
+				element.setFileIconName(paneModelCentre.btnArrayListTemp.get(i).getIcon().toString());
+			//	element.set
+			//	Util.getInstance().getElementsArray().add( element);
+			}
+		}*/
 		modelDemension = modelDemension + 5;
-		
 		editWindowContentPane.remove(scrollpane);
-		paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension);// FIXME
-		paneModelCentre.getContainer().repaint();
+		paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
+	
+	
 		scrollpane = new JScrollPane(paneModelCentre.getContainer());
 		editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
 
 		pack();
-
 
 	}
 
@@ -346,23 +356,21 @@ public class EditorWindow extends JFrame {
 		}
 
 	}
-/*
-	private void openItemMenuActionPerformed(ActionEvent e) {
-		Util.getInstance().fileChooser(editWindowInstanze, "open");
-	}
 
-	private void saveDefaultItemMenuActionPerformed(ActionEvent e) {
-
-	}
-
-	private void ScrlolPaneUpdate() {
-		scrollpane.revalidate();
-		scrollpane.repaint();
-	}*/
+	/*
+	 * private void openItemMenuActionPerformed(ActionEvent e) {
+	 * Util.getInstance().fileChooser(editWindowInstanze, "open"); }
+	 * 
+	 * private void saveDefaultItemMenuActionPerformed(ActionEvent e) {
+	 * 
+	 * }
+	 * 
+	 * private void ScrlolPaneUpdate() { scrollpane.revalidate();
+	 * scrollpane.repaint(); }
+	 */
 
 	// ======== End of OnClickListners ========
-	
-	
+
 	public static void main(String[] args) {
 		// Für die 3D-Demo nachfolgenden Code auskommentieren
 		// new DisplayManager().start();

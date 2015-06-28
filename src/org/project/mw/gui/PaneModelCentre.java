@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -35,33 +36,33 @@ import org.project.mw.util.Util;
 public class PaneModelCentre implements ActionListener {
 	GridBagLayout gb;
 	GridBagConstraints gc;
-	Map<Point, JButton> map;
-//	final int SIZE = 20;
-	private JPanel container;
-	//JButton[] button = new JButton[SIZE];
-	ArrayList <JButton>btnArrayListTemp= new ArrayList<JButton>();
 
-	PaneModelCentre(int size, int dimenisionX, int dimenisionY ) {
+	private JPanel container;
+
+	protected ArrayList<JButton> btnArrayListTemp = new ArrayList<JButton>();
+
+	PaneModelCentre(int size, int dimenisionX, int dimenisionY, boolean restore) {
 		System.out.println("Created PanelModelCentre");
+		JButton button;
 		gb = new GridBagLayout();
 		gc = new GridBagConstraints();
 		gc.fill = GridBagConstraints.BOTH;
-		map = new LinkedHashMap<Point, JButton>();
+		// Util.getInstance().map = new LinkedHashMap<Point, JButton>();
 		// Container container = getContentPane();
 		container = new JPanel();
 		container.setLayout(gb);
 		int x = 0, y = -1;
 		for (int i = 0; i < size; i++) {
-			btnArrayListTemp.add( new JButton());
+			btnArrayListTemp.add(new JButton());
 			btnArrayListTemp.get(i).setBackground(Color.WHITE);
-			System.out.println(btnArrayListTemp.size());
-			
-			if(size>100){
+		
+
+			if (size > 100) {
 				if (i % 20 == 0) {
 					x = 0;
 					y = y + 1;
 				}
-			}else{
+			} else {
 				if (i % 10 == 0) {
 					x = 0;
 					y = y + 1;
@@ -69,14 +70,26 @@ public class PaneModelCentre implements ActionListener {
 			}
 			gc.gridx = x++;
 			gc.gridy = y;
-			//button[i].setMinimumSize(new Dimension(100, 100));
+
 			btnArrayListTemp.get(i).setPreferredSize(new Dimension(dimenisionX, dimenisionY));
 			btnArrayListTemp.get(i).setTransferHandler(new TransferHandler("icon"));
+
 			gb.setConstraints(btnArrayListTemp.get(i), gc);
 			container.add(btnArrayListTemp.get(i));
-			map.put(new Point(x, y), btnArrayListTemp.get(i));
+			if (restore == true) {
+				button = Util.getInstance().map.get(new Point(x, y));
+				if (button.getIcon() != null) {
+					btnArrayListTemp.get(i).setIcon(new ImageIcon(button.getIcon().toString()));
+				}
+				Util.getInstance().map.replace(new Point(x, y), btnArrayListTemp.get(i));
+			} else {
+
+				Util.getInstance().map.put(new Point(x, y), btnArrayListTemp.get(i));
+
+			}
 			btnArrayListTemp.get(i).setActionCommand(x + "," + y);
 			btnArrayListTemp.get(i).addActionListener(this);
+			
 		}
 		container.repaint();
 
@@ -85,14 +98,33 @@ public class PaneModelCentre implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		// resetAll();
+		System.out.println(btnArrayListTemp.get(0).getIcon().toString());
 		JButton source = (JButton) evt.getSource();
 		String command = source.getActionCommand();
 		System.out.println(command);
 		String[] arr = command.split(",");
 		int x = Integer.parseInt(arr[0]);
 		int y = Integer.parseInt(arr[1]);
-		JButton button = map.get(new Point(x, y));
+		JButton button = Util.getInstance().map.get(new Point(x, y));
+		System.out.println("****" + button.getIcon().toString());
 		// TODO impement action
+
+	}
+
+	public void restore() {
+		JButton button;
+		int i = 0;
+		for (int y = 0; y < Util.getInstance().map.size(); y++) {
+			for (int x = 0; x < Util.getInstance().map.size(); x++) {
+
+				button = Util.getInstance().map.get(new Point(x, y));
+				if (button.getIcon() != null) {
+					btnArrayListTemp.get(i).setIcon(new ImageIcon(button.getIcon().toString()));
+				}
+				System.out.println("i=" + i);
+				i++;
+			}
+		}
 
 	}
 

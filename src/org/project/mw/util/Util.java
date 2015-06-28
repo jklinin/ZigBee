@@ -6,6 +6,7 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -15,9 +16,12 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
@@ -31,10 +35,11 @@ import org.project.mw.gui.Element;
 public class Util {
 	private static Util utilInstance = null;
 	private String FILENAME_DEFAULT = "./test.zb";
-	private ArrayList<Element> elementsArray = new ArrayList(); // ArrayList of
-																// elements(element
-																// name, x, y
-																// position)
+	public Map<Point, JButton> map;
+
+	Util() {
+		map = new LinkedHashMap<Point, JButton>();
+	}
 
 	public static Util getInstance() {
 		if (utilInstance == null) {
@@ -43,103 +48,74 @@ public class Util {
 		return utilInstance;
 	}
 
-	public void saveModel() {
-		if (new File(FILENAME_DEFAULT).exists()) {
-			new File(FILENAME_DEFAULT).delete();
-		}
-		try {
-			FileOutputStream fileoutput = new FileOutputStream(FILENAME_DEFAULT);
-			ObjectOutputStream outputstream = new ObjectOutputStream(fileoutput);
-			outputstream.writeObject(elementsArray);
-			System.out.println("file saved");
-			outputstream.flush();
-			outputstream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	/*
+	 * public void saveModel() { if (new File(FILENAME_DEFAULT).exists()) { new
+	 * File(FILENAME_DEFAULT).delete(); } try { FileOutputStream fileoutput =
+	 * new FileOutputStream(FILENAME_DEFAULT); ObjectOutputStream outputstream =
+	 * new ObjectOutputStream(fileoutput);
+	 * outputstream.writeObject(elementsArray);
+	 * System.out.println("file saved"); outputstream.flush();
+	 * outputstream.close(); } catch (Exception e) { e.printStackTrace(); } }
+	 */
 
 	/**
 	 * Two methondes for the saving files and opening file with the using the
 	 * file choosers
 	 */
-	public void openModel() {
+	/*
+	 * public void openModel() {
+	 * 
+	 * try { ObjectInputStream input = new ObjectInputStream(new
+	 * FileInputStream(FILENAME_DEFAULT)); elementsArray = (ArrayList<Element>)
+	 * input.readObject(); input.close(); } catch (Exception e) {
+	 * JOptionPane.showMessageDialog(null, Util.getInstance().FILENAME_DEFAULT +
+	 * " Konnte nicht gefunden werden.", "Warnung",
+	 * JOptionPane.WARNING_MESSAGE); e.printStackTrace(); } }
+	 */
+	/*
+	 * protected void saveModel(String fileName) { if (new
+	 * File(FILENAME_DEFAULT).exists()) { new File(FILENAME_DEFAULT).delete(); }
+	 * try { FileOutputStream fileoutput = new FileOutputStream(fileName);
+	 * ObjectOutputStream outputstream = new ObjectOutputStream(fileoutput);
+	 * outputstream.writeObject(elementsArray);
+	 * 
+	 * outputstream.flush(); outputstream.close(); } catch (Exception e) {
+	 * e.printStackTrace(); } }
+	 */
 
-		try {
-			ObjectInputStream input = new ObjectInputStream(new FileInputStream(FILENAME_DEFAULT));
-			elementsArray = (ArrayList<Element>) input.readObject();
-			input.close();
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, Util.getInstance().FILENAME_DEFAULT + " Konnte nicht gefunden werden.", "Warnung", JOptionPane.WARNING_MESSAGE);
-			e.printStackTrace();
-		}
-	}
+	/*
+	 * private void openModel(String fileName) {
+	 * 
+	 * try { ObjectInputStream input = new ObjectInputStream(new
+	 * FileInputStream(fileName)); elementsArray = (ArrayList<Element>)
+	 * input.readObject(); input.close(); } catch (Exception e) {
+	 * JOptionPane.showMessageDialog(null, fileName +
+	 * " Konnte nicht gefunden werden.", "Warnung",
+	 * JOptionPane.WARNING_MESSAGE); e.printStackTrace(); } }
+	 */
 
-	protected void saveModel(String fileName) {
-		if (new File(FILENAME_DEFAULT).exists()) {
-			new File(FILENAME_DEFAULT).delete();
-		}
-		try {
-			FileOutputStream fileoutput = new FileOutputStream(fileName);
-			ObjectOutputStream outputstream = new ObjectOutputStream(fileoutput);
-			outputstream.writeObject(elementsArray);
-
-			outputstream.flush();
-			outputstream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void openModel(String fileName) {
-
-		try {
-			ObjectInputStream input = new ObjectInputStream(new FileInputStream(fileName));
-			elementsArray = (ArrayList<Element>) input.readObject();
-			input.close();
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, fileName + " Konnte nicht gefunden werden.", "Warnung", JOptionPane.WARNING_MESSAGE);
-			e.printStackTrace();
-		}
-	}
-
-	public void fileChooser(Component component, String option) {
-		JFileChooser fc = new JFileChooser();
-		fc.addChoosableFileFilter(new FileFilter() {
-
-			@Override
-			public String getDescription() {
-				return "ZigBee";
-			}
-
-			@Override
-			public boolean accept(File f) {
-				return f.getName().endsWith(".zb");
-			}
-		});
-		if (option.equals("save")) {
-			fc.showSaveDialog(component);
-			if (fc.getSelectedFile() != null) {
-				saveModel(fc.getSelectedFile().getAbsolutePath() + ".zb");
-				System.out.println(fc.getSelectedFile().getAbsolutePath());
-			}
-		} else if (option.equals("open")) {
-			fc.showOpenDialog(component);
-			if (fc.getSelectedFile() != null) {
-				openModel(fc.getSelectedFile().getAbsolutePath());
-
-			}
-		}
-
-	}
-
-	public ArrayList<Element> getElementsArray() {
-		return elementsArray;
-
-	}
-
-	public void removeAllElementsArray() {
-		elementsArray = new ArrayList<Element>();
+	/*
+	 * public void fileChooser(Component component, String option) {
+	 * JFileChooser fc = new JFileChooser(); fc.addChoosableFileFilter(new
+	 * FileFilter() {
+	 * 
+	 * @Override public String getDescription() { return "ZigBee"; }
+	 * 
+	 * @Override public boolean accept(File f) { return
+	 * f.getName().endsWith(".zb"); } }); if (option.equals("save")) {
+	 * fc.showSaveDialog(component); if (fc.getSelectedFile() != null) {
+	 * saveModel(fc.getSelectedFile().getAbsolutePath() + ".zb");
+	 * System.out.println(fc.getSelectedFile().getAbsolutePath()); } } else if
+	 * (option.equals("open")) { fc.showOpenDialog(component); if
+	 * (fc.getSelectedFile() != null) {
+	 * openModel(fc.getSelectedFile().getAbsolutePath());
+	 * 
+	 * } }
+	 * 
+	 * }
+	 */
+	public Map<Point, JButton> getElementsArray() {
+		return map;
 
 	}
 
@@ -173,9 +149,6 @@ public class Util {
 		g2.drawImage(srcImg, 0, 0, w, h, null);
 		g2.dispose();
 		return resizedImg;
-	}
-	public void disposeElemtsArray(){
-		elementsArray=new ArrayList<Element>();
 	}
 
 	public Image iconToImage(Icon icon) {
