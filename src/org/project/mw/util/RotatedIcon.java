@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Graphics;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
+import java.io.Serializable;
+
 import javax.swing.Icon;
 
 /**
@@ -20,7 +22,7 @@ import javax.swing.Icon;
  * center.
  * </ul>
  */
-public class RotatedIcon implements Icon {
+public class RotatedIcon implements Icon, Serializable {
 	public RotatedIcon rotatedIconInstanze = null;
 
 	public enum Rotate {

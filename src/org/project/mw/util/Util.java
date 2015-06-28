@@ -83,8 +83,8 @@ public class Util implements Serializable{
 	}
 
 	protected void saveModel(String fileName) {
-		if (new File(FILENAME_DEFAULT).exists()) {
-			new File(FILENAME_DEFAULT).delete();
+		if (new File(fileName).exists()) {
+			new File(fileName).delete();
 		}
 		try {
 			FileOutputStream fileoutput = new FileOutputStream(fileName);

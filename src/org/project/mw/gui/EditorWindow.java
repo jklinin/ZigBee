@@ -102,7 +102,8 @@ public class EditorWindow extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-			dispose();
+				Util.getInstance().saveModel();
+				dispose();
 
 			}
 
@@ -336,9 +337,18 @@ public class EditorWindow extends JFrame {
 
 	}
 
-	
+	// action listner open model
 	private void openItemMenuActionPerformed(ActionEvent e) {
+		// file chooser dialog and reading of file into Util.map 
 		Util.getInstance().fileChooser(editWindowInstance, "open");
+		
+		editWindowContentPane.remove(scrollpane);
+		paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
+		paneModelCentre.getContainer().repaint();
+		scrollpane = new JScrollPane(paneModelCentre.getContainer());
+		editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
+
+		pack();
 	}
 
 	private void saveDefaultItemMenuActionPerformed(ActionEvent e) {
