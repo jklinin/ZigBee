@@ -147,8 +147,7 @@ public class EditorWindow extends JFrame {
 				saveDefaultItemMenu.setText("Speichern");
 				saveDefaultItemMenu.setIcon(UIManager.getIcon("FileView.floppyDriveIcon"));
 				saveDefaultItemMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
-				// saveDefaultItemMenu.addActionListener(e ->
-				// saveDefaultItemMenuActionPerformed(e));
+				 saveDefaultItemMenu.addActionListener(e -> saveDefaultItemMenuActionPerformed(e));
 				menuFile.add(saveDefaultItemMenu);
 
 				// ---- menuItem Save ----
@@ -343,6 +342,7 @@ public class EditorWindow extends JFrame {
 	}
 
 	private void saveDefaultItemMenuActionPerformed(ActionEvent e) {
+		Util.getInstance().saveModel();
 
 	}
 	 
