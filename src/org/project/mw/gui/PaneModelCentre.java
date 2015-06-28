@@ -1,5 +1,6 @@
 package org.project.mw.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -83,7 +84,9 @@ public class PaneModelCentre implements ActionListener {
 						btnArrayListTemp.get(i).setIcon(new ImageIcon(button.getIcon().toString()));
 					}
 				}
-				Util.getInstance().map.replace(new Point(x, y), btnArrayListTemp.get(i));
+
+				Util.getInstance().map.put(new Point(x, y), btnArrayListTemp.get(i));
+
 			} else {
 
 				Util.getInstance().map.put(new Point(x, y), btnArrayListTemp.get(i));
@@ -100,7 +103,7 @@ public class PaneModelCentre implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		// resetAll();
-		System.out.println(btnArrayListTemp.get(0).getIcon().toString());
+		//System.out.println(btnArrayListTemp.get(0).getIcon().toString());
 		JButton source = (JButton) evt.getSource();
 		String command = source.getActionCommand();
 		System.out.println(command);
@@ -108,24 +111,21 @@ public class PaneModelCentre implements ActionListener {
 		int x = Integer.parseInt(arr[0]);
 		int y = Integer.parseInt(arr[1]);
 		JButton button = Util.getInstance().map.get(new Point(x, y));
-		System.out.println("****" + button.getIcon().toString());
+		// System.out.println("****" + button.getIcon().toString());
 		// TODO impement action
 
-	}
+		if (EditorWindow.removeEnbKey == false) {// TODO just testing change
+													// this to true
+			Util.getInstance().map.remove(new Point(x, y));
+			EditorWindow editorWindowInstanze = EditorWindow.getEditWindowInstanze();
+			editorWindowInstanze.editWindowContentPane.remove(editorWindowInstanze.scrollpane);
+			editorWindowInstanze.paneModelCentre = new PaneModelCentre(editorWindowInstanze.n * editorWindowInstanze.scalFactor, editorWindowInstanze.modelDemension, editorWindowInstanze.modelDemension, true);// FIXME
+			editorWindowInstanze.paneModelCentre.getContainer().repaint();
+			editorWindowInstanze.scrollpane = new JScrollPane(editorWindowInstanze.paneModelCentre.getContainer());
+			editorWindowInstanze.editWindowContentPane.add(editorWindowInstanze.scrollpane, BorderLayout.CENTER);
 
-	public void restore() {
-		JButton button;
-		int i = 0;
-		for (int y = 0; y < Util.getInstance().map.size(); y++) {
-			for (int x = 0; x < Util.getInstance().map.size(); x++) {
+			editorWindowInstanze.pack();
 
-				button = Util.getInstance().map.get(new Point(x, y));
-				if (button.getIcon() != null) {
-					btnArrayListTemp.get(i).setIcon(new ImageIcon(button.getIcon().toString()));
-				}
-				System.out.println("i=" + i);
-				i++;
-			}
 		}
 
 	}

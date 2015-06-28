@@ -312,7 +312,7 @@ public class EditorWindow extends JFrame {
 			paneModelCentre.getContainer().repaint();
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
-
+			
 			pack();
 
 		}
