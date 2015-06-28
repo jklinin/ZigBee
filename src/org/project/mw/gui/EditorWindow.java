@@ -91,7 +91,7 @@ public class EditorWindow extends JFrame {
 
 					pack();
 
-				}else{
+				} else {
 					Util.getInstance().revomeDefaultSaveFile();
 				}
 			}
@@ -269,6 +269,9 @@ public class EditorWindow extends JFrame {
 	// ======== OnClicListners ========
 	private void closeItemMenuActionPerformed(ActionEvent e) {
 		editWindowInstance.dispose();
+		if (Util.getInstance().checkFileDefaultSaving() == true) {
+			Util.getInstance().revomeDefaultSaveFile();
+		}
 
 	}
 
