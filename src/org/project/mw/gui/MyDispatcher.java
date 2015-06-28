@@ -1,7 +1,7 @@
 package org.project.mw.gui;
 
 import java.awt.KeyEventDispatcher;
-import java.awt.RenderingHints.Key;
+
 import java.awt.event.KeyEvent;
 
 public class MyDispatcher implements KeyEventDispatcher {
