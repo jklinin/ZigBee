@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import org.project.mw.threeD.DisplayManager;
 import org.project.mw.util.Mlogger;
 import org.project.mw.util.Util;
 
@@ -74,6 +75,7 @@ public class EditorWindow extends JFrame {
 		buttonOk = new JButton();
 		// ======== this ========
 		setIconImage(((ImageIcon) UIManager.getIcon("FileView.computerIcon")).getImage());
+		
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		manager.addKeyEventDispatcher(new MyDispatcher());
 
@@ -276,8 +278,8 @@ public class EditorWindow extends JFrame {
 	}
 
 	private void goTo3DModelActionPerformed(ActionEvent e) {
-		// new DisplayManager().start();
-		editWindowInstance.setVisible(false);
+		new DisplayManager().start();
+		//editWindowInstance.setVisible(false);
 	}
 
 	private void newItemMenuActionPerformed(ActionEvent e) {
@@ -373,9 +375,6 @@ public class EditorWindow extends JFrame {
 	// ======== End of OnClickListners ========
 
 	public static void main(String[] args) {
-		// Für die 3D-Demo nachfolgenden Code auskommentieren
-		// new DisplayManager().start();
-
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {

@@ -5,8 +5,11 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Camera {
-	protected Vector3f position = new Vector3f(0,0,0);
-	protected float pitch = 20;
+	
+	private static final float MOVEMENT_SPEED = 0.6f;
+	
+	protected Vector3f position = new Vector3f(0,50,50);
+	protected float pitch = 45;
 	protected float yaw = 0;
 	protected float roll;
 	
@@ -28,34 +31,34 @@ public class Camera {
 	
 	public void move() {
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
-			position.z -= 1.2f;
+			position.z -= MOVEMENT_SPEED;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			position.z -= -1.2f;
+			position.z -= -MOVEMENT_SPEED;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			position.x += 1.2f;
+			position.x += MOVEMENT_SPEED;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			position.x -= 1.2f;
+			position.x -= MOVEMENT_SPEED;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			position.y += 0.3f;
+			position.y += MOVEMENT_SPEED/2f;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-			position.y -= 0.3f;
+			position.y -= MOVEMENT_SPEED/2f;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
-			changeYaw(0.6f);
+			changeYaw(-(MOVEMENT_SPEED/2f));
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-			changeYaw(-0.6f);
+			changeYaw(MOVEMENT_SPEED/2f);
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-			changePitch(-0.6f);
+			changePitch(MOVEMENT_SPEED/2f);
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-			changePitch(0.6f);
+			changePitch(-(MOVEMENT_SPEED/2f));
 		}
 		
 		if(Mouse.isButtonDown(1)) {
