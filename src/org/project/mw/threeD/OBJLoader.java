@@ -13,6 +13,12 @@ import org.project.mw.threeD.models.RawModel;
 
 public class OBJLoader {
 
+	/**
+	 * Returns a RawModel from a ".obj" file located in "Resources/Models"
+	 * @param fileName
+	 * @param loader
+	 * @return the RawModel
+	 */
 	public static RawModel loadObjModel(String fileName, Loader loader) {
 		FileReader fr = null;
 		try {

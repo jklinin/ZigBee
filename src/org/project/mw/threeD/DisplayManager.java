@@ -38,6 +38,7 @@ public class DisplayManager implements Runnable {
 	
 	private static final float PIPE_TILE_SIZE = 13.05f;
 	
+	private static final String DISPLAY_TITLE = "Pipes";
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 	private static final int FPS_CAP = 120;
@@ -45,6 +46,9 @@ public class DisplayManager implements Runnable {
 	private static long lastFrameTime;
 	private static float delta;
 	
+	/**
+	 * Creates the 3D Display of LWJGL
+	 */
 	public static void createDisplay() {
 		
 		ContextAttribs attribs = new ContextAttribs(3,2)
@@ -56,7 +60,7 @@ public class DisplayManager implements Runnable {
 			//Display.create(new PixelFormat(), attribs);
 			Display.create(new PixelFormat());
 			//Display.create();
-			Display.setTitle("Pipes");
+			Display.setTitle(DISPLAY_TITLE);
 			//Display.setIcon(icons);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -66,6 +70,10 @@ public class DisplayManager implements Runnable {
 		lastFrameTime = getCurrentTime();
 	}
 	
+	/**
+	 * Call this method after each iteration of the endless loop of the 3D-rendering
+	 * to update the display
+	 */
 	public static void updateDisplay() {
 		Display.sync(FPS_CAP);
 		Display.update();
@@ -74,25 +82,41 @@ public class DisplayManager implements Runnable {
 		lastFrameTime = currentFrameTime;
 	}
 	
+	/**
+	 * Returns the difference between the System times between the currently and the previously rendered frame
+	 * @return the time between current and previous frame
+	 */
 	public static float getFrameTimeSeconds() {
 		return delta;
 	}
 	
+	/**
+	 * closes the 3D-Window
+	 */
 	public static void closeDisplay() {
 		Display.destroy();	
 	}
 	
+	/**
+	 * Returns the current system time. Needed i.e. for real time movement
+	 * @return the current system time
+	 */
 	private static long getCurrentTime() {
 		return Sys.getTime()*1000 / Sys.getTimerResolution();
 	}
 	
-	
+	/**
+	 * Initializes the seperate thread and starts the 3D-Display. 
+	 */
 	public void start() {
 		running = true;
 		thread = new Thread(this, "Pipes");
 		thread.start();
 	}
 	
+	/**
+	 * Contains creation of every Model and the rendering loop of the 3D-Window
+	 */
 	public void run() {
 		
 		createDisplay();
@@ -124,6 +148,7 @@ public class DisplayManager implements Runnable {
 		
 		List<Entity> pipeModel = new ArrayList<Entity>();
 		Map<Point, JButton> elements = Util.getInstance().getElementsCollection();
+		/*
 		for(Map.Entry<Point, JButton> tile : elements.entrySet()) {
 			
 			//tile rotation
@@ -147,8 +172,8 @@ public class DisplayManager implements Runnable {
 			float xPos = (float) tile.getKey().getX();
 			float yPos = (float) tile.getKey().getY();
 			//type of tile, does this get the icon name?
-		//	String tileName = tile.getValue().getIcon().toString();
-			String tileName =Util.getInstance().getElementsCollection().get(new Point(1,0)).getIcon().toString(); 
+			String tileName = tile.getValue().getIcon().toString();
+			 
 			switch(tileName) {
 			case "IPartImage":
 				pipeModel.add(new Entity(PipeI, new Vector3f(xPos*PIPE_TILE_SIZE, 0, yPos*PIPE_TILE_SIZE), 0, rotationDeg, 0, 1.0f));
@@ -164,6 +189,7 @@ public class DisplayManager implements Runnable {
 				break;
 			}
 		}
+		*/
 		
 		pipeModel.add(new Entity(PipeI, new Vector3f(0, 0, 0), 0, 0, 0, 1.0f));
 		//pipeModel.add(new Entity(PipeI, new Vector3f(13.05f, 0, 0), 0, 0, 0, 1.0f));
@@ -178,26 +204,29 @@ public class DisplayManager implements Runnable {
 
 		MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix());
 	
-		Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
-		TrueTypeFont ttfont = new TrueTypeFont(awtFont, false);
-		FontModel font = new FontModel(ttfont, 100, 50, "Hello", Color.yellow);
 		
-		List<FontModel> fonts = new ArrayList<FontModel>();
-		fonts.add(font);
+		//Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
+		//TrueTypeFont ttfont = new TrueTypeFont(awtFont, false);
+		//FontModel font = new FontModel(ttfont, 100, 50, "Hello", Color.yellow);
+		
+		//List<FontModel> fonts = new ArrayList<FontModel>();
+		//fonts.add(font);
 		
 		while(running) {
 			camera.move();
 			
 			picker.update();
 			
-			//this code for each object
+			//TODO: Text von Sensor-Wert bekommen und Variable anstelle von "Hello" einfügen
+			List<Entity> stringEntityList = fontRenderer.getStringEntityList("Hello", new Vector3f(2,2,2), 0, 45f, 45f, 1f);
+			pipeModel.addAll(stringEntityList);
 			for(Entity entity : pipeModel) {
 				renderer.processEntity(entity);
 			}
 			
 			renderer.render(light, camera);
 			//guiRenderer.render(guis);
-			fontRenderer.render(fonts);
+			//fontRenderer.renderTTF(fonts);
 			updateDisplay();
 			
 			if(Display.isCloseRequested())

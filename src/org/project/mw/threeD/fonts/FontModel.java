@@ -44,7 +44,9 @@ public class FontModel {
 	}
 
 
-
+	/**
+	 * draws the prepared true type font string
+	 */
 	public void drawString() {
 		font.drawString(x, y, text, color);
 	}

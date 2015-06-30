@@ -25,6 +25,14 @@ public class Loader {
 	private List<Integer> vbos = new ArrayList<Integer>();
 	private List<Integer> textures = new ArrayList<Integer>();
 	
+	/**
+	 * loads all VBO's to the VAO and returns a RawModel
+	 * @param positions the vertex positions
+	 * @param textureCoords the coordinates of the texture
+	 * @param normals the normal vectors
+	 * @param indices the indices
+	 * @return a RawModel with the given VBO's
+	 */
 	public RawModel loadToVAO(float[] positions, float[] textureCoords, float[] normals, int[] indices) {
 		int vaoID = createVAO();
 		bindIndicesBuffer(indices);
@@ -35,6 +43,11 @@ public class Loader {
 		return new RawModel(vaoID,indices.length);
 	}
 	
+	/**
+	 * Loads only the vertex positions into the VAO and returns the RawModel
+	 * @param positions
+	 * @return a RawModel containing the vertex positions
+	 */
 	public RawModel loadToVAO(float[] positions) {
 		int vaoID = createVAO();
 		this.storeDataInAttributeList(0, 2, positions);
@@ -42,6 +55,12 @@ public class Loader {
 		return new RawModel(vaoID,  positions.length/2);
 	}
 	
+	/**
+	 * Loads a texture by file name. The file must be in the folder "Resources/Models/" and must have the
+	 * file extension ".png"
+	 * @param fileName
+	 * @return the texture ID of the loaded texture
+	 */
 	public int loadTexture(String fileName) {
 		Texture texture = null;
 		try {
@@ -59,6 +78,9 @@ public class Loader {
 		return textureID;
 	}
 	
+	/**
+	 * Deletes all Vertex Array Objects, Vertex Buffer Objects and loaded textures
+	 */
 	public void cleanUp() {
 		for(int vao:vaos) {
 			GL30.glDeleteVertexArrays(vao);

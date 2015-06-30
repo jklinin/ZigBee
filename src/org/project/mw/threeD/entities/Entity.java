@@ -10,8 +10,9 @@ public class Entity {
 	private float rotX,rotY,rotZ;
 	private float scale;
 	
+	private int textureIndex = 0;
+	
 	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
-		super();
 		this.model = model;
 		this.position = position;
 		this.rotX = rotX;
@@ -20,12 +21,54 @@ public class Entity {
 		this.scale = scale;
 	}
 	
+	public Entity(TexturedModel model, int index, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
+		this.textureIndex = index;
+		this.model = model;
+		this.position = position;
+		this.rotX = rotX;
+		this.rotY = rotY;
+		this.rotZ = rotZ;
+		this.scale = scale;
+	}
+	
+	/**
+	 * Returns the texture x offset. Necessary when using texture atlases (means multiple textures in one image)
+	 * @return
+	 */
+	public float getTextureXOffset() {
+		int column = textureIndex % model.getTexture().getNumberOfRows();
+		return (float) column / (float) model.getTexture().getNumberOfRows();
+	}
+	
+	/**
+	 * Returns the texture y offset. Necessary when using texture atlases (means multiple textures in one image)
+	 * @return
+	 */
+	public float getTextureYOffset() {
+		int row = textureIndex/model.getTexture().getNumberOfRows();
+		return (float) row / (float) model.getTexture().getNumberOfRows();
+	}
+	
+	/**
+	 * Increases the position of the entity. Therefore simulates the movement of the entity in the 3D display when
+	 * called in the main loop
+	 * @param dx
+	 * @param dy
+	 * @param dz
+	 */
 	public void increasePosition(float dx, float dy, float dz) {
 		this.position.x += dx;
 		this.position.y += dy;
 		this.position.z += dz;
 	}
 	
+	/**
+	 * Increases the rotation value of the entity. Therefore simulates a rotating entity in the 3D display when
+	 * called in the main loop
+	 * @param dx
+	 * @param dy
+	 * @param dz
+	 */
 	public void increaseRotation(float dx, float dy, float dz) {
 		this.rotX += dx;
 		this.rotY += dy;

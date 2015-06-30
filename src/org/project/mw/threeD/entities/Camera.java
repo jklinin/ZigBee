@@ -29,6 +29,10 @@ public class Camera {
 		return roll;
 	}
 	
+	/**
+	 * Catches the Keyboard and Mouse inputs and "moves the camera".
+	 * This method must be called in the main loop.
+	 */
 	public void move() {
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			position.z -= MOVEMENT_SPEED;

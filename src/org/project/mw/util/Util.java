@@ -27,7 +27,9 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 
+
 import org.project.mw.gui.EditorWindow;
+import org.project.mw.gui.Element;
 import org.project.mw.util.RotatedIcon;
 
 /**
@@ -37,10 +39,10 @@ import org.project.mw.util.RotatedIcon;
 public class Util implements Serializable{
 	private static Util utilInstance = null;
 	private String FILENAME_DEFAULT = "./dafaultModel.zb";
-	public Map<Point, JButton> map;
+	public Map<Point, Element> map;
 
 	Util() {
-		map = new LinkedHashMap<Point, JButton>();
+		map = new LinkedHashMap<Point, Element>();
 	}
 
 	public static Util getInstance() {
@@ -75,7 +77,7 @@ public class Util implements Serializable{
 
 		try {
 			ObjectInputStream input = new ObjectInputStream(new FileInputStream(FILENAME_DEFAULT));
-			map = (Map<Point, JButton>) input.readObject();
+			map = (Map<Point, Element>) input.readObject();
 			input.close();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, Util.getInstance().FILENAME_DEFAULT + " Konnte nicht gefunden werden.", "Warnung", JOptionPane.WARNING_MESSAGE);
@@ -121,7 +123,7 @@ public class Util implements Serializable{
 
 		try {
 			ObjectInputStream input = new ObjectInputStream(new FileInputStream(fileName));
-			map = (Map<Point, JButton>) input.readObject();
+			map = (Map<Point, Element>) input.readObject();
 			input.close();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, fileName + " Konnte nicht gefunden werden.", "Warnung", JOptionPane.WARNING_MESSAGE);
@@ -163,7 +165,7 @@ public class Util implements Serializable{
 	/**
 	 * @return Map of all elements on GridBagLayout
 	 */
-	public Map<Point, JButton> getElementsCollection() {
+	public Map<Point, Element> getElementsCollection() {
 		return map;
 
 	}
@@ -220,8 +222,8 @@ public class Util implements Serializable{
 	public void rotElemt(Point locationElement) {
 		RotatedIcon ri;
 		Icon icon;
-
-		JButton button = map.get(locationElement);
+		Element element=map.get(locationElement);
+		JButton button = element.getIconButton();
 		String roateElemt = button.getName();
 		icon = button.getIcon();
 

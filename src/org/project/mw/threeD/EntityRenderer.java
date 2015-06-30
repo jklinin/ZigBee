@@ -26,6 +26,11 @@ public class EntityRenderer {
 		shader.stop();
 	}
 	
+	/**
+	 * renders all Entities. The Map should ensure that every TexturedModel gets created only once
+	 * for rendering. This prevents a lot of overhead
+	 * @param entities all entities that should be rendered
+	 */
 	public void render(Map<TexturedModel,List<Entity>> entities) {
 		for(TexturedModel model:entities.keySet()) {
 			prepareTexturedModel(model);
@@ -46,6 +51,7 @@ public class EntityRenderer {
 		GL20.glEnableVertexAttribArray(1);
 		GL20.glEnableVertexAttribArray(2);
 		ModelTexture texture = model.getTexture();
+		shader.loadNumberOfRows(texture.getNumberOfRows());
 		if(texture.isHasTransparency()) {
 			MasterRenderer.disableCulling();
 		}
@@ -67,5 +73,6 @@ public class EntityRenderer {
 		Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), 
 				entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
 		shader.loadTransformationMatrix(transformationMatrix);
+		shader.loadOffset(entity.getTextureXOffset(), entity.getTextureYOffset());
 	}
 }

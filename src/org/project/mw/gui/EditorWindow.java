@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import org.lwjgl.util.Point;
 import org.project.mw.threeD.DisplayManager;
 import org.project.mw.util.Mlogger;
 import org.project.mw.util.Util;
@@ -75,7 +76,6 @@ public class EditorWindow extends JFrame {
 		buttonOk = new JButton();
 		// ======== this ========
 		setIconImage(((ImageIcon) UIManager.getIcon("FileView.computerIcon")).getImage());
-		
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		manager.addKeyEventDispatcher(new MyDispatcher());
 
@@ -226,6 +226,21 @@ public class EditorWindow extends JFrame {
 		toolbarRight.add(pump);
 		panelEast.add(toolbarRight);
 
+		// sensor on toolbar
+		JLabel sensor = new JLabel(new ImageIcon(FILE_IMAGE_PATH + "sensorPartImage.png"));
+		sensor.addMouseListener(listener);
+		sensor.setTransferHandler(new TransferHandler("icon"));
+		sensor.setToolTipText("Sensor");
+		toolbarRight.add(sensor);
+		panelEast.add(toolbarRight);
+
+		// ventilr on toolbar
+		JLabel fauc = new JLabel(new ImageIcon(FILE_IMAGE_PATH + "faucPartImage_50.png"));
+		fauc.addMouseListener(listener);
+		fauc.setTransferHandler(new TransferHandler("icon"));
+		fauc.setToolTipText("Ventile");
+		toolbarRight.add(fauc);
+		panelEast.add(toolbarRight);
 		// ======== panes ========
 		{
 
@@ -280,6 +295,8 @@ public class EditorWindow extends JFrame {
 	private void goTo3DModelActionPerformed(ActionEvent e) {
 		new DisplayManager().start();
 		//editWindowInstance.setVisible(false);
+		// just for testting of name in buttons
+		System.out.println("Name of elements 1,0 "+Util.getInstance().getElementsCollection().get(new Point(1,0)).getNameElement());
 	}
 
 	private void newItemMenuActionPerformed(ActionEvent e) {
