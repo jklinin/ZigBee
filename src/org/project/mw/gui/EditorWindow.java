@@ -2,6 +2,7 @@ package org.project.mw.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Map;
 
 import javax.swing.*;
 
@@ -301,7 +302,10 @@ public class EditorWindow extends JFrame {
 				//System.out.println("Name of elements 1,0 "+Util.getInstance().getElementsCollection().get(new Point(x,y)).getIconButton().toString());
 			}
 		}
-		System.out.println("Name of elements 1,0 "+Util.getInstance().map.get(new Point(1,0)).getNameElement());
+		for(Map.Entry e1 : Util.getInstance().map.entrySet()){
+			Element element =(Element) e1.getValue();
+			  System.out.println(e1.getKey() + " = " + element.getNameElement());
+		}
 	}
 
 	private void newItemMenuActionPerformed(ActionEvent e) {
