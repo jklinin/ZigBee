@@ -49,7 +49,7 @@ public class PaneModelCentre implements ActionListener {
 		int x = 0, y = -1;
 		for (int i = 0; i < size; i++) {
 			element = new Element();
-			element.setRotation("DOWN");
+			element.setRotation("0D");
 			btnArrayListTemp.add(element);
 			btnArrayListTemp.get(0).getIconButton().setBackground(Color.WHITE);
 

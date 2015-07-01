@@ -36,7 +36,7 @@ public class Element implements Serializable {
 		this.rotation = rotation;
 	}
 
-	private String getRotation() {
+	public String getRotation() {
 		return rotation;
 
 	}

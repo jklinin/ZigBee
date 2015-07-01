@@ -306,7 +306,7 @@ public class EditorWindow extends JFrame {
 		// just testing
 		for(Map.Entry e1 : Util.getInstance().map.entrySet()){
 			Element element =(Element) e1.getValue();
-			  System.out.println(e1.getKey() + " = " + element.getNameElement());
+			  System.out.println(e1.getKey() + " = " + element.getNameElement()+" Rot: "+element.getRotation() );
 		}
 	}
 

@@ -232,12 +232,12 @@ public class Util implements Serializable {
 																									// name
 		if (element.getIconButton().getIcon().toString().contains("@") == false) {
 			element.setNameElement(element.getIconButton().getIcon().toString());
-			map.replace(locationElement, element);
+			//map.replace(locationElement, element);
 		}
 		System.out.println("Rotation Check2" + element.getNameElement());// prüfen
 																			// wieder
 		JButton button = element.getIconButton();
-		String roateElemt = button.getName();
+		String roateElemt = element.getRotation();
 		icon = button.getIcon();
 
 		int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
@@ -251,42 +251,48 @@ public class Util implements Serializable {
 		if (roateElemt != null) {
 
 			switch (roateElemt) {
-			case "DOWN":
-				ri = new RotatedIcon(icon, RotatedIcon.Rotate.UP);
+			case "0D":
+				ri = new RotatedIcon(icon, 90.0);
 				button.setIcon(ri);
 				System.out.println("Rotated Icon-> " + icon.toString());
-				button.setName("UP");
+				element.setRotation("90D");
+				
 				break;
-			case "UP":
-				ri = new RotatedIcon(icon, RotatedIcon.Rotate.UPSIDE_DOWN);
+			case "90D":
+				ri = new RotatedIcon(icon,90.0);
 				button.setIcon(ri);
 				System.out.println("Rotated Icon-> " + icon.toString());
-				button.setName("UPSIDE_DOWN");
-				break;
-
-			case "UPSIDE_DOWN":
-				ri = new RotatedIcon(icon, RotatedIcon.Rotate.ABOUT_CENTER);
-				button.setIcon(ri);
-				System.out.println("Rotated Icon-> " + icon.toString());
-				button.setName("ABOUT_CENTER");
+				element.setRotation("180D");
+				
 				break;
 
-			case "ABOUT_CENTER":
-				ri = new RotatedIcon(icon, RotatedIcon.Rotate.DOWN);
+			case "180D":
+				ri = new RotatedIcon(icon, 90.0);
 				button.setIcon(ri);
 				System.out.println("Rotated Icon-> " + icon.toString());
-				button.setName("DOWN");
+				element.setRotation("270D");
+				
+				break;
+
+			case "270D":
+				ri = new RotatedIcon(icon, 90.0);
+				button.setIcon(ri);
+				element.setRotation("0D");
+				
+				
+				
 				break;
 			}
 		} else {
 			System.out.println("Rotation is null from array");
-			ri = new RotatedIcon(icon, RotatedIcon.Rotate.DOWN);
-			button.setName("DOWN");
+			ri = new RotatedIcon(icon, 0.0);
+			
+			element.setRotation("0D");
 			button.setIcon(ri);
 			System.out.println("Rotated Icon-> " + icon.toString());
 
 		}
-
+		map.replace(locationElement, element);
 		EditorWindow.getEditWindowInstanze().scrollpane.revalidate();
 		EditorWindow.getEditWindowInstanze().scrollpane.repaint();
 	}
