@@ -75,6 +75,9 @@ public class PaneModelCentre implements ActionListener {
 			if (restore == true) {
 
 				if (Util.getInstance().map.get(new Point(x, y))!= null) {
+					System.out.println("Restore check 1 "+Util.getInstance().map.get(new Point(x, y)).getNameElement());
+					btnArrayListTemp.get(i).setNameElement(Util.getInstance().map.get(new Point(x, y)).getNameElement());
+					System.out.println("Restore check 2 "+Util.getInstance().map.get(new Point(x, y)).getNameElement());
 				button = Util.getInstance().map.get(new Point(x, y)).getIconButton();
 
 					if (button.getIcon() != null) {

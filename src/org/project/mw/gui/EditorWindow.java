@@ -302,6 +302,7 @@ public class EditorWindow extends JFrame {
 				//System.out.println("Name of elements 1,0 "+Util.getInstance().getElementsCollection().get(new Point(x,y)).getIconButton().toString());
 			}
 		}
+		// just testing
 		for(Map.Entry e1 : Util.getInstance().map.entrySet()){
 			Element element =(Element) e1.getValue();
 			  System.out.println(e1.getKey() + " = " + element.getNameElement());
