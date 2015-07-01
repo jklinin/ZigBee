@@ -297,6 +297,7 @@ public class EditorWindow extends JFrame {
 	//	new DisplayManager().start();
 		//editWindowInstance.setVisible(false);
 		// just for testting of name in buttons
+		paneModelCentre.putElementsToMap();
 		for(int y=0; y<Util.getInstance().map.size(); y++){
 			for(int x=0; x<Util.getInstance().map.size(); x++){
 				//System.out.println("Name of elements 1,0 "+Util.getInstance().getElementsCollection().get(new Point(x,y)).getIconButton().toString());
@@ -327,6 +328,7 @@ public class EditorWindow extends JFrame {
 	private void removeColsRowsActionPerformend(ActionEvent e) {
 		if (scalFactor > 1) {
 			scalFactor = scalFactor - 2;
+			paneModelCentre.putElementsToMap();
 			editWindowContentPane.remove(scrollpane);
 			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 			paneModelCentre.getContainer().repaint();
@@ -343,6 +345,7 @@ public class EditorWindow extends JFrame {
 
 		if (scalFactor < 10) {
 			scalFactor = scalFactor + 2;
+			paneModelCentre.putElementsToMap();
 			editWindowContentPane.remove(scrollpane);
 			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 			paneModelCentre.getContainer().repaint();
@@ -358,6 +361,7 @@ public class EditorWindow extends JFrame {
 	private void moreZoomActionPerformend(ActionEvent e) {
 
 		modelDemension = modelDemension + 5;
+		paneModelCentre.putElementsToMap();
 		editWindowContentPane.remove(scrollpane);
 		paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 		scrollpane = new JScrollPane(paneModelCentre.getContainer());
@@ -369,6 +373,7 @@ public class EditorWindow extends JFrame {
 	private void lessZoomActionPerformed(ActionEvent e) {
 		if (modelDemension != 50) {
 			modelDemension = modelDemension - 5;
+			paneModelCentre.putElementsToMap();
 			editWindowContentPane.remove(scrollpane);
 			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 			paneModelCentre.getContainer().repaint();

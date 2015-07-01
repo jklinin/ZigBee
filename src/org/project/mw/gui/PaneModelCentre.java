@@ -31,10 +31,11 @@ public class PaneModelCentre implements ActionListener {
 	GridBagConstraints gc;
 
 	private JPanel container;
-
+	private int size;
 	protected ArrayList<Element> btnArrayListTemp = new ArrayList<Element>();
 
 	PaneModelCentre(int size, int dimenisionX, int dimenisionY, boolean restore) {
+		this.size = size;
 		System.out.println("Created PanelModelCentre");
 		JButton button;
 		Element element;
@@ -65,29 +66,28 @@ public class PaneModelCentre implements ActionListener {
 			}
 			gc.gridx = x++;
 			gc.gridy = y;
-			//set size for JButtons
+			// set size for JButtons
 			btnArrayListTemp.get(i).getIconButton().setPreferredSize(new Dimension(dimenisionX, dimenisionY));
 			btnArrayListTemp.get(i).getIconButton().setTransferHandler(new TransferHandler("icon"));
-			
+
 			gb.setConstraints(btnArrayListTemp.get(i).getIconButton(), gc);
 			container.add(btnArrayListTemp.get(i).getIconButton());
 			// restore
 			if (restore == true) {
 
-				if (Util.getInstance().map.get(new Point(x, y))!= null) {
-					System.out.println("Restore check 1 "+Util.getInstance().map.get(new Point(x, y)).getNameElement());
+				if (Util.getInstance().map.get(new Point(x, y)) != null) {
+					System.out.println("Restore check 1 " + Util.getInstance().map.get(new Point(x, y)).getNameElement());
 					btnArrayListTemp.get(i).setNameElement(Util.getInstance().map.get(new Point(x, y)).getNameElement());
-					System.out.println("Restore check 2 "+Util.getInstance().map.get(new Point(x, y)).getNameElement());
-				button = Util.getInstance().map.get(new Point(x, y)).getIconButton();
+					System.out.println("Restore check 2 " + Util.getInstance().map.get(new Point(x, y)).getNameElement());
+					button = Util.getInstance().map.get(new Point(x, y)).getIconButton();
 
 					if (button.getIcon() != null) {
 						Image image = Util.getInstance().iconToImage(button.getIcon());
-					
 						btnArrayListTemp.get(i).setImageIconElement((Util.getInstance().getScaledImage(image, dimenisionX, dimenisionY)));
 
 					}
 				}
-			
+
 				Util.getInstance().map.put(new Point(x, y), btnArrayListTemp.get(i));
 
 			} else {
@@ -116,7 +116,7 @@ public class PaneModelCentre implements ActionListener {
 		JButton button = Util.getInstance().map.get(new Point(x, y)).getIconButton();
 		System.out.println("****" + button.getIcon().toString());
 		// TODO impement action
-		System.out.println("+++++"+Util.getInstance().getElementsCollection().get(new Point(x, y)).getNameElement());
+		System.out.println("+++++" + Util.getInstance().getElementsCollection().get(new Point(x, y)).getNameElement());
 
 		if (EditorWindow.removeEnbKey == true) {
 			Util.getInstance().map.remove(new Point(x, y));
@@ -132,7 +132,7 @@ public class PaneModelCentre implements ActionListener {
 		}
 
 		if (EditorWindow.rotEnbledKey == true) {
-		
+
 			Util.getInstance().rotElemt(new Point(x, y));
 
 		}
@@ -140,5 +140,32 @@ public class PaneModelCentre implements ActionListener {
 
 	public JPanel getContainer() {
 		return container;
+	}
+
+	public void putElementsToMap() {
+		int x = 0, y = -1;
+		for (int i = 0; i < size; i++) {
+
+			if (size > 100) {
+				if (i % 20 == 0) {
+					x = 0;
+					y = y + 1;
+				}
+			} else {
+				if (i % 10 == 0) {
+					x = 0;
+					y = y + 1;
+				}
+			}
+			if (btnArrayListTemp.get(i).getIconButton().getIcon() != null) {
+				String iconName = btnArrayListTemp.get(i).getIconButton().getIcon().toString();
+				if (iconName.contains("@") == false) {
+					btnArrayListTemp.get(i).setNameElement(btnArrayListTemp.get(i).getIconButton().getIcon().toString());
+					Util.getInstance().map.replace(new Point(x, y), btnArrayListTemp.get(i));
+				}
+			}
+
+		}
+
 	}
 }
