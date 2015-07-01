@@ -50,7 +50,7 @@ public class PaneModelCentre implements ActionListener {
 			element = new Element();
 			element.setRotation("DOWN");
 			btnArrayListTemp.add(element);
-			btnArrayListTemp.get(i).getIconButton().setBackground(Color.WHITE);
+			btnArrayListTemp.get(0).getIconButton().setBackground(Color.WHITE);
 
 			if (size > 100) {
 				if (i % 20 == 0) {
@@ -65,12 +65,13 @@ public class PaneModelCentre implements ActionListener {
 			}
 			gc.gridx = x++;
 			gc.gridy = y;
+			//set size for JButtons
 			btnArrayListTemp.get(i).getIconButton().setPreferredSize(new Dimension(dimenisionX, dimenisionY));
-
 			btnArrayListTemp.get(i).getIconButton().setTransferHandler(new TransferHandler("icon"));
 			
 			gb.setConstraints(btnArrayListTemp.get(i).getIconButton(), gc);
 			container.add(btnArrayListTemp.get(i).getIconButton());
+			// restore
 			if (restore == true) {
 
 				if (Util.getInstance().map.get(new Point(x, y))!= null) {
@@ -129,10 +130,6 @@ public class PaneModelCentre implements ActionListener {
 
 		if (EditorWindow.rotEnbledKey == true) {
 		
-			Element element =Util.getInstance().getElementsCollection().get(new Point(x, y));
-			element.setNameElement(button.getIcon().toString());
-			Util.getInstance().map.replace(new Point(x, y), element);
-			
 			Util.getInstance().rotElemt(new Point(x, y));
 
 		}

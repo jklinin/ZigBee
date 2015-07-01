@@ -293,10 +293,15 @@ public class EditorWindow extends JFrame {
 	}
 
 	private void goTo3DModelActionPerformed(ActionEvent e) {
-		new DisplayManager().start();
+	//	new DisplayManager().start();
 		//editWindowInstance.setVisible(false);
 		// just for testting of name in buttons
-		System.out.println("Name of elements 1,0 "+Util.getInstance().getElementsCollection().get(new Point(1,0)).getNameElement());
+		for(int y=0; y<Util.getInstance().map.size(); y++){
+			for(int x=0; x<Util.getInstance().map.size(); x++){
+				//System.out.println("Name of elements 1,0 "+Util.getInstance().getElementsCollection().get(new Point(x,y)).getIconButton().toString());
+			}
+		}
+		System.out.println("Name of elements 1,0 "+Util.getInstance().map.get(new Point(1,0)).getNameElement());
 	}
 
 	private void newItemMenuActionPerformed(ActionEvent e) {

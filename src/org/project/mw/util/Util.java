@@ -26,8 +26,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-
-
 import org.project.mw.gui.EditorWindow;
 import org.project.mw.gui.Element;
 import org.project.mw.util.RotatedIcon;
@@ -36,7 +34,7 @@ import org.project.mw.util.RotatedIcon;
  * @author Yuri Kalinin
  *
  */
-public class Util implements Serializable{
+public class Util implements Serializable {
 	private static Util utilInstance = null;
 	private String FILENAME_DEFAULT = "./dafaultModel.zb";
 	public Map<Point, Element> map;
@@ -69,8 +67,8 @@ public class Util implements Serializable{
 	}
 
 	/**
-	 * Two method for the saving files and opening file with the using the
-	 * file choosers
+	 * Two method for the saving files and opening file with the using the file
+	 * choosers
 	 */
 
 	public void openModel() {
@@ -84,25 +82,28 @@ public class Util implements Serializable{
 			e.printStackTrace();
 		}
 	}
+
 	/**
-	 * @return true if the default file exists 
+	 * @return true if the default file exists
 	 */
-	public boolean checkFileDefaultSaving(){
+	public boolean checkFileDefaultSaving() {
 		if (new File(FILENAME_DEFAULT).exists()) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
+
 	/**
 	 * remove default file
 	 */
 	public void revomeDefaultSaveFile() {
-		if(new File(FILENAME_DEFAULT).exists()){
+		if (new File(FILENAME_DEFAULT).exists()) {
 			new File(FILENAME_DEFAULT).delete();
 		}
-		
+
 	}
+
 	protected void saveModel(String fileName) {
 		if (new File(fileName).exists()) {
 			new File(fileName).delete();
@@ -222,7 +223,19 @@ public class Util implements Serializable{
 	public void rotElemt(Point locationElement) {
 		RotatedIcon ri;
 		Icon icon;
-		Element element=map.get(locationElement);
+		Element element = map.get(locationElement);
+		System.out.println("Rotation " + element.getNameElement());// hier ist
+																	// noch null
+		System.out.println("Rotation Icon Name->" + element.getIconButton().getIcon().toString());// hier
+																									// ist
+																									// richtige
+																									// name
+		if (element.getIconButton().getIcon().toString().contains("@") == false) {
+			element.setNameElement(element.getIconButton().getIcon().toString());
+			map.replace(locationElement, element);
+		}
+		System.out.println("Rotation Check2" + element.getNameElement());// prüfen
+																			// wieder
 		JButton button = element.getIconButton();
 		String roateElemt = button.getName();
 		icon = button.getIcon();
@@ -277,7 +290,5 @@ public class Util implements Serializable{
 		EditorWindow.getEditWindowInstanze().scrollpane.revalidate();
 		EditorWindow.getEditWindowInstanze().scrollpane.repaint();
 	}
-
-
 
 }
