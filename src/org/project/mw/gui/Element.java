@@ -10,6 +10,7 @@ public class Element implements Serializable {
 	private String nameElement;
 	private JButton iconButton = new JButton();
 	private String rotation;
+	private int sensorID;
 
 	public void setNameElement(String nameIcon) {
 		nameElement = nameIcon;
@@ -41,4 +42,23 @@ public class Element implements Serializable {
 
 	}
 
+	public void setSensorID(int id) {
+		sensorID = id;
+	}
+
+	public int getSensorID() {
+		return sensorID;
+	}
+
+	public boolean isSensor() {
+		
+			if (nameElement.contains("sensor") == true) {
+				return true;
+
+			}else{
+				return false;
+			}
+		
+		
+	}
 }

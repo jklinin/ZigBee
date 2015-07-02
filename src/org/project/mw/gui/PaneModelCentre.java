@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -33,6 +34,7 @@ public class PaneModelCentre implements ActionListener {
 	private JPanel container;
 	private int size;
 	protected ArrayList<Element> btnArrayListTemp = new ArrayList<Element>();
+	private MouseListenerSensorId mouseListner= new  MouseListenerSensorId();
 
 	PaneModelCentre(int size, int dimenisionX, int dimenisionY, boolean restore) {
 		this.size = size;
@@ -76,8 +78,12 @@ public class PaneModelCentre implements ActionListener {
 			if (restore == true) {
 
 				if (Util.getInstance().map.get(new Point(x, y)) != null) {
-					System.out.println("Restore check 1 " + Util.getInstance().map.get(new Point(x, y)).getNameElement());
+					System.out.println("Restore check 1 " + Util.getInstance().map.get(new Point(x, y)).getSensorID());
+					int id=Util.getInstance().map.get(new Point(x, y)).getSensorID();
+					String rotation=Util.getInstance().map.get(new Point(x, y)).getRotation();
 					btnArrayListTemp.get(i).setNameElement(Util.getInstance().map.get(new Point(x, y)).getNameElement());
+					btnArrayListTemp.get(i).setSensorID(id);
+					btnArrayListTemp.get(i).setRotation(rotation);
 					System.out.println("Restore check 2 " + Util.getInstance().map.get(new Point(x, y)).getNameElement());
 					button = Util.getInstance().map.get(new Point(x, y)).getIconButton();
 
@@ -98,6 +104,7 @@ public class PaneModelCentre implements ActionListener {
 
 			btnArrayListTemp.get(i).getIconButton().setActionCommand(x + "," + y);
 			btnArrayListTemp.get(i).getIconButton().addActionListener(this);
+			btnArrayListTemp.get(i).getIconButton().addMouseListener(mouseListner);
 
 		}
 		container.repaint();

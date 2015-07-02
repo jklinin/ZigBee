@@ -232,7 +232,7 @@ public class Util implements Serializable {
 																									// name
 		if (element.getIconButton().getIcon().toString().contains("@") == false) {
 			element.setNameElement(element.getIconButton().getIcon().toString());
-			//map.replace(locationElement, element);
+			// map.replace(locationElement, element);
 		}
 		System.out.println("Rotation Check2" + element.getNameElement());// prüfen
 																			// wieder
@@ -256,14 +256,14 @@ public class Util implements Serializable {
 				button.setIcon(ri);
 				System.out.println("Rotated Icon-> " + icon.toString());
 				element.setRotation("90D");
-				
+
 				break;
 			case "90D":
-				ri = new RotatedIcon(icon,90.0);
+				ri = new RotatedIcon(icon, 90.0);
 				button.setIcon(ri);
 				System.out.println("Rotated Icon-> " + icon.toString());
 				element.setRotation("180D");
-				
+
 				break;
 
 			case "180D":
@@ -271,22 +271,20 @@ public class Util implements Serializable {
 				button.setIcon(ri);
 				System.out.println("Rotated Icon-> " + icon.toString());
 				element.setRotation("270D");
-				
+
 				break;
 
 			case "270D":
 				ri = new RotatedIcon(icon, 90.0);
 				button.setIcon(ri);
 				element.setRotation("0D");
-				
-				
-				
+
 				break;
 			}
 		} else {
 			System.out.println("Rotation is null from array");
 			ri = new RotatedIcon(icon, 0.0);
-			
+
 			element.setRotation("0D");
 			button.setIcon(ri);
 			System.out.println("Rotated Icon-> " + icon.toString());

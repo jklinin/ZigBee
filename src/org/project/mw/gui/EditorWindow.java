@@ -298,15 +298,11 @@ public class EditorWindow extends JFrame {
 		//editWindowInstance.setVisible(false);
 		// just for testting of name in buttons
 		paneModelCentre.putElementsToMap();
-		for(int y=0; y<Util.getInstance().map.size(); y++){
-			for(int x=0; x<Util.getInstance().map.size(); x++){
-				//System.out.println("Name of elements 1,0 "+Util.getInstance().getElementsCollection().get(new Point(x,y)).getIconButton().toString());
-			}
-		}
+		
 		// just testing
 		for(Map.Entry e1 : Util.getInstance().map.entrySet()){
 			Element element =(Element) e1.getValue();
-			  System.out.println(e1.getKey() + " = " + element.getNameElement()+" Rot: "+element.getRotation() );
+			  System.out.println(e1.getKey() + " = " + element.getNameElement()+" Rot: "+element.getRotation()+ " Sensor ID "+ element.getSensorID());
 		}
 	}
 
@@ -423,4 +419,8 @@ public class EditorWindow extends JFrame {
 		}
 		return editWindowInstance;
 	}
+	public PaneModelCentre getPaneModelCentreInstance(){
+		return paneModelCentre;
+	}
+	
 }
