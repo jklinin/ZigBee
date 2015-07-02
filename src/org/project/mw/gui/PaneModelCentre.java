@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,13 +29,14 @@ import org.project.mw.util.Util;
  *
  */
 public class PaneModelCentre implements ActionListener {
-	GridBagLayout gb;
-	GridBagConstraints gc;
+	private GridBagLayout gb;
+	private GridBagConstraints gc;
 
 	private JPanel container;
 	private int size;
 	protected ArrayList<Element> btnArrayListTemp = new ArrayList<Element>();
-	private MouseListenerSensorId mouseListner= new  MouseListenerSensorId();
+	private MouseListenerSensorId mouseListner = new MouseListenerSensorId();
+	private Map<Point, Element> map = Util.getInstance().getElementsCollection();
 
 	PaneModelCentre(int size, int dimenisionX, int dimenisionY, boolean restore) {
 		this.size = size;
@@ -44,8 +46,6 @@ public class PaneModelCentre implements ActionListener {
 		gb = new GridBagLayout();
 		gc = new GridBagConstraints();
 		gc.fill = GridBagConstraints.BOTH;
-		// Util.getInstance().map = new LinkedHashMap<Point, JButton>();
-		// Container container = getContentPane();
 		container = new JPanel();
 		container.setLayout(gb);
 		int x = 0, y = -1;
@@ -53,7 +53,7 @@ public class PaneModelCentre implements ActionListener {
 			element = new Element();
 			element.setRotation("0D");
 			btnArrayListTemp.add(element);
-			btnArrayListTemp.get(0).getIconButton().setBackground(Color.WHITE);
+			btnArrayListTemp.get(i).getIconButton().setBackground(Color.WHITE);
 
 			if (size > 100) {
 				if (i % 20 == 0) {
@@ -77,15 +77,15 @@ public class PaneModelCentre implements ActionListener {
 			// restore
 			if (restore == true) {
 
-				if (Util.getInstance().map.get(new Point(x, y)) != null) {
-					System.out.println("Restore check 1 " + Util.getInstance().map.get(new Point(x, y)).getSensorID());
-					int id=Util.getInstance().map.get(new Point(x, y)).getSensorID();
-					String rotation=Util.getInstance().map.get(new Point(x, y)).getRotation();
-					btnArrayListTemp.get(i).setNameElement(Util.getInstance().map.get(new Point(x, y)).getNameElement());
+				if (map.get(new Point(x, y)) != null) {
+					System.out.println("Restore check 1 " + map.get(new Point(x, y)).getSensorID());
+					int id = map.get(new Point(x, y)).getSensorID();
+					String rotation = map.get(new Point(x, y)).getRotation();
+					btnArrayListTemp.get(i).setNameElement(map.get(new Point(x, y)).getNameElement());
 					btnArrayListTemp.get(i).setSensorID(id);
 					btnArrayListTemp.get(i).setRotation(rotation);
-					System.out.println("Restore check 2 " + Util.getInstance().map.get(new Point(x, y)).getNameElement());
-					button = Util.getInstance().map.get(new Point(x, y)).getIconButton();
+					System.out.println("Restore check 2 " + map.get(new Point(x, y)).getNameElement());
+					button = map.get(new Point(x, y)).getIconButton();
 
 					if (button.getIcon() != null) {
 						Image image = Util.getInstance().iconToImage(button.getIcon());
@@ -94,11 +94,11 @@ public class PaneModelCentre implements ActionListener {
 					}
 				}
 
-				Util.getInstance().map.put(new Point(x, y), btnArrayListTemp.get(i));
+				map.put(new Point(x, y), btnArrayListTemp.get(i));
 
 			} else {
 
-				Util.getInstance().map.put(new Point(x, y), btnArrayListTemp.get(i));
+				map.put(new Point(x, y), btnArrayListTemp.get(i));
 
 			}
 
@@ -120,14 +120,14 @@ public class PaneModelCentre implements ActionListener {
 		String[] arr = command.split(",");
 		int x = Integer.parseInt(arr[0]);
 		int y = Integer.parseInt(arr[1]);
-		JButton button = Util.getInstance().map.get(new Point(x, y)).getIconButton();
+		JButton button = map.get(new Point(x, y)).getIconButton();
 		System.out.println("****" + button.getIcon().toString());
 		// TODO impement action
 		System.out.println("+++++" + Util.getInstance().getElementsCollection().get(new Point(x, y)).getNameElement());
 
 		if (EditorWindow.removeEnbKey == true) {
-			Util.getInstance().map.remove(new Point(x, y));
-			EditorWindow editorWindowInstanze = EditorWindow.getEditWindowInstanze();
+			map.remove(new Point(x, y));
+			EditorWindow editorWindowInstanze = EditorWindow.getEditWindowInstance();
 			editorWindowInstanze.editWindowContentPane.remove(editorWindowInstanze.scrollpane);
 			editorWindowInstanze.paneModelCentre = new PaneModelCentre(editorWindowInstanze.n * editorWindowInstanze.scalFactor, editorWindowInstanze.modelDemension, editorWindowInstanze.modelDemension, true);// FIXME
 			editorWindowInstanze.paneModelCentre.getContainer().repaint();
@@ -168,7 +168,7 @@ public class PaneModelCentre implements ActionListener {
 				String iconName = btnArrayListTemp.get(i).getIconButton().getIcon().toString();
 				if (iconName.contains("@") == false) {
 					btnArrayListTemp.get(i).setNameElement(btnArrayListTemp.get(i).getIconButton().getIcon().toString());
-					Util.getInstance().map.replace(new Point(x, y), btnArrayListTemp.get(i));
+					map.replace(new Point(x, y), btnArrayListTemp.get(i));
 				}
 			}
 

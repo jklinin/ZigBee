@@ -37,7 +37,7 @@ import org.project.mw.util.RotatedIcon;
 public class Util implements Serializable {
 	private static Util utilInstance = null;
 	private String FILENAME_DEFAULT = "./dafaultModel.zb";
-	public Map<Point, Element> map;
+	private Map<Point, Element> map;
 
 	Util() {
 		map = new LinkedHashMap<Point, Element>();
@@ -240,7 +240,7 @@ public class Util implements Serializable {
 		String roateElemt = element.getRotation();
 		icon = button.getIcon();
 
-		int modelDemension = EditorWindow.getEditWindowInstanze().modelDemension;
+		int modelDemension = EditorWindow.getEditWindowInstance().getModelDemension();
 		JButton btnTemp = new JButton();
 		btnTemp.setIcon(Util.getInstance().getScaledImage(icon.toString(), modelDemension, modelDemension));
 
@@ -291,8 +291,8 @@ public class Util implements Serializable {
 
 		}
 		map.replace(locationElement, element);
-		EditorWindow.getEditWindowInstanze().scrollpane.revalidate();
-		EditorWindow.getEditWindowInstanze().scrollpane.repaint();
+		EditorWindow.getEditWindowInstance().scrollpane.revalidate();
+		EditorWindow.getEditWindowInstance().scrollpane.repaint();
 	}
 
 }

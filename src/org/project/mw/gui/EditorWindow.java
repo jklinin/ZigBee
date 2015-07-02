@@ -35,9 +35,9 @@ public class EditorWindow extends JFrame {
 	private AbstractButton buttonLessZoom;
 	private AbstractButton buttonAdd;
 	private AbstractButton buttonRemove;
-	public int modelDemension;
-	public PaneModelCentre paneModelCentre;
-	int scalFactor = 1;
+	protected int modelDemension;
+	protected PaneModelCentre paneModelCentre;
+	protected int scalFactor = 1;
 	public JScrollPane scrollpane;
 	private JPanel panelEast;
 
@@ -45,10 +45,10 @@ public class EditorWindow extends JFrame {
 	private MouseListener listener;
 	private JButton buttonOk;
 	protected static boolean rotEnbledKey = false;
-	public static boolean removeEnbKey = false;
-	Container editWindowContentPane;
-	int n = 40;
-	boolean newWindow;
+	protected static boolean removeEnbKey = false;
+	protected Container editWindowContentPane;
+	protected int n = 40;
+	private boolean newWindow;
 
 	public EditorWindow(boolean newWindow) {
 		this.newWindow = newWindow;
@@ -296,11 +296,11 @@ public class EditorWindow extends JFrame {
 	private void goTo3DModelActionPerformed(ActionEvent e) {
 	//	new DisplayManager().start();
 		//editWindowInstance.setVisible(false);
-		// just for testting of name in buttons
+		// just for testing of name in buttons
 		paneModelCentre.putElementsToMap();
 		
 		// just testing
-		for(Map.Entry e1 : Util.getInstance().map.entrySet()){
+		for(Map.Entry e1 : Util.getInstance().getElementsCollection().entrySet()){
 			Element element =(Element) e1.getValue();
 			  System.out.println(e1.getKey() + " = " + element.getNameElement()+" Rot: "+element.getRotation()+ " Sensor ID "+ element.getSensorID());
 		}
@@ -406,14 +406,14 @@ public class EditorWindow extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				EditorWindow edit = EditorWindow.getEditWindowInstanze();
+				EditorWindow edit = EditorWindow.getEditWindowInstance();
 				edit.setVisible(true);
 			}
 		});
 
 	}
 
-	public static EditorWindow getEditWindowInstanze() {
+	public static EditorWindow getEditWindowInstance() {
 		if (editWindowInstance == null) {
 			editWindowInstance = new EditorWindow(false);
 		}
@@ -422,5 +422,7 @@ public class EditorWindow extends JFrame {
 	public PaneModelCentre getPaneModelCentreInstance(){
 		return paneModelCentre;
 	}
-	
+	public  int getModelDemension() {
+		return modelDemension;
+	}
 }
