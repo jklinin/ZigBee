@@ -2,6 +2,13 @@ package org.project.mw.threeD.models;
 
 import org.project.mw.threeD.textures.ModelTexture;
 
+/**
+ * Model class combining a RawModel with a ModelTexture.
+ * This Model can be rendered in the 3D view.
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class TexturedModel {
 
 	private RawModel rawModel;

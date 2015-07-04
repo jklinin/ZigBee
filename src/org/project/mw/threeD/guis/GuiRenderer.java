@@ -11,6 +11,12 @@ import org.project.mw.threeD.Loader;
 import org.project.mw.threeD.models.RawModel;
 import org.project.mw.threeD.toolbox.Maths;
 
+/**
+ * Renderer class for GUI models
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class GuiRenderer {
 
 	private final RawModel quad;
@@ -22,6 +28,10 @@ public class GuiRenderer {
 		shader = new GuiShader();
 	}
 	
+	/**
+	 * Prepares OpenGL for rendering a gui (2D, blending, no depth test etc.) and renders a list of GuiTextures
+	 * @param guis the List of GuiTextures to render
+	 */
 	public void render(List<GuiTexture> guis) {
 		shader.start();
 		GL30.glBindVertexArray(quad.getVaoID());
@@ -43,6 +53,10 @@ public class GuiRenderer {
 		shader.stop();
 	}
 	
+	/**
+	 * Cleans up after rendering is finished.
+	 * Should be called after the main loop is exited.
+	 */
 	public void cleanUp() {
 		shader.cleanUp();
 	}

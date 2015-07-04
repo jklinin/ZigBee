@@ -12,6 +12,12 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+/**
+ * Abstract class for shader classes which load variables into the shader programs
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public abstract class ShaderProgram {
 	
 	private int programID;
@@ -38,14 +44,24 @@ public abstract class ShaderProgram {
 		return GL20.glGetUniformLocation(programID, uniformName);
 	}
 	
+	/**
+	 * Starting the shader program.
+	 */
 	public void start() {
 		GL20.glUseProgram(programID);
 	}
 	
+	/**
+	 * Stopping the shader program.
+	 */
 	public void stop() {
 		GL20.glUseProgram(0);
 	}
 	
+	/**
+	 * Cleans up the shader.
+	 * Should be called after the main rendering loop has finished.
+	 */
 	public void cleanUp() {
 		stop();
 		GL20.glDetachShader(programID, vertexShaderID);

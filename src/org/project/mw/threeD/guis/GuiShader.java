@@ -3,7 +3,13 @@ package org.project.mw.threeD.guis;
 import org.lwjgl.util.vector.Matrix4f;
 import org.project.mw.threeD.shaders.ShaderProgram;
 
- 
+/**
+ * Shader for GUI's.
+ * 
+ * @see org.project.mw.threeD.shader.StaticShader
+ * @author Philipp Seﬂner
+ *
+ */
 public class GuiShader extends ShaderProgram{
      
     private static final String VERTEX_FILE = "src/org/project/mw/threeD/guis/guiVertexShader.txt";
@@ -14,7 +20,11 @@ public class GuiShader extends ShaderProgram{
     public GuiShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
     }
-     
+    
+    /**
+     * loads the transformation matrix into the shader program
+     * @param matrix
+     */
     public void loadTransformation(Matrix4f matrix){
         super.loadMatrix(location_transformationMatrix, matrix);
     }

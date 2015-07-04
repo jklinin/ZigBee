@@ -16,7 +16,12 @@ import org.project.mw.threeD.models.TexturedModel;
 import org.project.mw.threeD.textures.ModelTexture;
 import org.project.mw.threeD.toolbox.Maths;
 
-
+/**
+ * Renderer class for fonts
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class FontRenderer {
 	
 	private static final float CHARACTER_WIDTH = 3f;
@@ -82,18 +87,16 @@ public class FontRenderer {
 	 * @return
 	 */
 	public List<Entity> getStringEntityList(String string, Vector3f startingPosition, float rotX, float rotY, float rotZ, float scale) {
+		Matrix4f transformationMatrix = Maths.createTransformationMatrix(new Vector3f(0,0,0), rotX, rotY, rotZ, scale);
 		List<Entity> stringEntityList = new ArrayList<Entity>();
 		for(int i=0; i < string.length(); i++) {
 			int asciiCode = (int)string.charAt(i);
 			
 			float charPosInString = i * CHARACTER_WIDTH * scale / 3;
 
-			Matrix4f transformationMatrix = Maths.createTransformationMatrix(startingPosition, rotX, rotY, rotZ, scale);
-			Vector4f characterPosition = new Vector4f(startingPosition.x+charPosInString, startingPosition.y, startingPosition.z, scale);
-			
 			Vector4f translatedCharacterPosition = new Vector4f();
-			Matrix4f.transform(transformationMatrix, characterPosition, translatedCharacterPosition);
-			
+			Matrix4f.transform(transformationMatrix, new Vector4f(charPosInString, 0, 0, scale), translatedCharacterPosition);
+			translatedCharacterPosition.translate(startingPosition.x, startingPosition.y, startingPosition.z, scale);
 			
 			stringEntityList.add(new Entity(fontTextureModel, asciiCode, new Vector3f(translatedCharacterPosition.x,translatedCharacterPosition.y,translatedCharacterPosition.z), rotX, rotY, rotZ, translatedCharacterPosition.w));
 		}

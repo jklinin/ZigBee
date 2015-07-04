@@ -51,7 +51,7 @@ public class PaneModelCentre implements ActionListener {
 		int x = 0, y = -1;
 		for (int i = 0; i < size; i++) {
 			element = new Element();
-			element.setRotation("0D");
+			element.setRotation(0);
 			btnArrayListTemp.add(element);
 			btnArrayListTemp.get(i).getIconButton().setBackground(Color.WHITE);
 
@@ -80,7 +80,7 @@ public class PaneModelCentre implements ActionListener {
 				if (map.get(new Point(x, y)) != null) {
 					System.out.println("Restore check 1 " + map.get(new Point(x, y)).getSensorID());
 					int id = map.get(new Point(x, y)).getSensorID();
-					String rotation = map.get(new Point(x, y)).getRotation();
+					int rotation = map.get(new Point(x, y)).getRotation();
 					btnArrayListTemp.get(i).setNameElement(map.get(new Point(x, y)).getNameElement());
 					btnArrayListTemp.get(i).setSensorID(id);
 					btnArrayListTemp.get(i).setRotation(rotation);

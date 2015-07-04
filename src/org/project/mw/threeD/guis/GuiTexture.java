@@ -2,6 +2,12 @@ package org.project.mw.threeD.guis;
 
 import org.lwjgl.util.vector.Vector2f;
 
+/**
+ * The GuiTexture contains the texture, position and scale of a GUI object
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class GuiTexture {
 
 	private int texture;

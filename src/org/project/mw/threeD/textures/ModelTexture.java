@@ -1,5 +1,12 @@
 package org.project.mw.threeD.textures;
 
+/**
+ * The ModelTexture contains information about the texture and the behavior of the texture of Models.
+ * Each TexturedModel has a ModelTexture
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class ModelTexture {
 
 	private int textureID;

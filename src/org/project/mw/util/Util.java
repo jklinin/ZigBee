@@ -237,7 +237,7 @@ public class Util implements Serializable {
 		System.out.println("Rotation Check2" + element.getNameElement());// prüfen
 																			// wieder
 		JButton button = element.getIconButton();
-		String roateElemt = element.getRotation();
+		int roateElemt = element.getRotation();
 		icon = button.getIcon();
 
 		int modelDemension = EditorWindow.getEditWindowInstance().getModelDemension();
@@ -248,48 +248,38 @@ public class Util implements Serializable {
 
 		button.setIcon(new ImageIcon(Util.getInstance().getScaledImage(image, modelDemension, modelDemension)));
 		icon = button.getIcon();
-		if (roateElemt != null) {
-
 			switch (roateElemt) {
-			case "0D":
+			case 0:
 				ri = new RotatedIcon(icon, 90.0);
 				button.setIcon(ri);
 				System.out.println("Rotated Icon-> " + icon.toString());
-				element.setRotation("90D");
+				element.setRotation(90);
 
 				break;
-			case "90D":
+			case 90:
 				ri = new RotatedIcon(icon, 90.0);
 				button.setIcon(ri);
 				System.out.println("Rotated Icon-> " + icon.toString());
-				element.setRotation("180D");
+				element.setRotation(180);
 
 				break;
 
-			case "180D":
+			case 180:
 				ri = new RotatedIcon(icon, 90.0);
 				button.setIcon(ri);
 				System.out.println("Rotated Icon-> " + icon.toString());
-				element.setRotation("270D");
+				element.setRotation(270);
 
 				break;
 
-			case "270D":
+			case 270:
 				ri = new RotatedIcon(icon, 90.0);
 				button.setIcon(ri);
-				element.setRotation("0D");
+				element.setRotation(0);
 
 				break;
 			}
-		} else {
-			System.out.println("Rotation is null from array");
-			ri = new RotatedIcon(icon, 0.0);
-
-			element.setRotation("0D");
-			button.setIcon(ri);
-			System.out.println("Rotated Icon-> " + icon.toString());
-
-		}
+		
 		map.replace(locationElement, element);
 		EditorWindow.getEditWindowInstance().scrollpane.revalidate();
 		EditorWindow.getEditWindowInstance().scrollpane.repaint();

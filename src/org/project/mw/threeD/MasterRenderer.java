@@ -14,6 +14,12 @@ import org.project.mw.threeD.entities.Light;
 import org.project.mw.threeD.models.TexturedModel;
 import org.project.mw.threeD.shaders.StaticShader;
 
+/**
+ * The MasterRenderer renders the 3D world considering the light source and the camera position.
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class MasterRenderer {
 
 	private static final float FOV = 70;
@@ -99,7 +105,8 @@ public class MasterRenderer {
 	}
 	
 	/**
-	 * Cleans up after rendering is finished
+	 * Cleans up after rendering is finished.
+	 * Should be called after the main loop is exited.
 	 */
 	public void cleanUp() {
 		shader.cleanUp();

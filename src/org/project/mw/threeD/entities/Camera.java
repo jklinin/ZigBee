@@ -4,11 +4,17 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 
+/**
+ * The camera is a pseudo object in the 3D room. It affects the rendering of all objects in the 3D room.
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class Camera {
 	
 	private static final float MOVEMENT_SPEED = 0.6f;
 	
-	protected Vector3f position = new Vector3f(0,50,50);
+	protected Vector3f position = new Vector3f(50,50,50);
 	protected float pitch = 45;
 	protected float yaw = 0;
 	protected float roll;

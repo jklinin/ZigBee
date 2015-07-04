@@ -3,6 +3,13 @@ package org.project.mw.threeD.fonts;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
+/**
+ * The FontModel contains a TrueTypeFont (from the slick library), the text, color and position.
+ * The object makes it easier to change 2D-Text during the rendering process.
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class FontModel {
 	
 	TrueTypeFont font;

@@ -131,7 +131,7 @@ public class EditorWindow extends JFrame {
 
 			}
 		});
-		setMinimumSize(new Dimension(1133, 652));
+		setMinimumSize(new Dimension(800, 600));
 		editWindowContentPane = getContentPane();
 		editWindowContentPane.setLayout(new BorderLayout());
 
@@ -294,16 +294,13 @@ public class EditorWindow extends JFrame {
 	}
 
 	private void goTo3DModelActionPerformed(ActionEvent e) {
-	//	new DisplayManager().start();
-		//editWindowInstance.setVisible(false);
-		// just for testing of name in buttons
 		paneModelCentre.putElementsToMap();
-		
 		// just testing
 		for(Map.Entry e1 : Util.getInstance().getElementsCollection().entrySet()){
 			Element element =(Element) e1.getValue();
 			  System.out.println(e1.getKey() + " = " + element.getNameElement()+" Rot: "+element.getRotation()+ " Sensor ID "+ element.getSensorID());
 		}
+		new DisplayManager().start();
 	}
 
 	private void newItemMenuActionPerformed(ActionEvent e) {

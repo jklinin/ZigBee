@@ -11,6 +11,12 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.project.mw.threeD.models.RawModel;
 
+/**
+ * The OBJLoader can load and process .obj-files.
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class OBJLoader {
 
 	/**

@@ -19,6 +19,12 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.project.mw.threeD.models.RawModel;
 
+/**
+ * The loader loads keeps track of all VAO's, VBO's and textures to clean up after the 3D rendering gets finished.
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class Loader {
 	
 	private List<Integer> vaos = new ArrayList<Integer>();

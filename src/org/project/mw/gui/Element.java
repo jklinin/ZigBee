@@ -9,7 +9,7 @@ import javax.swing.JButton;
 public class Element implements Serializable {
 	private String nameElement;
 	private JButton iconButton = new JButton();
-	private String rotation;
+	private int rotation;
 	private int sensorID;
 
 	public void setNameElement(String nameIcon) {
@@ -33,11 +33,11 @@ public class Element implements Serializable {
 		return iconButton;
 	}
 
-	public void setRotation(String rotation) {
+	public void setRotation(int rotation) {
 		this.rotation = rotation;
 	}
 
-	public String getRotation() {
+	public int getRotation() {
 		return rotation;
 
 	}

@@ -15,6 +15,12 @@ import org.project.mw.threeD.shaders.StaticShader;
 import org.project.mw.threeD.textures.ModelTexture;
 import org.project.mw.threeD.toolbox.Maths;
 
+/**
+ * Renderer class for entities
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class EntityRenderer {
 	
 	private StaticShader shader;

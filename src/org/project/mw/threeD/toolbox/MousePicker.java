@@ -7,7 +7,12 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 import org.project.mw.threeD.entities.Camera;
-
+/**
+ * The MousePicker determines the position where the mouse is pointing on in the 3D room
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class MousePicker {
 	
 	private Vector3f currentRay;
@@ -26,6 +31,9 @@ public class MousePicker {
 		return currentRay;
 	}
 	
+	/**
+	 * Updates the mouse picker
+	 */
 	public void update() {
 		viewMatrix = Maths.createViewMatrix(camera);
 		currentRay = calculateMouseRay();

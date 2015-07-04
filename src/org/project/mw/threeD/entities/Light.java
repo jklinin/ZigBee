@@ -2,6 +2,12 @@ package org.project.mw.threeD.entities;
 
 import org.lwjgl.util.vector.Vector3f;
 
+/**
+ * Lighting class containing position and color of the light source. 
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class Light {
 	private Vector3f position;
 	private Vector3f colour;

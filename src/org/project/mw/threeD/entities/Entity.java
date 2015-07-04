@@ -3,6 +3,12 @@ package org.project.mw.threeD.entities;
 import org.lwjgl.util.vector.Vector3f;
 import org.project.mw.threeD.models.TexturedModel;
 
+/**
+ * An Entity contains the position, rotation and scale of a TexturedModel for rendering it in 3D.
+ * 
+ * @author Philipp Seﬂner
+ *
+ */
 public class Entity {
 
 	private TexturedModel model;
