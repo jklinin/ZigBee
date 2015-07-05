@@ -178,7 +178,7 @@ public class DisplayManager implements Runnable {
 		
 		for(Entry<Point, Element> tile : elements.entrySet()) {
 			if(tile.getValue().getNameElement() != null) {
-				float rotationDeg = tile.getValue().getRotation();
+				float rotationDeg = tile.getValue().getRotationCounterClockWise();
 				System.out.println(rotationDeg);
 				float xPos = (float) tile.getKey().getX();
 				float zPos = (float) tile.getKey().getY();
@@ -200,7 +200,7 @@ public class DisplayManager implements Runnable {
 					pipeModel.add(new Entity(Pump, new Vector3f(xPos*PIPE_TILE_SIZE, 0, zPos*PIPE_TILE_SIZE), 0, rotationDeg, 0, 1.0f));
 					break;
 				case "./Resources/Images/sensorPartImage.png":
-					pipeModel.add(new Entity(Sensor, new Vector3f(xPos*PIPE_TILE_SIZE, 0, zPos*PIPE_TILE_SIZE), 0, rotationDeg, 0, 1.0f));
+					pipeModel.add(new Entity(Sensor, new Vector3f(xPos*PIPE_TILE_SIZE, 0, zPos*PIPE_TILE_SIZE), 0, rotationDeg-90, 0, 1.0f));
 					sensorIdMap.put(tile.getValue().getSensorID(), tile);
 					break;
 				case "./Resources/Images/faucPartImage_50.png":
@@ -259,27 +259,28 @@ public class DisplayManager implements Runnable {
 				float adjustmentFactorX = 0;
 				float adjustmentFactorY = PIPE_TILE_SIZE/2.8f;
 				float adjustmentFactorZ = 0;
-				switch(sensorWithId.getValue().getRotation()) {
+				switch(sensorWithId.getValue().getRotationCounterClockWise()) {
 				case 0:
+				case 360:
 					adjustmentFactorX = -PIPE_TILE_SIZE*0.15f;
 					adjustmentFactorZ = 0.2f;
 					break;
 				case 90:
-					adjustmentFactorX = -0.2f;
-					adjustmentFactorZ = -PIPE_TILE_SIZE*0.15f;
+					adjustmentFactorX = 0.2f;
+					adjustmentFactorZ = PIPE_TILE_SIZE*0.15f;
 					break;
 				case 180:
 					adjustmentFactorX = PIPE_TILE_SIZE*0.15f;
 					adjustmentFactorZ = -0.2f;
 					break;
 				case 270:
-					adjustmentFactorX = 0.2f;
-					adjustmentFactorZ = PIPE_TILE_SIZE*0.15f;
+					adjustmentFactorX = -0.2f;
+					adjustmentFactorZ = -PIPE_TILE_SIZE*0.15f;
 					break;
 				}
 				
 				//String portValue = Double.toString(SerPort.getFlowSpeed(SerPort.getValue(SerPort.readPort(comPort))))+("l/m");
-				stringEntityList.addAll(fontRenderer.getStringEntityList("Hello World My Name Is John", new Vector3f( xPos*PIPE_TILE_SIZE + adjustmentFactorX, adjustmentFactorY, zPos*(PIPE_TILE_SIZE + adjustmentFactorZ) ), 0, sensorWithId.getValue().getRotation(), 0, 1f));
+				stringEntityList.addAll(fontRenderer.getStringEntityList("Hello World My Name Is John", new Vector3f( xPos*PIPE_TILE_SIZE + adjustmentFactorX, adjustmentFactorY, zPos*(PIPE_TILE_SIZE + adjustmentFactorZ) ), 0, sensorWithId.getValue().getRotationCounterClockWise(), 0, 1f));
 			}
 			
 			for(Entity entity : pipeModel) {

@@ -41,6 +41,10 @@ public class Element implements Serializable {
 		return rotation;
 
 	}
+	
+	public int getRotationCounterClockWise() {
+		return 360-rotation;
+	}
 
 	public void setSensorID(int id) {
 		sensorID = id;
