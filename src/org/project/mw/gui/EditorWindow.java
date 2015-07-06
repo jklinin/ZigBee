@@ -203,6 +203,7 @@ public class EditorWindow extends JFrame {
 		tPart.addMouseListener(listener);
 		tPart.setToolTipText("T-Bauteil");
 		tPart.setTransferHandler(new TransferHandler("icon"));
+		tPart.setDropTarget(null);
 		toolbarRight.add(tPart);
 
 		// L-Part on toolbar
@@ -210,12 +211,14 @@ public class EditorWindow extends JFrame {
 		lPart.setToolTipText("L-Bauteil");
 		lPart.addMouseListener(listener);
 		lPart.setTransferHandler(new TransferHandler("icon"));
+		lPart.setDropTarget(null);
 		toolbarRight.add(lPart);
 
 		// Straight-Part on toolbar
 		JLabel sPart = new JLabel(new ImageIcon(FILE_IMAGE_PATH + "IPartImage_1_50.png"));
 		sPart.addMouseListener(listener);
 		sPart.setTransferHandler(new TransferHandler("icon"));
+		sPart.setDropTarget(null);
 		sPart.setToolTipText("Gerades Bauteil");
 		toolbarRight.add(sPart);
 
@@ -223,6 +226,7 @@ public class EditorWindow extends JFrame {
 		JLabel pump = new JLabel(new ImageIcon(FILE_IMAGE_PATH + "pumpPartImage_50.png"));
 		pump.addMouseListener(listener);
 		pump.setTransferHandler(new TransferHandler("icon"));
+		pump.setDropTarget(null);
 		pump.setToolTipText("Pumpe");
 		toolbarRight.add(pump);
 		panelEast.add(toolbarRight);
@@ -231,6 +235,7 @@ public class EditorWindow extends JFrame {
 		JLabel sensor = new JLabel(new ImageIcon(FILE_IMAGE_PATH + "sensorPartImage.png"));
 		sensor.addMouseListener(listener);
 		sensor.setTransferHandler(new TransferHandler("icon"));
+		sensor.setDropTarget(null);
 		sensor.setToolTipText("Sensor");
 		toolbarRight.add(sensor);
 		panelEast.add(toolbarRight);
@@ -239,6 +244,7 @@ public class EditorWindow extends JFrame {
 		JLabel fauc = new JLabel(new ImageIcon(FILE_IMAGE_PATH + "faucPartImage_50.png"));
 		fauc.addMouseListener(listener);
 		fauc.setTransferHandler(new TransferHandler("icon"));
+		fauc.setDropTarget(null);
 		fauc.setToolTipText("Ventile");
 		toolbarRight.add(fauc);
 		panelEast.add(toolbarRight);
