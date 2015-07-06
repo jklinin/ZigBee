@@ -196,6 +196,7 @@ public class EditorWindow extends JFrame {
 				menuItemHelp.setIcon(null);
 				menuItemHelp.setSelected(true);
 				menuItemHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+				menuItemHelp.addActionListener(e -> helpItemMenuActionPerformed(e));
 				menuHelp.add(menuItemHelp);
 			}
 			menuBar.add(menuHelp);
@@ -293,6 +294,13 @@ public class EditorWindow extends JFrame {
 		//pack();
 		
 		}
+	}
+
+	private void helpItemMenuActionPerformed(ActionEvent e) {
+		AboutDialog aboutDialog= new AboutDialog();
+		aboutDialog.setVisible(true);
+		System.out.println("About Dialog");
+		
 	}
 
 	// ======== OnClicListners ========
