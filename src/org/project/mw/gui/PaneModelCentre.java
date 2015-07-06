@@ -124,13 +124,24 @@ public class PaneModelCentre implements ActionListener {
 		System.out.println("****" + button.getIcon().toString());
 		// TODO impement action
 		System.out.println("+++++" + Util.getInstance().getElementsCollection().get(new Point(x, y)).getNameElement());
+		
+		EditorWindow editorWindowInstanze = EditorWindow.getEditWindowInstance();
+		editorWindowInstanze.editWindowContentPane.remove(editorWindowInstanze.scrollpane);
+		int scalFactor=Util.getInstance().getScalFactor();
+		int modelDemension=Util.getInstance().getModelDemension();
+		editorWindowInstanze.paneModelCentre = new PaneModelCentre(editorWindowInstanze.n * scalFactor, modelDemension, modelDemension, true);// FIXME
+		editorWindowInstanze.paneModelCentre.getContainer().repaint();
+		editorWindowInstanze.scrollpane = new JScrollPane(editorWindowInstanze.paneModelCentre.getContainer());
+		editorWindowInstanze.editWindowContentPane.add(editorWindowInstanze.scrollpane, BorderLayout.CENTER);
+
+		editorWindowInstanze.pack();
 
 		if (EditorWindow.removeEnbKey == true) {
 			map.remove(new Point(x, y));
-			EditorWindow editorWindowInstanze = EditorWindow.getEditWindowInstance();
+			 editorWindowInstanze = EditorWindow.getEditWindowInstance();
 			editorWindowInstanze.editWindowContentPane.remove(editorWindowInstanze.scrollpane);
-			int scalFactor=Util.getInstance().getScalFactor();
-			int modelDemension=Util.getInstance().getModelDemension();
+			scalFactor=Util.getInstance().getScalFactor();
+			modelDemension=Util.getInstance().getModelDemension();
 			editorWindowInstanze.paneModelCentre = new PaneModelCentre(editorWindowInstanze.n * scalFactor, modelDemension, modelDemension, true);// FIXME
 			editorWindowInstanze.paneModelCentre.getContainer().repaint();
 			editorWindowInstanze.scrollpane = new JScrollPane(editorWindowInstanze.paneModelCentre.getContainer());
