@@ -1,6 +1,7 @@
 package org.project.mw.util;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -38,7 +39,10 @@ public class Util implements Serializable {
 	private static Util utilInstance = null;
 	private String FILENAME_DEFAULT = "./dafaultModel.zb";
 	private Map<Point, Element> map;
-
+	private int scalFactor = 1;
+	private Dimension sizeEditorWindow;
+	private Point locationEditorWindow;
+	private int modelDemension=50;
 	Util() {
 		map = new LinkedHashMap<Point, Element>();
 	}
@@ -58,6 +62,10 @@ public class Util implements Serializable {
 			FileOutputStream fileoutput = new FileOutputStream(FILENAME_DEFAULT);
 			ObjectOutputStream outputstream = new ObjectOutputStream(fileoutput);
 			outputstream.writeObject(map);
+			outputstream.writeObject(scalFactor);
+			outputstream.writeObject(sizeEditorWindow);
+			outputstream.writeObject(locationEditorWindow);
+			outputstream.writeObject(modelDemension);
 			System.out.println("file saved");
 			outputstream.flush();
 			outputstream.close();
@@ -76,10 +84,15 @@ public class Util implements Serializable {
 		try {
 			ObjectInputStream input = new ObjectInputStream(new FileInputStream(FILENAME_DEFAULT));
 			map = (Map<Point, Element>) input.readObject();
+			scalFactor = (int) input.readObject();
+			System.out.println("Scall->" + scalFactor);
+			sizeEditorWindow = (Dimension) input.readObject();
+			locationEditorWindow=(Point) input.readObject();
+			modelDemension=(int) input.readObject();
 			input.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, Util.getInstance().FILENAME_DEFAULT + " Konnte nicht gefunden werden.", "Warnung", JOptionPane.WARNING_MESSAGE);
-			e.printStackTrace();
+		//	JOptionPane.showMessageDialog(null, Util.getInstance().FILENAME_DEFAULT + " Konnte nicht gefunden werden.", "Warnung", JOptionPane.WARNING_MESSAGE);
+			//e.printStackTrace();
 		}
 	}
 
@@ -112,6 +125,10 @@ public class Util implements Serializable {
 			FileOutputStream fileoutput = new FileOutputStream(fileName);
 			ObjectOutputStream outputstream = new ObjectOutputStream(fileoutput);
 			outputstream.writeObject(map);
+			outputstream.writeObject(scalFactor);
+			outputstream.writeObject(sizeEditorWindow);
+			outputstream.writeObject(locationEditorWindow);
+			outputstream.writeObject(modelDemension);
 
 			outputstream.flush();
 			outputstream.close();
@@ -125,6 +142,11 @@ public class Util implements Serializable {
 		try {
 			ObjectInputStream input = new ObjectInputStream(new FileInputStream(fileName));
 			map = (Map<Point, Element>) input.readObject();
+			scalFactor = (int) input.readObject();
+			System.out.println("Scall->" + scalFactor);
+			sizeEditorWindow = (Dimension) input.readObject();
+			locationEditorWindow=(Point) input.readObject();
+			modelDemension=(int) input.readObject();
 			input.close();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, fileName + " Konnte nicht gefunden werden.", "Warnung", JOptionPane.WARNING_MESSAGE);
@@ -240,7 +262,7 @@ public class Util implements Serializable {
 		int roateElemt = element.getRotation();
 		icon = button.getIcon();
 
-		int modelDemension = EditorWindow.getEditWindowInstance().getModelDemension();
+	
 		JButton btnTemp = new JButton();
 		btnTemp.setIcon(Util.getInstance().getScaledImage(icon.toString(), modelDemension, modelDemension));
 
@@ -248,41 +270,67 @@ public class Util implements Serializable {
 
 		button.setIcon(new ImageIcon(Util.getInstance().getScaledImage(image, modelDemension, modelDemension)));
 		icon = button.getIcon();
-			switch (roateElemt) {
-			case 0:
-				ri = new RotatedIcon(icon, 90.0);
-				button.setIcon(ri);
-				System.out.println("Rotated Icon-> " + icon.toString());
-				element.setRotation(90);
+		switch (roateElemt) {
+		case 0:
+			ri = new RotatedIcon(icon, 90.0);
+			button.setIcon(ri);
+			System.out.println("Rotated Icon-> " + icon.toString());
+			element.setRotation(90);
 
-				break;
-			case 90:
-				ri = new RotatedIcon(icon, 90.0);
-				button.setIcon(ri);
-				System.out.println("Rotated Icon-> " + icon.toString());
-				element.setRotation(180);
+			break;
+		case 90:
+			ri = new RotatedIcon(icon, 90.0);
+			button.setIcon(ri);
+			System.out.println("Rotated Icon-> " + icon.toString());
+			element.setRotation(180);
 
-				break;
+			break;
 
-			case 180:
-				ri = new RotatedIcon(icon, 90.0);
-				button.setIcon(ri);
-				System.out.println("Rotated Icon-> " + icon.toString());
-				element.setRotation(270);
+		case 180:
+			ri = new RotatedIcon(icon, 90.0);
+			button.setIcon(ri);
+			System.out.println("Rotated Icon-> " + icon.toString());
+			element.setRotation(270);
 
-				break;
+			break;
 
-			case 270:
-				ri = new RotatedIcon(icon, 90.0);
-				button.setIcon(ri);
-				element.setRotation(0);
+		case 270:
+			ri = new RotatedIcon(icon, 90.0);
+			button.setIcon(ri);
+			element.setRotation(0);
 
-				break;
-			}
-		
+			break;
+		}
+
 		map.replace(locationElement, element);
 		EditorWindow.getEditWindowInstance().scrollpane.revalidate();
 		EditorWindow.getEditWindowInstance().scrollpane.repaint();
 	}
 
+	public void setScalFactor(int sc) {
+		scalFactor = sc;
+	}
+
+	public int getScalFactor() {
+		return scalFactor;
+	}
+
+	public void editorWindowParamater() {
+		sizeEditorWindow = EditorWindow.getEditWindowInstance().getSize();
+		locationEditorWindow = EditorWindow.getEditWindowInstance().getLocation();
+	}
+
+	public Dimension getSizeEditorWindow() {
+		return sizeEditorWindow;
+	}
+
+	public Point getlocationEditorWindow() {
+		return locationEditorWindow;
+	}
+	public int getModelDemension(){
+		return modelDemension;
+	}
+	public void setModelDemension (int md) {
+		modelDemension=md;
+	}
 }

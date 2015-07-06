@@ -129,7 +129,9 @@ public class PaneModelCentre implements ActionListener {
 			map.remove(new Point(x, y));
 			EditorWindow editorWindowInstanze = EditorWindow.getEditWindowInstance();
 			editorWindowInstanze.editWindowContentPane.remove(editorWindowInstanze.scrollpane);
-			editorWindowInstanze.paneModelCentre = new PaneModelCentre(editorWindowInstanze.n * editorWindowInstanze.scalFactor, editorWindowInstanze.modelDemension, editorWindowInstanze.modelDemension, true);// FIXME
+			int scalFactor=Util.getInstance().getScalFactor();
+			int modelDemension=Util.getInstance().getModelDemension();
+			editorWindowInstanze.paneModelCentre = new PaneModelCentre(editorWindowInstanze.n * scalFactor, modelDemension, modelDemension, true);// FIXME
 			editorWindowInstanze.paneModelCentre.getContainer().repaint();
 			editorWindowInstanze.scrollpane = new JScrollPane(editorWindowInstanze.paneModelCentre.getContainer());
 			editorWindowInstanze.editWindowContentPane.add(editorWindowInstanze.scrollpane, BorderLayout.CENTER);
