@@ -13,7 +13,7 @@ class AboutDialog extends JFrame {
 	private JPanel versionPane;
 
 	public AboutDialog() {
-
+		setIconImage(((ImageIcon) UIManager.getIcon("FileView.computerIcon")).getImage());
 		setTitle("Über das Programm");
 		setSize(500, 500);
 		setBackground(Color.gray);
