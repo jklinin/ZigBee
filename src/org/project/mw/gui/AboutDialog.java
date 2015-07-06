@@ -15,8 +15,8 @@ class AboutDialog extends JFrame {
 	public AboutDialog() {
 		setIconImage(((ImageIcon) UIManager.getIcon("FileView.computerIcon")).getImage());
 		setTitle("Über das Programm");
-		setSize(500, 500);
-		setBackground(Color.gray);
+		setSize(789, 335);
+		setBackground(Color.decode("#948b93"));
 
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout());
@@ -72,7 +72,10 @@ class AboutDialog extends JFrame {
 
 	public void createPage1() {
 		aboutPane = new JPanel();
-		aboutPane.setLayout(null);
+		aboutPane.setBackground(Color.decode("#948b93"));
+		JLabel aboutLabel=new JLabel(new ImageIcon("./Resources/Images/hilfeImages/ueberProgramm.jpg"));
+		//aboutPane.setLayout(null);
+		aboutPane.add(aboutLabel);
 
 	}
 
