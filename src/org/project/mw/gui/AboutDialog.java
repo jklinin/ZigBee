@@ -15,7 +15,7 @@ class AboutDialog extends JFrame {
 	public AboutDialog() {
 		setIconImage(((ImageIcon) UIManager.getIcon("FileView.computerIcon")).getImage());
 		setTitle("Über das Programm");
-		setSize(789, 335);
+		setSize(789, 400);
 		setBackground(Color.decode("#948b93"));
 
 		JPanel topPanel = new JPanel();
@@ -74,20 +74,26 @@ class AboutDialog extends JFrame {
 		aboutPane = new JPanel();
 		aboutPane.setBackground(Color.decode("#948b93"));
 		JLabel aboutLabel=new JLabel(new ImageIcon("./Resources/Images/hilfeImages/ueberProgramm.jpg"));
-		//aboutPane.setLayout(null);
+		
 		aboutPane.add(aboutLabel);
 
 	}
 
 	public void createPage2() {
-		hilfePane = new JPanel();
-		hilfePane.setLayout(new BorderLayout());
+		hilfePane = new JPanel();	
+		hilfePane.setBackground(Color.decode("#948b93"));
+		JLabel hilfeLabel=new JLabel(new ImageIcon("./Resources/Images/hilfeImages/hotKey.jpg"));
+		hilfePane.add(hilfeLabel);
 
 	}
 
 	public void createPage3() {
-		versionPane = new JPanel();
-		versionPane.setLayout(new GridLayout(3, 2));
+		versionPane = new JPanel();	
+		versionPane.setBackground(Color.decode("#948b93"));
+		JLabel versionLabel=new JLabel("Version 1.0.0");
+		versionLabel.setForeground(Color.WHITE);
+		versionLabel.setFont(versionLabel.getFont().deriveFont(20.0f));
+		versionPane.add(versionLabel);
 
 	}
 
