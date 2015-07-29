@@ -14,20 +14,6 @@ import org.project.mw.threeD.entities.Camera;
 public class Maths {
 
 	/**
-	 * Calculates and returns the transformation matrix by translation and scale
-	 * @param translation
-	 * @param scale
-	 * @return
-	 */
-	public static Matrix4f createTransformationMatrix(Vector2f translation, Vector2f scale) {
-		Matrix4f matrix = new Matrix4f();
-		matrix.setIdentity();
-		Matrix4f.translate(translation, matrix, matrix);
-		Matrix4f.scale(new Vector3f(scale.x, scale.y, 1f), matrix, matrix);
-		return matrix;
-	}
-	
-	/**
 	 * Calculates and returns the barycentric 
 	 * @param p1
 	 * @param p2
@@ -41,6 +27,20 @@ public class Maths {
 		float l2 = ((p3.z - p1.z) * (pos.x - p3.x) + (p1.x - p3.x) * (pos.y - p3.z)) / det;
 		float l3 = 1.0f - l1 - l2;
 		return l1 * p1.y + l2 * p2.y + l3 * p3.y;
+	}
+	
+	/**
+	 * Calculates and returns the transformation matrix by translation and scale
+	 * @param translation
+	 * @param scale
+	 * @return
+	 */
+	public static Matrix4f createTransformationMatrix(Vector2f translation, Vector2f scale) {
+		Matrix4f matrix = new Matrix4f();
+		matrix.setIdentity();
+		Matrix4f.translate(translation, matrix, matrix);
+		Matrix4f.scale(new Vector3f(scale.x, scale.y, 1f), matrix, matrix);
+		return matrix;
 	}
 	
 	/**

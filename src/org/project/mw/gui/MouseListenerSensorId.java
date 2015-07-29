@@ -1,17 +1,14 @@
 package org.project.mw.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+
 import java.awt.Point;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -24,27 +21,32 @@ import org.project.mw.util.Util;
 public class MouseListenerSensorId extends MouseAdapter {
 	public void mousePressed(MouseEvent e) {
 		if (SwingUtilities.isRightMouseButton(e)) {
-
+			EditorWindow.getEditWindowInstance().getPaneModelCentreInstance().putElementsToMap();
 			JButton source = (JButton) e.getSource();
 			String command = source.getActionCommand();
-			System.out.println(command);
+			
 			String[] arr = command.split(",");
 			int x = Integer.parseInt(arr[0]);
 			int y = Integer.parseInt(arr[1]);
 			JButton button = Util.getInstance().getElementsCollection().get(new Point(x, y)).getIconButton();
 			EditorWindow.getEditWindowInstance().getPaneModelCentreInstance().putElementsToMap();
 			if (Util.getInstance().getElementsCollection().get(new Point(x, y)).isSensor() == true) {
-				System.out.println("Sensor");
-
-				dialog(x, y);
-
+				dialog(x, y); // open dialog for input of sensor ID
 			}
 		}
 	}
 
+	/**dialog for input of sensor ID
+	 * @param x point x of component in gridbaglayout and in the map collection
+	 * @param y point y of component in gridbaglayout and in the map collection
+	 */
 	private void dialog(int x, int y) {
 		JPanel pan = new JPanel(new BorderLayout());
 		final JTextField sensorIdField = new JTextField(5);
+		int sensorID=Util.getInstance().getElementsCollection().get(new Point(x, y)).getSensorID();
+		if(sensorID!=0){
+			sensorIdField.setText(Integer.toString(sensorID));
+		}
 		final JButton ok = new JButton("OK");
 		ok.setEnabled(false);
 
@@ -52,7 +54,6 @@ public class MouseListenerSensorId extends MouseAdapter {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String input = sensorIdField.getText();
-				System.out.println("The input is: " + input);
 				int id = Integer.parseInt(input);
 				Util.getInstance().getElementsCollection().get(new Point(x, y)).setSensorID(id);
 
@@ -66,6 +67,7 @@ public class MouseListenerSensorId extends MouseAdapter {
 		sensorIdField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void removeUpdate(DocumentEvent e) {
+				// validation of input only int
 				if (sensorIdField.getText().matches("\\d+") == false) {
 					ok.setEnabled(false);
 				} else {
@@ -75,7 +77,7 @@ public class MouseListenerSensorId extends MouseAdapter {
 
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-
+				// validation of input only int
 				if (sensorIdField.getText().matches("\\d+") == true) {
 					ok.setEnabled(true);
 				} else {
@@ -86,6 +88,7 @@ public class MouseListenerSensorId extends MouseAdapter {
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
+				// validation of input only int
 				if (sensorIdField.getText().matches("\\d+") == true) {
 					ok.setEnabled(true);
 				} else {

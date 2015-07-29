@@ -12,10 +12,10 @@ import org.newdawn.slick.TrueTypeFont;
  */
 public class FontModel {
 	
-	TrueTypeFont font;
-	float x, y;
-	String text;
 	Color color;
+	TrueTypeFont font;
+	String text;
+	float x, y;
 
 	public FontModel(TrueTypeFont font) {
 		this.font = font;
@@ -30,31 +30,31 @@ public class FontModel {
 		this.color = color;
 	}
 
-	public void setFont(TrueTypeFont font) {
-		this.font = font;
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	public void setText(String text) {
-		this.text = text;
+	/**
+	 * draws the prepared true type font string
+	 */
+	public void drawString() {
+		font.drawString(x, y, text, color);
 	}
 
 	public void setColor(Color color) {
 		this.color = color;
 	}
 
+	public void setFont(TrueTypeFont font) {
+		this.font = font;
+	}
 
-	/**
-	 * draws the prepared true type font string
-	 */
-	public void drawString() {
-		font.drawString(x, y, text, color);
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+
+	public void setY(float y) {
+		this.y = y;
 	}
 }

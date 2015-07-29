@@ -2,22 +2,19 @@ package org.project.mw.gui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Map;
-
 import javax.swing.*;
-
-import org.lwjgl.util.Point;
 import org.project.mw.threeD.DisplayManager;
-import org.project.mw.util.Mlogger;
 import org.project.mw.util.Util;
 
 /**
- * @author Yuri Kalinin MainWindow for 2D constaraction
+ * @author Yuri Kalinin 
+ * 2D Editor window for construction of model
+ * MainWindow of the program 
  * 
  */
 
 public class EditorWindow extends JFrame {
-	private Mlogger log = new Mlogger();// for logging write inf ito output.txt
+	
 	private static EditorWindow editWindowInstance = null;
 	private JMenuBar menuBar;
 	private JMenu menuFile;
@@ -35,7 +32,7 @@ public class EditorWindow extends JFrame {
 	private AbstractButton buttonLessZoom;
 	private AbstractButton buttonAdd;
 	private AbstractButton buttonRemove;
-	
+
 	protected PaneModelCentre paneModelCentre;
 	public JScrollPane scrollpane;
 	private JPanel panelEast;
@@ -51,6 +48,7 @@ public class EditorWindow extends JFrame {
 
 	public EditorWindow(boolean newWindow) {
 		this.newWindow = newWindow;
+		setTitle("2D Editor");
 		menuBar = new JMenuBar();
 		menuFile = new JMenu();
 		newItemMenu = new JMenuItem();
@@ -67,7 +65,7 @@ public class EditorWindow extends JFrame {
 		buttonLessZoom = new JButton();
 		buttonAdd = new JButton();
 		buttonRemove = new JButton();
-		int modelDemension=Util.getInstance().getModelDemension();
+		int modelDemension = Util.getInstance().getModelDemension();
 		paneModelCentre = new PaneModelCentre(n, modelDemension, modelDemension, false);
 		scrollpane = new JScrollPane(paneModelCentre.getContainer());
 		scrollpane.setMinimumSize(new Dimension(150, 150));
@@ -88,7 +86,7 @@ public class EditorWindow extends JFrame {
 					Util.getInstance().openModel();
 					int scalFactor = Util.getInstance().getScalFactor();
 					editWindowContentPane.remove(scrollpane);
-					int modelDemension=Util.getInstance().getModelDemension();
+					int modelDemension = Util.getInstance().getModelDemension();
 					paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 					paneModelCentre.getContainer().repaint();
 					scrollpane = new JScrollPane(paneModelCentre.getContainer());
@@ -119,7 +117,8 @@ public class EditorWindow extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				Util.getInstance().editorWindowParamater();// save parameters of editor window 
+				Util.getInstance().editorWindowParamater();// save parameters of
+															// editor window
 				Util.getInstance().saveModel();
 				dispose();
 
@@ -281,7 +280,7 @@ public class EditorWindow extends JFrame {
 			buttonRemove.setMnemonic(KeyEvent.VK_LEFT);
 			panelSouth.add(buttonRemove);
 			// ---- button GoTO 3D Model----
-			buttonOk.setText("Fertig");
+			buttonOk.setText("Render");
 			buttonOk.setBackground(new Color(135, 206, 235));
 			buttonOk.addActionListener(e -> goTo3DModelActionPerformed(e));
 			panelSouth.add(buttonOk);
@@ -289,18 +288,14 @@ public class EditorWindow extends JFrame {
 			editWindowContentPane.add(panelSouth, BorderLayout.SOUTH);
 			editWindowContentPane.add(panelEast, BorderLayout.EAST);
 			editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
-			// editWindowContentPane.add(paneModelCentre.getContainer(),
-			// BorderLayout.CENTER);
-		//pack();
-		
+
 		}
 	}
 
 	private void helpItemMenuActionPerformed(ActionEvent e) {
-		AboutDialog aboutDialog= new AboutDialog();
+		AboutDialog aboutDialog = new AboutDialog();
 		aboutDialog.setVisible(true);
-		System.out.println("About Dialog");
-		
+
 	}
 
 	// ======== OnClicListners ========
@@ -314,11 +309,6 @@ public class EditorWindow extends JFrame {
 
 	private void goTo3DModelActionPerformed(ActionEvent e) {
 		paneModelCentre.putElementsToMap();
-		// just testing
-		for (Map.Entry e1 : Util.getInstance().getElementsCollection().entrySet()) {
-			Element element = (Element) e1.getValue();
-			System.out.println(e1.getKey() + " = " + element.getNameElement() + " Rot: " + element.getRotation() + " Sensor ID " + element.getSensorID());
-		}
 		new DisplayManager().start();
 	}
 
@@ -345,7 +335,7 @@ public class EditorWindow extends JFrame {
 			scalFactor = scalFactor - 2;
 			paneModelCentre.putElementsToMap();
 			editWindowContentPane.remove(scrollpane);
-			int modelDemension=Util.getInstance().getModelDemension();
+			int modelDemension = Util.getInstance().getModelDemension();
 			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 			paneModelCentre.getContainer().repaint();
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
@@ -354,7 +344,7 @@ public class EditorWindow extends JFrame {
 			Util.getInstance().editorWindowParamater();// save parameter of
 														// window
 			pack();
-			
+
 			editWindowInstance.setSize(Util.getInstance().getSizeEditorWindow());// restore
 																					// window
 																					// after
@@ -372,7 +362,7 @@ public class EditorWindow extends JFrame {
 			scalFactor = scalFactor + 2;
 			paneModelCentre.putElementsToMap();
 			editWindowContentPane.remove(scrollpane);
-			int modelDemension=Util.getInstance().getModelDemension();
+			int modelDemension = Util.getInstance().getModelDemension();
 			paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 			paneModelCentre.getContainer().repaint();
 			scrollpane = new JScrollPane(paneModelCentre.getContainer());
@@ -392,7 +382,7 @@ public class EditorWindow extends JFrame {
 	}
 
 	private void moreZoomActionPerformend(ActionEvent e) {
-		int modelDemension=Util.getInstance().getModelDemension();
+		int modelDemension = Util.getInstance().getModelDemension();
 		int scalFactor = Util.getInstance().getScalFactor();
 		modelDemension = modelDemension + 5;
 		Util.getInstance().setModelDemension(modelDemension);
@@ -403,15 +393,13 @@ public class EditorWindow extends JFrame {
 		editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
 		Util.getInstance().editorWindowParamater();// save parameter of window
 		pack();
-		editWindowInstance.setSize(Util.getInstance().getSizeEditorWindow());// restore
-																				// window
-																				// after
-																				// pack()
+		editWindowInstance.setSize(Util.getInstance().getSizeEditorWindow());
+		// Restore window after pack()
 		editWindowInstance.setLocation(Util.getInstance().getlocationEditorWindow());
 	}
 
 	private void lessZoomActionPerformed(ActionEvent e) {
-		int modelDemension=Util.getInstance().getModelDemension();
+		int modelDemension = Util.getInstance().getModelDemension();
 		if (modelDemension != 50) {
 			int scalFactor = Util.getInstance().getScalFactor();
 			modelDemension = modelDemension - 5;
@@ -425,10 +413,8 @@ public class EditorWindow extends JFrame {
 			Util.getInstance().editorWindowParamater();// save parameter of
 														// window
 			pack();
-			editWindowInstance.setSize(Util.getInstance().getSizeEditorWindow());// restore
-																					// window
-																					// after
-																					// pack()
+			// Restore window after pack()
+			editWindowInstance.setSize(Util.getInstance().getSizeEditorWindow());
 			editWindowInstance.setLocation(Util.getInstance().getlocationEditorWindow());
 
 		}
@@ -441,17 +427,15 @@ public class EditorWindow extends JFrame {
 		Util.getInstance().fileChooser(editWindowInstance, "open");
 		int scalFactor = Util.getInstance().getScalFactor();
 		editWindowContentPane.remove(scrollpane);
-		int modelDemension=Util.getInstance().getModelDemension();
+		int modelDemension = Util.getInstance().getModelDemension();
 		paneModelCentre = new PaneModelCentre(n * scalFactor, modelDemension, modelDemension, true);
 		paneModelCentre.getContainer().repaint();
 		scrollpane = new JScrollPane(paneModelCentre.getContainer());
 		editWindowContentPane.add(scrollpane, BorderLayout.CENTER);
 		Util.getInstance().editorWindowParamater();// save parameter of window
 		pack();
-		editWindowInstance.setSize(Util.getInstance().getSizeEditorWindow());// restore
-																				// window
-																				// after
-																				// pack()
+		editWindowInstance.setSize(Util.getInstance().getSizeEditorWindow());
+		// Restore window after pack()
 		editWindowInstance.setLocation(Util.getInstance().getlocationEditorWindow());
 	}
 
@@ -484,5 +468,4 @@ public class EditorWindow extends JFrame {
 		return paneModelCentre;
 	}
 
-	
 }

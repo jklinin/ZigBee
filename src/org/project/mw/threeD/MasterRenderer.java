@@ -22,25 +22,49 @@ import org.project.mw.threeD.shaders.StaticShader;
  */
 public class MasterRenderer {
 
-	private static final float FOV = 70;
-	private static final float NEAR_PLANE = 0.1f;
+	private static final float BLUE = 0.1f;
 	private static final float FAR_PLANE = 1000;
+	private static final float FOV = 70;
 	
-	private static final float RED = 0f;
-	private static final float GREEN = 0f;
-	private static final float BLUE = 0f;
+	private static final float GREEN = 0.75f;
+	private static final float NEAR_PLANE = 0.1f;
+	private static final float RED = 0.99f;
+	
+	/**
+	 * Disables face culling for 3D-Rendering
+	 */
+	public static void disableCulling() {
+		GL11.glDisable(GL11.GL_CULL_FACE);
+	}
+	
+	/**
+	 * Enables face culling for 3D-Rendering.
+	 * Tells OpenGL to not render triangles not facing to the camera and therefore increasing performance.
+	 */
+	public static void enableCulling() {
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glCullFace(GL11.GL_BACK);
+	}
+	private Map<TexturedModel,List<Entity>> entities = new HashMap<TexturedModel,List<Entity>>();
 	
 	private Matrix4f projectionMatrix;
 	
-	private StaticShader shader = new StaticShader();
 	private EntityRenderer renderer;
 	
-	private Map<TexturedModel,List<Entity>> entities = new HashMap<TexturedModel,List<Entity>>();
+	private StaticShader shader = new StaticShader();
 	
 	public MasterRenderer() {
 		enableCulling();
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader,projectionMatrix);
+	}
+	
+	/**
+	 * Cleans up after rendering is finished.
+	 * Should be called after the main loop is exited.
+	 */
+	public void cleanUp() {
+		shader.cleanUp();
 	}
 	
 	/**
@@ -57,35 +81,14 @@ public class MasterRenderer {
 	}
 	
 	/**
-	 * Enables face culling for 3D-Rendering.
-	 * Tells OpenGL to not render triangles not facing to the camera and therefore increasing performance.
+	 * prepares OpenGL for entity rendering.
+	 * Includes depth test and clearing from previous frames.
+	 * Sets the background color.
 	 */
-	public static void enableCulling() {
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glCullFace(GL11.GL_BACK);
-	}
-	
-	/**
-	 * Disables face culling for 3D-Rendering
-	 */
-	public static void disableCulling() {
-		GL11.glDisable(GL11.GL_CULL_FACE);
-	}
-	
-	/**
-	 * Renders registered entities considering camera and light position
-	 * @param sun the main light source
-	 * @param camera the camera
-	 */
-	public void render(Light sun, Camera camera) {
-		prepare();
-		shader.start();
-		shader.loadSkyColour(RED, GREEN, BLUE);
-		shader.loadLight(sun);
-		shader.loadViewMatrix(camera);
-		renderer.render(entities);
-		shader.stop();
-		entities.clear();
+	public void prepare() {
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
+		GL11.glClearColor(RED, GREEN, BLUE, 1);
 	}
 	
 	/**
@@ -105,22 +108,19 @@ public class MasterRenderer {
 	}
 	
 	/**
-	 * Cleans up after rendering is finished.
-	 * Should be called after the main loop is exited.
+	 * Renders registered entities considering camera and light position
+	 * @param sun the main light source
+	 * @param camera the camera
 	 */
-	public void cleanUp() {
-		shader.cleanUp();
-	}
-	
-	/**
-	 * prepares OpenGL for entity rendering.
-	 * Includes depth test and clearing from previous frames.
-	 * Sets the background color.
-	 */
-	public void prepare() {
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glClearColor(RED, GREEN, BLUE, 1);
+	public void render(Light sun, Camera camera) {
+		prepare();
+		shader.start();
+		shader.loadSkyColour(RED, GREEN, BLUE);
+		shader.loadLight(sun);
+		shader.loadViewMatrix(camera);
+		renderer.render(entities);
+		shader.stop();
+		entities.clear();
 	}
 	
 	private void createProjectionMatrix() {

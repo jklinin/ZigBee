@@ -1,41 +1,31 @@
 package org.project.mw.threeD;
 
-import java.awt.Font;
 import java.awt.Point;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.swing.JButton;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.ContextAttribs;
+//import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.TrueTypeFont;
 import org.project.mw.gui.Element;
+import org.project.mw.serial.WaterFlowSensorReader;
 import org.project.mw.threeD.entities.Camera;
 import org.project.mw.threeD.entities.Entity;
 import org.project.mw.threeD.entities.Light;
 import org.project.mw.threeD.fonts.FontRenderer;
-import org.project.mw.threeD.fonts.FontModel;
-import org.project.mw.threeD.guis.GuiRenderer;
-import org.project.mw.threeD.guis.GuiTexture;
 import org.project.mw.threeD.models.TexturedModel;
 import org.project.mw.threeD.textures.ModelTexture;
-import org.project.mw.threeD.toolbox.MousePicker;
 import org.project.mw.util.Util;
 
-import simpleread.SerPort;
 
 /**
  * Main class for the 3D view. Implements a runnable for calculation in a separate task.
@@ -47,29 +37,30 @@ import simpleread.SerPort;
  */
 public class DisplayManager implements Runnable {
 	
-	private Thread thread;
-	private boolean running = false;
-	
-	private static final float PIPE_TILE_SIZE = 14f;
-	
+	private static float delta;
 	private static final String DISPLAY_TITLE = "Pipes";
-	private static final int WIDTH = 800;
-	private static final int HEIGHT = 800;
+	
 	private static final int FPS_CAP = 120;
 	
+	private static final int HEIGHT = 600;
 	private static long lastFrameTime;
-	private static float delta;
-
-	private static String comPort = null;
+	private static final float PIPE_TILE_SIZE = 14f;
+	private static final int WIDTH = 800;
 	
+	/**
+	 * closes the 3D-Window
+	 */
+	public static void closeDisplay() {
+		Display.destroy();	
+	}
 	/**
 	 * Creates the 3D Display of LWJGL
 	 */
 	public static void createDisplay() {
 		
-		ContextAttribs attribs = new ContextAttribs(3,2)
-		.withForwardCompatible(true)
-		.withProfileCore(true);
+		//ContextAttribs attribs = new ContextAttribs(3,2)
+		//.withForwardCompatible(true)
+		//.withProfileCore(true);
 		
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT));
@@ -85,6 +76,14 @@ public class DisplayManager implements Runnable {
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
 		lastFrameTime = getCurrentTime();
 	}
+
+	/**
+	 * Returns the difference between the System times between the currently and the previously rendered frame
+	 * @return the time between current and previous frame
+	 */
+	public static float getFrameTimeSeconds() {
+		return delta;
+	}
 	
 	/**
 	 * Call this method after each iteration of the endless loop of the 3D-rendering
@@ -99,21 +98,6 @@ public class DisplayManager implements Runnable {
 	}
 	
 	/**
-	 * Returns the difference between the System times between the currently and the previously rendered frame
-	 * @return the time between current and previous frame
-	 */
-	public static float getFrameTimeSeconds() {
-		return delta;
-	}
-	
-	/**
-	 * closes the 3D-Window
-	 */
-	public static void closeDisplay() {
-		Display.destroy();	
-	}
-	
-	/**
 	 * Returns the current system time. Needed i.e. for real time movement
 	 * @return the current system time
 	 */
@@ -121,14 +105,9 @@ public class DisplayManager implements Runnable {
 		return Sys.getTime()*1000 / Sys.getTimerResolution();
 	}
 	
-	/**
-	 * Initializes the seperate thread and starts the 3D-Display. 
-	 */
-	public void start() {
-		running = true;
-		thread = new Thread(this, "Pipes");
-		thread.start();
-	}
+	private boolean running = false;
+	
+	private Thread thread;
 	
 	/**
 	 * Contains creation of every Model and the rendering loop of the 3D-Window
@@ -139,7 +118,6 @@ public class DisplayManager implements Runnable {
 		
 		Loader loader = new Loader();
 		MasterRenderer renderer = new MasterRenderer();
-		//GuiRenderer guiRenderer = new GuiRenderer(loader);
 		FontRenderer fontRenderer = new FontRenderer();
 		
 		TexturedModel PipeI = new TexturedModel(OBJLoader.loadObjModel("pipeIFinal", loader),
@@ -179,7 +157,6 @@ public class DisplayManager implements Runnable {
 		for(Entry<Point, Element> tile : elements.entrySet()) {
 			if(tile.getValue().getNameElement() != null) {
 				float rotationDeg = tile.getValue().getRotationCounterClockWise();
-				System.out.println(rotationDeg);
 				float xPos = (float) tile.getKey().getX();
 				float zPos = (float) tile.getKey().getY();
 				String tileName = tile.getValue().getNameElement();
@@ -189,7 +166,6 @@ public class DisplayManager implements Runnable {
 					pipeModel.add(new Entity(PipeI, new Vector3f(xPos*PIPE_TILE_SIZE, 0, zPos*PIPE_TILE_SIZE), 0, rotationDeg, 0, 1.0f));
 					break;
 				case "./Resources/Images/LPartImage_50.png":
-					System.out.println(rotationDeg + " " + (rotationDeg-45));
 					rotationDeg -= 45f;
 					pipeModel.add(new Entity(PipeL, new Vector3f(xPos*PIPE_TILE_SIZE, 0, zPos*PIPE_TILE_SIZE), 0, rotationDeg, 0, 1.0f));
 					break;
@@ -197,14 +173,14 @@ public class DisplayManager implements Runnable {
 					pipeModel.add(new Entity(PipeT, new Vector3f(xPos*PIPE_TILE_SIZE, 0, zPos*PIPE_TILE_SIZE), 0, rotationDeg, 0, 1.0f));
 					break;
 				case "./Resources/Images/pumpPartImage_50.png":
-					pipeModel.add(new Entity(Pump, new Vector3f(xPos*PIPE_TILE_SIZE, 0, zPos*PIPE_TILE_SIZE), 0, rotationDeg, 0, 1.0f));
+					pipeModel.add(new Entity(Pump, new Vector3f(xPos*PIPE_TILE_SIZE, 0, zPos*PIPE_TILE_SIZE), 0, rotationDeg, 0, 2.5f));
 					break;
 				case "./Resources/Images/sensorPartImage.png":
 					pipeModel.add(new Entity(Sensor, new Vector3f(xPos*PIPE_TILE_SIZE, 0, zPos*PIPE_TILE_SIZE), 0, rotationDeg-90, 0, 1.0f));
 					sensorIdMap.put(tile.getValue().getSensorID(), tile);
 					break;
 				case "./Resources/Images/faucPartImage_50.png":
-					//TODO Ventil-Model verwenden
+					rotationDeg -= 90f;
 					pipeModel.add(new Entity(Faucet, new Vector3f(xPos*PIPE_TILE_SIZE, 0, zPos*PIPE_TILE_SIZE), 0, rotationDeg, 0, 1.0f));
 					break;
 				}
@@ -216,91 +192,86 @@ public class DisplayManager implements Runnable {
 		
 		Camera camera = new Camera();
 		
-		//List<GuiTexture> guis = new ArrayList<GuiTexture>();
-		//GuiTexture gui = new GuiTexture(loader.loadTexture("cobble"), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
-		//guis.add(gui);
-
-		MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix());
-	
-		
-		//Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
-		//TrueTypeFont ttfont = new TrueTypeFont(awtFont, false);
-		//FontModel font = new FontModel(ttfont, 100, 50, "Hello", Color.yellow);
-		
-		//List<FontModel> fonts = new ArrayList<FontModel>();
-		//fonts.add(font);
-		
-		
-		//TODO comPort null
-		//comPort = SerPort.setPort("COM4");
-		float factor = 0;
+		WaterFlowSensorReader sensorReader = new WaterFlowSensorReader();
+		sensorReader.start();
 		while(running) {
 			camera.move();
 			
-			picker.update();
-			
-			if(Keyboard.isKeyDown(Keyboard.KEY_ADD)) {
-				factor += 0.1;
-				System.out.println(factor);
-			}
-			if(Keyboard.isKeyDown(Keyboard.KEY_SUBTRACT)) {
-				factor -= 0.1;
-				System.out.println(factor);
-			}
-			
 			List<Entity> stringEntityList = new ArrayList<Entity>();
-			//TODO: sensorId von Serial bekommen
-			int sensorId = 2;
+			int sensorId = sensorReader.getLastSensorId();
 			Entry<Point, Element> sensorWithId = sensorIdMap.get(sensorId);
+			
 			if(sensorWithId != null) {
-				float xPos = (float) sensorWithId.getKey().getX();
-				float zPos = (float) sensorWithId.getKey().getY();
-				
-				float adjustmentFactorX = 0;
-				float adjustmentFactorY = PIPE_TILE_SIZE/2.8f;
-				float adjustmentFactorZ = 0;
-				switch(sensorWithId.getValue().getRotationCounterClockWise()) {
-				case 0:
-				case 360:
-					adjustmentFactorX = -PIPE_TILE_SIZE*0.15f;
-					adjustmentFactorZ = 0.2f;
-					break;
-				case 90:
-					adjustmentFactorX = 0.2f;
-					adjustmentFactorZ = PIPE_TILE_SIZE*0.15f;
-					break;
-				case 180:
-					adjustmentFactorX = PIPE_TILE_SIZE*0.15f;
-					adjustmentFactorZ = -0.2f;
-					break;
-				case 270:
-					adjustmentFactorX = -0.2f;
-					adjustmentFactorZ = -PIPE_TILE_SIZE*0.15f;
-					break;
+				DecimalFormat f = new DecimalFormat("#0.00");
+				sensorWithId.getValue().setCurrentSensorValue(f.format(sensorReader.getLastFlowSpeed())+("l/m"));
+			}
+			
+			for(Entry<Integer, Entry<Point, Element>> sensorIdMapEntry : sensorIdMap.entrySet()) {
+				if(sensorIdMapEntry.getValue().getValue().getCurrentSensorValue() != null) {
+					float xPos = (float) sensorIdMapEntry.getValue().getKey().getX();
+					float zPos = (float) sensorIdMapEntry.getValue().getKey().getY();
+					
+					float adjustmentFactorX = 0;
+					float adjustmentFactorY = PIPE_TILE_SIZE/2.8f;
+					float adjustmentFactorZ = 0;
+					switch(sensorIdMapEntry.getValue().getValue().getRotationCounterClockWise()) {
+					case 0:
+					case 360:
+						adjustmentFactorX = -PIPE_TILE_SIZE*0.15f;
+						adjustmentFactorZ = 0.2f;
+						break;
+					case 90:
+						adjustmentFactorX = 0.2f;
+						adjustmentFactorZ = PIPE_TILE_SIZE*0.15f;
+						break;
+					case 180:
+						adjustmentFactorX = PIPE_TILE_SIZE*0.15f;
+						adjustmentFactorZ = -0.2f;
+						break;
+					case 270:
+						adjustmentFactorX = -0.2f;
+						adjustmentFactorZ = -PIPE_TILE_SIZE*0.15f;
+						break;
+					}
+					
+					stringEntityList.addAll(
+							fontRenderer.getStringEntityList(
+									sensorIdMapEntry.getValue().getValue().getCurrentSensorValue(),
+									new Vector3f( 
+											xPos*PIPE_TILE_SIZE + adjustmentFactorX, adjustmentFactorY, zPos*(PIPE_TILE_SIZE + adjustmentFactorZ) 
+									), 0, sensorIdMapEntry.getValue().getValue().getRotationCounterClockWise(), 0, 0.5f
+							)
+					);
 				}
-				
-				//String portValue = Double.toString(SerPort.getFlowSpeed(SerPort.getValue(SerPort.readPort(comPort))))+("l/m");
-				stringEntityList.addAll(fontRenderer.getStringEntityList("Hello World My Name Is John", new Vector3f( xPos*PIPE_TILE_SIZE + adjustmentFactorX, adjustmentFactorY, zPos*(PIPE_TILE_SIZE + adjustmentFactorZ) ), 0, sensorWithId.getValue().getRotationCounterClockWise(), 0, 1f));
 			}
 			
 			for(Entity entity : pipeModel) {
 				renderer.processEntity(entity);
 			}
+			
 			for(Entity character : stringEntityList) {
 				renderer.processEntity(character);
 			}
+			
 			renderer.render(light, camera);
-			//guiRenderer.render(guis);
-			//fontRenderer.renderTTF(fonts);
 			updateDisplay();
 			
 			if(Display.isCloseRequested())
 				running = false;
 		}
 		
-		//guiRenderer.cleanUp();
+		sensorReader.stop();
 		renderer.cleanUp();
 		loader.cleanUp();
 		closeDisplay();
+	}
+	
+	/**
+	 * Initializes the seperate thread and starts the 3D-Display. 
+	 */
+	public void start() {
+		running = true;
+		thread = new Thread(this, "Pipes");
+		thread.start();
 	}
 }

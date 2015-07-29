@@ -33,6 +33,11 @@ import org.project.mw.util.RotatedIcon;
 
 /**
  * @author Yuri Kalinin
+ * Util class contains the following methods:
+ * save model default  (in the file dafaultModel.zb)
+ * save as (possible to change file name and destination)
+ * resizing of image
+ * rotation of image
  *
  */
 public class Util implements Serializable {
@@ -66,7 +71,6 @@ public class Util implements Serializable {
 			outputstream.writeObject(sizeEditorWindow);
 			outputstream.writeObject(locationEditorWindow);
 			outputstream.writeObject(modelDemension);
-			System.out.println("file saved");
 			outputstream.flush();
 			outputstream.close();
 		} catch (Exception e) {
@@ -85,14 +89,12 @@ public class Util implements Serializable {
 			ObjectInputStream input = new ObjectInputStream(new FileInputStream(FILENAME_DEFAULT));
 			map = (Map<Point, Element>) input.readObject();
 			scalFactor = (int) input.readObject();
-			System.out.println("Scall->" + scalFactor);
 			sizeEditorWindow = (Dimension) input.readObject();
 			locationEditorWindow=(Point) input.readObject();
 			modelDemension=(int) input.readObject();
 			input.close();
 		} catch (Exception e) {
-		//	JOptionPane.showMessageDialog(null, Util.getInstance().FILENAME_DEFAULT + " Konnte nicht gefunden werden.", "Warnung", JOptionPane.WARNING_MESSAGE);
-			//e.printStackTrace();
+		
 		}
 	}
 
@@ -143,7 +145,6 @@ public class Util implements Serializable {
 			ObjectInputStream input = new ObjectInputStream(new FileInputStream(fileName));
 			map = (Map<Point, Element>) input.readObject();
 			scalFactor = (int) input.readObject();
-			System.out.println("Scall->" + scalFactor);
 			sizeEditorWindow = (Dimension) input.readObject();
 			locationEditorWindow=(Point) input.readObject();
 			modelDemension=(int) input.readObject();
@@ -173,7 +174,6 @@ public class Util implements Serializable {
 			fc.showSaveDialog(component);
 			if (fc.getSelectedFile() != null) {
 				saveModel(fc.getSelectedFile().getAbsolutePath() + ".zb");
-				System.out.println(fc.getSelectedFile().getAbsolutePath());
 			}
 		} else if (option.equals("open")) {
 			fc.showOpenDialog(component);
@@ -194,17 +194,13 @@ public class Util implements Serializable {
 	}
 
 	/**
-	 * The method make scalation of Image
-	 * 
-	 * @param srcImg
-	 *            source image
-	 * @param w
-	 *            width
-	 * @param h
-	 *            height
+	 * resize  image
+	 * @param srcImg source of image
+	 * @param w width
+	 * @param h height
 	 * @return resized image icon
 	 */
-	public ImageIcon getScaledImage(String imageName, int w, int h) {
+	public ImageIcon getResizedImage(String imageName, int w, int h) {
 		Toolkit t = Toolkit.getDefaultToolkit();
 		Image srcImg = t.getImage(imageName);
 		BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
@@ -215,7 +211,7 @@ public class Util implements Serializable {
 		return new ImageIcon(resizedImg);
 	}
 
-	public Image getScaledImage(Image srcImg, int w, int h) {
+	public Image getResizedImage(Image srcImg, int w, int h) {
 
 		BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = resizedImg.createGraphics();
@@ -225,6 +221,11 @@ public class Util implements Serializable {
 		return resizedImg;
 	}
 
+	/**
+	 * convert icon from JButton to image
+	 * @param icon for the converting to image
+	 * @return image
+	 */
 	public Image iconToImage(Icon icon) {
 		if (icon instanceof ImageIcon) {
 			return ((ImageIcon) icon).getImage();
@@ -242,46 +243,39 @@ public class Util implements Serializable {
 		}
 	}
 
+	/**
+	 * Rotation of image to right
+	 * @param locationElement point of component in GridBagLayout
+	 */
 	public void rotElemt(Point locationElement) {
 		RotatedIcon ri;
 		Icon icon;
 		Element element = map.get(locationElement);
-		System.out.println("Rotation " + element.getNameElement());// hier ist
-																	// noch null
-		System.out.println("Rotation Icon Name->" + element.getIconButton().getIcon().toString());// hier
-																									// ist
-																									// richtige
-																									// name
 		if (element.getIconButton().getIcon().toString().contains("@") == false) {
 			element.setNameElement(element.getIconButton().getIcon().toString());
-			// map.replace(locationElement, element);
 		}
-		System.out.println("Rotation Check2" + element.getNameElement());// prüfen
-																			// wieder
+													
 		JButton button = element.getIconButton();
 		int roateElemt = element.getRotation();
 		icon = button.getIcon();
 
 	
 		JButton btnTemp = new JButton();
-		btnTemp.setIcon(Util.getInstance().getScaledImage(icon.toString(), modelDemension, modelDemension));
+		btnTemp.setIcon(Util.getInstance().getResizedImage(icon.toString(), modelDemension, modelDemension));
 
 		Image image = Util.getInstance().iconToImage(icon);
 
-		button.setIcon(new ImageIcon(Util.getInstance().getScaledImage(image, modelDemension, modelDemension)));
+		button.setIcon(new ImageIcon(Util.getInstance().getResizedImage(image, modelDemension, modelDemension)));
 		icon = button.getIcon();
 		switch (roateElemt) {
 		case 0:
 			ri = new RotatedIcon(icon, 90.0);
 			button.setIcon(ri);
-			System.out.println("Rotated Icon-> " + icon.toString());
 			element.setRotation(90);
-
 			break;
 		case 90:
 			ri = new RotatedIcon(icon, 90.0);
 			button.setIcon(ri);
-			System.out.println("Rotated Icon-> " + icon.toString());
 			element.setRotation(180);
 
 			break;
@@ -289,7 +283,6 @@ public class Util implements Serializable {
 		case 180:
 			ri = new RotatedIcon(icon, 90.0);
 			button.setIcon(ri);
-			System.out.println("Rotated Icon-> " + icon.toString());
 			element.setRotation(270);
 
 			break;

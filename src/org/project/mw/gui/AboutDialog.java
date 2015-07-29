@@ -6,6 +6,11 @@ import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
+/**
+ * @author Yuri Kalinin
+ * About, help, version dialog
+ *
+ */
 class AboutDialog extends JFrame {
 	private JTabbedPane tabbedPane;
 	private JPanel aboutPane;
@@ -36,35 +41,32 @@ class AboutDialog extends JFrame {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
+			
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				JTabbedPane pane = (JTabbedPane) e.getComponent();
-
-				System.out.println(pane.getTitleAt(pane.getSelectedIndex()));
 				setTitle(pane.getTitleAt(pane.getSelectedIndex()));
 
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
+
+
 
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 		topPanel.add(tabbedPane, BorderLayout.CENTER);

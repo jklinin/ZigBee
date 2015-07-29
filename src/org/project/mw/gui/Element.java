@@ -6,11 +6,21 @@ import java.io.Serializable;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+
+/**
+ * @author Yuri Kalinin Class contains information about component in 2D Model
+ *         nameElement name of icon file iconButton icon rotation information
+ *         about rotation(0, 90, 180, 270 degrees) sensorID sendorID for
+ *         identification of sensor
+ */
 public class Element implements Serializable {
 	private String nameElement;
 	private JButton iconButton = new JButton();
 	private int rotation;
 	private int sensorID;
+	private String currentSensorValue = null;
+	
+	
 
 	public void setNameElement(String nameIcon) {
 		nameElement = nameIcon;
@@ -54,6 +64,17 @@ public class Element implements Serializable {
 		return sensorID;
 	}
 
+	public String getCurrentSensorValue() {
+		return currentSensorValue;
+	}
+
+	public void setCurrentSensorValue(String currentSensorValue) {
+		this.currentSensorValue = currentSensorValue;
+	}
+
+	/**
+	 * @return true if the component is sensor
+	 */
 	public boolean isSensor() {
 		
 			if (nameElement.contains("sensor") == true) {

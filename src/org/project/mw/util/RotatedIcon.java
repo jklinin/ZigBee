@@ -10,17 +10,17 @@ import java.io.Serializable;
 import javax.swing.Icon;
 
 /**
- * The RotatedIcon allows you to change the orientation of an Icon by rotating
- * the Icon before it is painted. This class supports the following
- * orientations:
+ * @author Yuri Kalinin The RotatedIcon allows you to change the orientation of
+ *         an Icon by rotating the Icon before it is painted. This class
+ *         supports the following orientations:
  *
- * <ul>
- * <li>DOWN - rotated 90 degrees
- * <li>UP (default) - rotated -90 degrees
- * <li>UPSIDE_DOWN - rotated 180 degrees
- * <li>ABOUT_CENTER - the icon is rotated by the specified degrees about its
- * center.
- * </ul>
+ *         <ul>
+ *         <li>DOWN - rotated 90 degrees
+ *         <li>UP (default) - rotated -90 degrees
+ *         <li>UPSIDE_DOWN - rotated 180 degrees
+ *         <li>ABOUT_CENTER - the icon is rotated by the specified degrees about
+ *         its center.
+ *         </ul>
  */
 public class RotatedIcon implements Icon, Serializable {
 	public RotatedIcon rotatedIconInstanze = null;
@@ -34,16 +34,6 @@ public class RotatedIcon implements Icon, Serializable {
 	private Rotate rotate;
 
 	private double degrees;
-
-	/**
-	 * Convenience constructor to create a RotatedIcon that is rotated DOWN.
-	 *
-	 * @param icon
-	 *            the Icon to rotate
-	 */
-	public RotatedIcon(Icon icon) {
-		this(icon, Rotate.UP);
-	}
 
 	/**
 	 * Create a RotatedIcon
@@ -71,49 +61,6 @@ public class RotatedIcon implements Icon, Serializable {
 		this(icon, Rotate.ABOUT_CENTER);
 		this.degrees = degrees;
 	}
-
-	/**
-	 * Gets the Icon to be rotated
-	 *
-	 * @return the Icon to be rotated
-	 */
-	public Icon getIcon() {
-		return icon;
-	}
-
-	/**
-	 * Gets the Rotate enum which indicates the direction of rotation
-	 *
-	 * @return the Rotate enum
-	 */
-	public Rotate getRotate() {
-		return rotate;
-	}
-
-	/**
-	 * Gets the degrees of rotation. Only used for Rotate.ABOUT_CENTER.
-	 *
-	 * @return the degrees of rotation
-	 */
-	public double getDegrees() {
-		return degrees;
-	}
-
-	/**
-	 * Set the degrees of rotation. Only used for Rotate.ABOUT_CENTER. This
-	 * method only sets the degress of rotation, it will not cause the Icon to
-	 * be repainted.
-	 *
-	 * @param degrees
-	 *            the degrees of rotation
-	 */
-	public void setDegrees(double degrees) {
-		this.degrees = degrees;
-	}
-
-	//
-	// Implement the Icon Interface
-	//
 
 	/**
 	 * Gets the width of this icon.

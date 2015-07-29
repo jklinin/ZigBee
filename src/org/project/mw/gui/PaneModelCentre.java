@@ -22,8 +22,8 @@ import javax.swing.TransferHandler;
 import org.project.mw.util.Util;
 
 /**
- * Class of centre model in the editor window default matrix (gridbag) 5x5
- * dafault size 50px
+ * Class of center model in the editor window default matrix (gridbag) 10x10 
+ * Default size 50px
  * 
  * @author Yuri Kalinin
  *
@@ -40,7 +40,7 @@ public class PaneModelCentre implements ActionListener {
 
 	PaneModelCentre(int size, int dimenisionX, int dimenisionY, boolean restore) {
 		this.size = size;
-		System.out.println("Created PanelModelCentre");
+
 		JButton button;
 		Element element;
 		gb = new GridBagLayout();
@@ -78,18 +78,16 @@ public class PaneModelCentre implements ActionListener {
 			if (restore == true) {
 
 				if (map.get(new Point(x, y)) != null) {
-					System.out.println("Restore check 1 " + map.get(new Point(x, y)).getSensorID());
+
 					int id = map.get(new Point(x, y)).getSensorID();
 					int rotation = map.get(new Point(x, y)).getRotation();
 					btnArrayListTemp.get(i).setNameElement(map.get(new Point(x, y)).getNameElement());
 					btnArrayListTemp.get(i).setSensorID(id);
 					btnArrayListTemp.get(i).setRotation(rotation);
-					System.out.println("Restore check 2 " + map.get(new Point(x, y)).getNameElement());
 					button = map.get(new Point(x, y)).getIconButton();
-
 					if (button.getIcon() != null) {
 						Image image = Util.getInstance().iconToImage(button.getIcon());
-						btnArrayListTemp.get(i).setImageIconElement((Util.getInstance().getScaledImage(image, dimenisionX, dimenisionY)));
+						btnArrayListTemp.get(i).setImageIconElement((Util.getInstance().getResizedImage(image, dimenisionX, dimenisionY)));
 
 					}
 				}
@@ -97,7 +95,6 @@ public class PaneModelCentre implements ActionListener {
 				map.put(new Point(x, y), btnArrayListTemp.get(i));
 
 			} else {
-
 				map.put(new Point(x, y), btnArrayListTemp.get(i));
 
 			}
@@ -116,20 +113,19 @@ public class PaneModelCentre implements ActionListener {
 
 		JButton source = (JButton) evt.getSource();
 		String command = source.getActionCommand();
-		System.out.println(command);
+
 		String[] arr = command.split(",");
 		int x = Integer.parseInt(arr[0]);
 		int y = Integer.parseInt(arr[1]);
 		JButton button = map.get(new Point(x, y)).getIconButton();
-		System.out.println("****" + button.getIcon().toString());
-		// TODO impement action
-		System.out.println("+++++" + Util.getInstance().getElementsCollection().get(new Point(x, y)).getNameElement());
-		
+
+		putElementsToMap();
+
 		EditorWindow editorWindowInstanze = EditorWindow.getEditWindowInstance();
 		editorWindowInstanze.editWindowContentPane.remove(editorWindowInstanze.scrollpane);
-		int scalFactor=Util.getInstance().getScalFactor();
-		int modelDemension=Util.getInstance().getModelDemension();
-		editorWindowInstanze.paneModelCentre = new PaneModelCentre(editorWindowInstanze.n * scalFactor, modelDemension, modelDemension, true);// FIXME
+		int scalFactor = Util.getInstance().getScalFactor();
+		int modelDemension = Util.getInstance().getModelDemension();
+		editorWindowInstanze.paneModelCentre = new PaneModelCentre(editorWindowInstanze.n * scalFactor, modelDemension, modelDemension, true);
 		editorWindowInstanze.paneModelCentre.getContainer().repaint();
 		editorWindowInstanze.scrollpane = new JScrollPane(editorWindowInstanze.paneModelCentre.getContainer());
 		editorWindowInstanze.editWindowContentPane.add(editorWindowInstanze.scrollpane, BorderLayout.CENTER);
@@ -138,23 +134,19 @@ public class PaneModelCentre implements ActionListener {
 
 		if (EditorWindow.removeEnbKey == true) {
 			map.remove(new Point(x, y));
-			 editorWindowInstanze = EditorWindow.getEditWindowInstance();
+			editorWindowInstanze = EditorWindow.getEditWindowInstance();
 			editorWindowInstanze.editWindowContentPane.remove(editorWindowInstanze.scrollpane);
-			scalFactor=Util.getInstance().getScalFactor();
-			modelDemension=Util.getInstance().getModelDemension();
-			editorWindowInstanze.paneModelCentre = new PaneModelCentre(editorWindowInstanze.n * scalFactor, modelDemension, modelDemension, true);// FIXME
+			scalFactor = Util.getInstance().getScalFactor();
+			modelDemension = Util.getInstance().getModelDemension();
+			editorWindowInstanze.paneModelCentre = new PaneModelCentre(editorWindowInstanze.n * scalFactor, modelDemension, modelDemension, true);
 			editorWindowInstanze.paneModelCentre.getContainer().repaint();
 			editorWindowInstanze.scrollpane = new JScrollPane(editorWindowInstanze.paneModelCentre.getContainer());
 			editorWindowInstanze.editWindowContentPane.add(editorWindowInstanze.scrollpane, BorderLayout.CENTER);
-
 			editorWindowInstanze.pack();
-
 		}
 
 		if (EditorWindow.rotEnbledKey == true) {
-
 			Util.getInstance().rotElemt(new Point(x, y));
-
 		}
 	}
 

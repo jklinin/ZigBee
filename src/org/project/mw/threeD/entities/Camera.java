@@ -14,25 +14,25 @@ public class Camera {
 	
 	private static final float MOVEMENT_SPEED = 0.6f;
 	
-	protected Vector3f position = new Vector3f(50,50,50);
 	protected float pitch = 45;
-	protected float yaw = 0;
+	protected Vector3f position = new Vector3f(50,50,50);
 	protected float roll;
+	protected float yaw = 0;
 	
-	public Vector3f getPosition() {
-		return position;
-	}
-
 	public float getPitch() {
 		return pitch;
 	}
 
-	public float getYaw() {
-		return yaw;
+	public Vector3f getPosition() {
+		return position;
 	}
 
 	public float getRoll() {
 		return roll;
+	}
+
+	public float getYaw() {
+		return yaw;
 	}
 	
 	/**

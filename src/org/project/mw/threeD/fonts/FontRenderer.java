@@ -92,7 +92,7 @@ public class FontRenderer {
 		for(int i=0; i < string.length(); i++) {
 			int asciiCode = (int)string.charAt(i);
 			
-			float charPosInString = i * CHARACTER_WIDTH * scale / 3;
+			float charPosInString = i * CHARACTER_WIDTH / 1.7f;
 
 			Vector4f translatedCharacterPosition = new Vector4f();
 			Matrix4f.transform(transformationMatrix, new Vector4f(charPosInString, 0, 0, scale), translatedCharacterPosition);
